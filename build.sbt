@@ -5,5 +5,6 @@ ThisBuild / scalaVersion := "2.13.10"
 lazy val root = (project in file("."))
   .settings(
     name := "Report-Generator",
-    idePackagePrefix := Some("fr.valle.report_generator")
+    idePackagePrefix := Some("fr.valle.report_generator"),
+    libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.3.10"
   )
