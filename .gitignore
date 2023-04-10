@@ -217,5 +217,5 @@ hs_err_pid*
 
 **/.idea/
 
-**/csv_input/
-**/docx_output/
+**/outputs/
+**/resources/inputs/
