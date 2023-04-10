@@ -1,0 +1,14 @@
+.tab-pane .tab-header-area {
+    -fx-background-color: #333333;
+    -fx-tab-min-width: 1000;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #333333;
+    -fx-text-fill: #ffffff;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+}
