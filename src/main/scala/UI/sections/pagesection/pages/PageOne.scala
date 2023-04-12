@@ -32,6 +32,7 @@ class PageOne extends IsAPageTrait {
     myTextField = templateFilePathTextField
   )
 
+  //todo see if it is possible to browse a dir instead of a file
   private val outputDirectoryFormSection = new LabelTextFieldBrowseFormSection(
     label = "Dossier cible :",
     myTextField = outputDirectoryTextField

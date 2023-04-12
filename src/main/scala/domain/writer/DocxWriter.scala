@@ -7,6 +7,8 @@ import java.io.FileOutputStream
 
 class DocxWriter {
   def write(templateDoc: XWPFDocument, outputFilePath: String): String = {
+    //todo access denied while writing
+
     // Write the modified document to the output file
     val outputStream = new FileOutputStream(outputFilePath)
     try {
