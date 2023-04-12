@@ -1,9 +1,9 @@
 package fr.valle.report_generator
 package domain.parser
 
-import java.io.FileInputStream
 import org.apache.poi.xwpf.usermodel.{XWPFDocument, XWPFParagraph}
 
+import java.io.FileInputStream
 import java.util
 import scala.collection.convert.ImplicitConversions.`list asScalaBuffer`
 
