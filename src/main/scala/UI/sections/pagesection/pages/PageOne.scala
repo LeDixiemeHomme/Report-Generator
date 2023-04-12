@@ -1,55 +1,64 @@
 package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
-import scalafx.geometry.{Insets, Pos}
-import scalafx.scene.control.{Button, Label, TextField}
-import scalafx.scene.layout.{HBox, VBox}
+import UI.sections.formsection.forms.{LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
+import UI.sections.formsection.{FormSection, FormSectionTrait}
+import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
+import services.parsing.{ParsingCsvService, ParsingServiceTrait}
+import services.processing.{ProcessingCarDataService, ProcessingServiceTrait}
+
+import scalafx.scene.control.TextField
+import scalafx.scene.layout._
 
 class PageOne extends IsAPageTrait {
 
-  val firstNameField = new TextField()
-  val lastNameField = new TextField()
-  val emailField = new TextField()
+  private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
+  private val parsingCsvService: ParsingServiceTrait = ParsingCsvService()
+  private val processingCarDataService: ProcessingServiceTrait = ProcessingCarDataService()
 
-  val submitButton = new Button("Submit")
-  submitButton.disable = true // disable by default
+  private val dataFilePathTextField: TextField = new TextField()
+  private val templateFilePathTextField: TextField = new TextField()
+  private val outputDirectoryTextField: TextField = new TextField()
 
-  // Add a listener to the fields to enable/disable the submit button
-  val fields: Seq[TextField] = Seq(firstNameField, lastNameField, emailField)
-  fields.foreach { field =>
-    field.text.onChange { (_, _, newValue) =>
-      submitButton.disable = fields.exists(_.text.value.isEmpty)
-    }
+  private val dataFilePathFormSection = new LabelTextFieldBrowseFormSection(
+    label = "Fichier de données :",
+    myTextField = dataFilePathTextField
+  )
+
+  private val templateFilePathFormSection = new LabelTextFieldBrowseFormSection(
+    label = "Fichier modèle :",
+    myTextField = templateFilePathTextField
+  )
+
+  private val outputDirectoryFormSection = new LabelTextFieldBrowseFormSection(
+    label = "Dossier cible :",
+    myTextField = outputDirectoryTextField
+  )
+
+  private val submitButton: SubmitButtonFormSection = new SubmitButtonFormSection()
+
+  submitButton.myButton.onAction = _ => {
+    // Define the map of values to replace in the template
+    val data: List[Any] = parsingCsvService.parse().parsedData
+
+    val valuesMap: Map[String, String] = processingCarDataService.process(data = data).processedData
+
+    val result: FillingResult = fillingService.fill(
+      templateFilePath = templateFilePathTextField.getText,
+      valuesMap = valuesMap,
+      outputFilePath = outputDirectoryTextField.getText
+    )
+
+    println(result.toString)
   }
 
-  val nameLabel = new Label("First Name:")
-  nameLabel.prefWidth = 100
-  nameLabel.alignment = Pos.BaselineRight
+  val fields: List[FormSectionTrait] = List(
+    dataFilePathFormSection,
+    templateFilePathFormSection,
+    outputDirectoryFormSection
+  )
 
-  val lastNameLabel = new Label("Last Name:")
-  lastNameLabel.prefWidth = 100
-  lastNameLabel.alignment = Pos.BaselineRight
-
-  val emailLabel = new Label("Email:")
-  emailLabel.prefWidth = 100
-  emailLabel.alignment = Pos.BaselineRight
-
-  val hbox1 = new HBox(10)
-  hbox1.children.addAll(nameLabel, firstNameField)
-
-  val hbox2 = new HBox(10)
-  hbox2.children.addAll(lastNameLabel, lastNameField)
-
-  val hbox3 = new HBox(10)
-  hbox3.children.addAll(emailLabel, emailField)
-
-  private val body: VBox = new VBox {
-    id = "PageOne"
-    alignment = Pos.Center
-  }
-  body.spacing = 20
-  body.padding = Insets(20)
-  body.children.addAll(hbox1, hbox2, hbox3, submitButton)
+  val body: VBox = new FormSection(forms = fields, submitButton = submitButton).myForm
 
   override def myPage: Page = new Page(body = body)
 }
