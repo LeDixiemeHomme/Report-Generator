@@ -1,12 +1,16 @@
 package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
+import UI.DebugBorder
+
 import scalafx.geometry.Pos
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.VBox
+import scalafx.scene.layout._
+import scalafx.scene.paint.Color
 
 class PageTwo extends IsAPageTrait {
   private val body: VBox = new VBox {
+    border = DebugBorder(Color.Purple).border
     alignment = Pos.Center
     id = "PageTwo"
     children = Seq {
