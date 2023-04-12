@@ -17,13 +17,12 @@ class DocxWriter {
   }
 
   def writeFromString(text: String, filePath: String): Unit = {
-    val resourcePath = getClass.getResource(filePath).getPath
     val doc = new XWPFDocument()
     val para = doc.createParagraph()
     val run = para.createRun()
     run.setText(text)
 
-    val out = new FileOutputStream(resourcePath)
+    val out = new FileOutputStream(filePath)
     doc.write(out)
     out.close()
 

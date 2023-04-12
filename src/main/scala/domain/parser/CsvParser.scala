@@ -7,8 +7,7 @@ import java.io.File
 
 object CsvParser {
   def parseFile[A](filePath: String)(implicit parser: FileParser[A]): List[A] = {
-    val resourcePath = getClass.getResource(filePath).getPath
-    val inputFile = new File(resourcePath)
+    val inputFile = new File(filePath)
     val reader = CSVReader.open(inputFile)
 
     val linesWithoutHeader = reader.all().drop(1)
