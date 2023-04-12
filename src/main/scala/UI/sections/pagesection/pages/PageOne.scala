@@ -6,8 +6,8 @@ import UI.sections.formsection.{FormSection, FormSectionTrait}
 import domain.model.InterventionData
 import domain.model.InterventionData.InterventionDataParser
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
-import services.parsing.{ParsingCsvService, ParsingServiceTrait}
-import services.processing.{ProcessingCarDataService, ProcessingServiceTrait}
+import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
+import services.processing.{ProcessingCarDataService, ProcessingResult, ProcessingServiceTrait}
 
 import scalafx.scene.control.TextField
 import scalafx.scene.layout._
