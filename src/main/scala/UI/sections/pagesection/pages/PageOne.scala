@@ -3,6 +3,8 @@ package UI.sections.pagesection.pages
 
 import UI.sections.formsection.forms.{LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
 import UI.sections.formsection.{FormSection, FormSectionTrait}
+import domain.model.InterventionData
+import domain.model.InterventionData.InterventionDataParser
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
 import services.parsing.{ParsingCsvService, ParsingServiceTrait}
 import services.processing.{ProcessingCarDataService, ProcessingServiceTrait}
@@ -13,7 +15,7 @@ import scalafx.scene.layout._
 class PageOne extends IsAPageTrait {
 
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
-  private val parsingCsvService: ParsingServiceTrait = ParsingCsvService()
+  private val parsingInterventionDataCsvService: ParsingServiceTrait[InterventionData] = ParsingCsvService()
   private val processingCarDataService: ProcessingServiceTrait = ProcessingCarDataService()
 
   private val dataFilePathTextField: TextField = new TextField()
@@ -39,7 +41,7 @@ class PageOne extends IsAPageTrait {
 
   submitButton.myButton.onAction = _ => {
     // Define the map of values to replace in the template
-    val data: List[Any] = parsingCsvService.parse().parsedData
+    val data: List[InterventionData] = parsingInterventionDataCsvService.parse(filePath = dataFilePathTextField.getText)(InterventionDataParser).parsedData
 
     val valuesMap: Map[String, String] = processingCarDataService.process(data = data).processedData
 
