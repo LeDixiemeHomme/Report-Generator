@@ -20,3 +20,7 @@ class FillingDocxToDocxService extends FillingServiceTrait {
     new FillingResult(result = result)
   }
 }
+
+object FillingDocxToDocxService {
+  def apply(): FillingDocxToDocxService = new FillingDocxToDocxService()
+}
