@@ -17,7 +17,7 @@ class FillingDocxToDocxService extends FillingServiceTrait {
     val filledTemplateDoc: XWPFDocument = docxFiller.fillDocx(templateDoc = templateDoc, valuesMap = valuesMap)
     val result: String = docxWriter.write(filledTemplateDoc, outputFilePath)
 
-    new FillingResult(result = result)
+    new FillingResult(completionMessage = result)
   }
 }
 

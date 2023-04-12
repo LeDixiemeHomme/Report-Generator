@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package services.filling
 
-class FillingResult(val result: String) {
-  override def toString: String = s"FillingResult : $result"
+class FillingResult(val completionMessage: String) {
+  override def toString: String = s"FillingResult : $completionMessage"
 }
 
 object FillingResult {

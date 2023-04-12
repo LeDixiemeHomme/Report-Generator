@@ -40,18 +40,18 @@ class PageOne extends IsAPageTrait {
   private val submitButton: SubmitButtonFormSection = new SubmitButtonFormSection()
 
   submitButton.myButton.onAction = _ => {
-    // Define the map of values to replace in the template
-    val data: List[InterventionData] = parsingInterventionDataCsvService.parse(filePath = dataFilePathTextField.getText)(InterventionDataParser).parsedData
+    val parsingResult: ParsingResult[InterventionData] = parsingInterventionDataCsvService.parse(filePath = dataFilePathTextField.getText)(InterventionDataParser)
 
-    val valuesMap: Map[String, String] = processingCarDataService.process(data = data).processedData
+    println(parsingResult)
 
-    val result: FillingResult = fillingService.fill(
-      templateFilePath = templateFilePathTextField.getText,
-      valuesMap = valuesMap,
-      outputFilePath = outputDirectoryTextField.getText
-    )
+    val processingResult: ProcessingResult = processingCarDataService.process(dataToProcess = parsingResult.parsedData)
 
-    println(result.toString)
+    println(processingResult)
+
+    val result: FillingResult = fillingService.fill(templateFilePath = templateFilePathTextField.getText,
+      valuesMap = processingResult.processedData, outputFilePath = outputDirectoryTextField.getText)
+
+    println(result)
   }
 
   val fields: List[FormSectionTrait] = List(
