@@ -62,7 +62,7 @@ class PageOne extends IsAPageTrait {
 
   val body: VBox = new FormSection(forms = fields, submitButton = submitButton).myForm
 
-  override def myPage: Page = new Page(body = body)
+  override def myPage: Page = Page(body = body)
 }
 
 object PageOne {

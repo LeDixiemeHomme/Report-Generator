@@ -19,7 +19,7 @@ class PageTwo extends IsAPageTrait {
     }
   }
 
-  override def myPage: Page = new Page(body = body)
+  override def myPage: Page = Page(body = body)
 }
 
 object PageTwo {

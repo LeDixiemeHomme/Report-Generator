@@ -11,7 +11,7 @@ import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
 class NavBarSection(pageSection: IsAPageSectionTrait) extends IsASectionTrait {
-  private val stateMachine = new PageStateMachine(pageSection = pageSection)
+  private val stateMachine = PageStateMachine(pageSection = pageSection)
 
   private val pageOneButton: Button = new Button {
     text = "Page One"

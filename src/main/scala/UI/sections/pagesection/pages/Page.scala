@@ -6,3 +6,7 @@ import scalafx.scene.layout.VBox
 class Page(body: VBox) {
   val myBody: VBox = body
 }
+
+object Page {
+  def apply(body: VBox): Page = new Page(body)
+}
