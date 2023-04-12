@@ -1,14 +1,16 @@
 package fr.valle.report_generator
 package UI.sections
 
+import UI.DebugBorder
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
 
 import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
+import scalafx.scene.paint.Color
 
 class ButtonSection extends IsASectionTrait {
 
-  private val fillingService: FillingServiceTrait = new FillingDocxToDocxService()
+  private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
 
   private val button: Button = new Button {
     text = "Click me"
@@ -31,6 +33,7 @@ class ButtonSection extends IsASectionTrait {
   }
 
   private val section: HBox = new HBox {
+    border = DebugBorder(Color.Pink).border
     children = Seq(button)
   }
 

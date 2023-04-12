@@ -1,9 +1,11 @@
 package fr.valle.report_generator
 package UI.sections.pagesection
 
+import UI.DebugBorder
 import UI.sections.pagesection.pages.IsAPageTrait
 
-import scalafx.scene.layout.{HBox, StackPane}
+import scalafx.scene.layout._
+import scalafx.scene.paint.Color
 
 class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
   private val stackPane: StackPane = new StackPane {
@@ -12,6 +14,8 @@ class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
   }
 
   private val section: HBox = new HBox {
+    border = DebugBorder(Color.White).border
+    prefHeight =  400
     children = stackPane
   }
 

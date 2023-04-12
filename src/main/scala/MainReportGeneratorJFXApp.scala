@@ -13,23 +13,23 @@ import scalafx.stage.Screen
 object MainReportGeneratorJFXApp extends JFXApp3 {
   Platform.startup(runnable = () => {})
 
-  private val mainTitle: MainTitle = new MainTitle(words = "Report" :: "Generator" :: Nil)
+  private val mainTitle: MainTitle = MainTitle(words = "Report" :: "Generator" :: Nil)
 
-  private val stageOne: PageOne = new PageOne
-  private val stageTwo: PageTwo = new PageTwo
+  private val stageOne: PageOne = PageOne()
+  private val stageTwo: PageTwo = PageTwo()
 
-  private val titleSection: IsASectionTrait = new TitleSection(mainTitle = mainTitle)
+  private val titleSection: IsASectionTrait = TitleSection(mainTitle = mainTitle)
 
-  private val pageSection: IsAPageSectionTrait = new PageSection(stageList = stageOne :: stageTwo :: Nil)
-  private val navBarSection: IsASectionTrait = new NavBarSection(pageSection = pageSection)
+  private val pageSection: IsAPageSectionTrait = PageSection(stageList = stageOne :: stageTwo :: Nil)
+  private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
 
-  private val buttonSection = new ButtonSection()
+  private val buttonSection = ButtonSection()
 
-  private val mainVBox: MainVBox = new MainVBox(sectionSeq = Seq(
+  private val mainVBox: MainVBox = MainVBox(sectionSeq = Seq(
     titleSection, navBarSection, pageSection, buttonSection
   ))
 
-  private val mainContent = new MainContent(mainVBox = mainVBox).mainContent
+  private val mainContent = MainContent(mainVBox = mainVBox).mainContent
 
   override def start(): Unit = {
     stage = new JFXApp3.PrimaryStage {
