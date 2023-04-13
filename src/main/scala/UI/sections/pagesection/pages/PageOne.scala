@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
-import UI.sections.formsection.forms.{LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
+import UI.sections.formsection.forms.{LabelTextFieldBrowseFormSection, LabelTextFieldFormSection, SubmitButtonFormSection}
 import UI.sections.formsection.{FormSection, FormSectionTrait}
 import domain.model.InterventionData
 import domain.model.InterventionData.InterventionDataParser
@@ -21,36 +21,54 @@ class PageOne extends IsAPageTrait {
   private val dataFilePathTextField: TextField = new TextField()
   private val templateFilePathTextField: TextField = new TextField()
   private val outputDirectoryTextField: TextField = new TextField()
+  private val outputFileNameTextField: TextField = new TextField()
 
-  private val dataFilePathFormSection = new LabelTextFieldBrowseFormSection(
-    label = "Fichier de données :",
-    myTextField = dataFilePathTextField
+  private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+    label = "* Fichier de données (Excel) :",
+    myTextField = dataFilePathTextField,
+    required = true
   )
 
-  private val templateFilePathFormSection = new LabelTextFieldBrowseFormSection(
-    label = "Fichier modèle :",
-    myTextField = templateFilePathTextField
+  private val templateFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+    label = "* Fichier modèle (Word) :",
+    myTextField = templateFilePathTextField,
+    required = true
   )
 
   //todo see if it is possible to browse a dir instead of a file
-  private val outputDirectoryFormSection = new LabelTextFieldBrowseFormSection(
-    label = "Dossier cible :",
-    myTextField = outputDirectoryTextField
+  private val outputDirectoryFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+    label = "* Dossier cible :",
+    myTextField = outputDirectoryTextField,
+    required = true
+  )
+
+  private val outputFileNameFormSection: FormSectionTrait = new LabelTextFieldFormSection(
+    label = "Nom du fichier à créer:",
+    myTextField = outputFileNameTextField,
+    required = false
   )
 
   private val submitButton: SubmitButtonFormSection = new SubmitButtonFormSection()
 
   submitButton.myButton.onAction = _ => {
-    val parsingResult: ParsingResult[InterventionData] = parsingInterventionDataCsvService.parse(filePath = dataFilePathTextField.getText)(InterventionDataParser)
+    val parsingResult: ParsingResult[InterventionData] = parsingInterventionDataCsvService.parse(
+      filePath = dataFilePathTextField.getText
+    )(InterventionDataParser)
 
     println(parsingResult)
 
-    val processingResult: ProcessingResult = processingCarDataService.process(dataToProcess = parsingResult.parsedData)
+    val processingResult: ProcessingResult = processingCarDataService.process(
+      dataToProcess = parsingResult.parsedData
+    )
 
     println(processingResult)
 
-    val result: FillingResult = fillingService.fill(templateFilePath = templateFilePathTextField.getText,
-      valuesMap = processingResult.processedData, outputFilePath = outputDirectoryTextField.getText)
+    val result: FillingResult = fillingService.fill(
+      templateFilePath = templateFilePathTextField.getText,
+      valuesMap = processingResult.processedData,
+      outputFilePath = outputDirectoryTextField.getText,
+      fileName = Some(outputFileNameTextField.getText)
+    )
 
     println(result)
   }
@@ -58,7 +76,8 @@ class PageOne extends IsAPageTrait {
   val fields: List[FormSectionTrait] = List(
     dataFilePathFormSection,
     templateFilePathFormSection,
-    outputDirectoryFormSection
+    outputDirectoryFormSection,
+    outputFileNameFormSection
   )
 
   val body: VBox = new FormSection(forms = fields, submitButton = submitButton).myForm
