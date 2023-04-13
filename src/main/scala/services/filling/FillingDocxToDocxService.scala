@@ -12,10 +12,13 @@ class FillingDocxToDocxService extends FillingServiceTrait {
   private val docxFiller: DocxFiller = new DocxFiller
   private val docxWriter: DocxWriter = new DocxWriter
 
-  def fill(templateFilePath: String, valuesMap: Map[String, String], outputFilePath: String): FillingResult = {
+  def fill(templateFilePath: String, valuesMap: Map[String, String], outputFilePath: String, optionalFileName: Option[String] = None): FillingResult = {
     val templateDoc: XWPFDocument = docxReader.readDocx(templateFilePath = templateFilePath)
     val filledTemplateDoc: XWPFDocument = docxFiller.fillDocx(templateDoc = templateDoc, valuesMap = valuesMap)
-    val result: String = docxWriter.write(filledTemplateDoc, outputFilePath)
+
+    val fileName = optionalFileName.getOrElse("default value")
+
+    val result: String = docxWriter.write(filledTemplateDoc, outputFilePath, fileName)
 
     new FillingResult(completionMessage = result)
   }
