@@ -23,10 +23,8 @@ object MainReportGeneratorJFXApp extends JFXApp3 {
   private val pageSection: IsAPageSectionTrait = PageSection(stageList = stageOne :: stageTwo :: Nil)
   private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
 
-  private val buttonSection = ButtonSection()
-
   private val mainVBox: MainVBox = MainVBox(sectionSeq = Seq(
-    titleSection, navBarSection, pageSection, buttonSection
+    titleSection, navBarSection, pageSection
   ))
 
   private val mainContent = MainContent(mainVBox = mainVBox).mainContent
