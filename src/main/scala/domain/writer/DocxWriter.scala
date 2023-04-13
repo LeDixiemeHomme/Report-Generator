@@ -6,29 +6,14 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument
 import java.io.FileOutputStream
 
 class DocxWriter {
-  def write(templateDoc: XWPFDocument, outputFilePath: String): String = {
-    //todo access denied while writing
-
+  def write(templateDoc: XWPFDocument, outputDirPath: String, fileName: String): String = {
     // Write the modified document to the output file
-    val outputStream = new FileOutputStream(outputFilePath)
+    val outputStream = new FileOutputStream(outputDirPath + fileName + ".docx")
     try {
       templateDoc.write(outputStream)
       outputStream.close()
-      s"Successfully written in $outputFilePath"
+      s"Successfully written in $outputDirPath"
     }
-  }
-
-  def writeFromString(text: String, filePath: String): Unit = {
-    val doc = new XWPFDocument()
-    val para = doc.createParagraph()
-    val run = para.createRun()
-    run.setText(text)
-
-    val out = new FileOutputStream(filePath)
-    doc.write(out)
-    out.close()
-
-    println(s"Successfully wrote to $filePath")
   }
 }
 

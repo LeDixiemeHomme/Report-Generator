@@ -7,4 +7,5 @@ import scalafx.scene.layout.HBox
 trait FormSectionTrait {
   def myFormSection: HBox
   def myTextField: TextField
+  def isRequired: Boolean
 }

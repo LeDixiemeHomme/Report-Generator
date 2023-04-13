@@ -11,7 +11,7 @@ import scalafx.scene.paint.Color
 
 class FormSection(forms: List[FormSectionTrait], submitButton: SubmitButtonFormSection) {
   // Add a listener to the fields to enable/disable the submit button
-  val fields: Seq[TextField] = forms.map(_.myTextField)
+  val fields: Seq[TextField] = forms.filter(_.isRequired).map(_.myTextField)
   fields.foreach { field =>
     field.text.onChange { (_, _, _) =>
       submitButton.myButton.disable = fields.exists(_.text.value.isEmpty)
