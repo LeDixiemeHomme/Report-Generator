@@ -8,6 +8,10 @@ case class InterventionData(experimentName: String, date: String, sampleName: St
   override def toString: String = {
     s"InterventionData: { $experimentName; Date: $date; Sample Name: $sampleName; Mass (g): $mass; Volume (mL): $volume; Temperature (°C): $temperature }"
   }
+
+  private def massTimesVolume: Double = {
+    mass * volume
+  }
 }
 
 object InterventionData {
@@ -30,8 +34,8 @@ object InterventionData {
       //todo to implement
       Map(
         "<Name>" -> inputData.sampleName,
-        "<Age>" -> "30",
-        "<City>" -> "New York"
+        "<Mass x Volume>" -> inputData.massTimesVolume.toString,
+        "<Date>" -> inputData.date
       )
     }
   }
