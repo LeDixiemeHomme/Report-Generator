@@ -5,7 +5,6 @@ import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrateg
 
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.control.{Button, TextField}
-import scalafx.scene.paint.Color
 import scalafx.stage.FileChooser
 
 object BrowseFileButtonStrategy extends BrowseButtonStrategyTrait {

@@ -4,7 +4,7 @@ package UI
 import scalafx.scene.layout.{Border, BorderStroke, BorderStrokeStyle, BorderWidths}
 import scalafx.scene.paint.Color
 
-class DebugBorder(borderColor : Color) {
+class DebugBorder(borderColor: Color) {
   val border: Border = new Border(new BorderStroke(borderColor, BorderStrokeStyle.Solid, null, new BorderWidths(2)))
 }
 

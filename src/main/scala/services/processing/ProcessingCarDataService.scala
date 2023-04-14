@@ -8,6 +8,7 @@ class ProcessingCarDataService() extends ProcessingServiceTrait {
     "<Age>" -> "30",
     "<City>" -> "New York"
   )
+
   override def process(dataToProcess: List[Any]): ProcessingResult = ProcessingResult(valuesMap)
 }
 
