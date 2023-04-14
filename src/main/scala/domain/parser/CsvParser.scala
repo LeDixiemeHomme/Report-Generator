@@ -6,7 +6,7 @@ import com.github.tototoshi.csv.CSVReader
 import java.io.File
 
 object CsvParser {
-  def parseFile[A](filePath: String)(implicit parser: FileParser[A]): List[A] = {
+  def parseFile[A](filePath: String)(implicit parser: FileParserTrait[A]): List[A] = {
     val inputFile = new File(filePath)
     val reader = CSVReader.open(inputFile)
 
@@ -17,7 +17,7 @@ object CsvParser {
     parsedList
   }
 
-  trait FileParser[A] {
+  trait FileParserTrait[A] {
     def parse(lines: List[List[String]]): List[A]
   }
 

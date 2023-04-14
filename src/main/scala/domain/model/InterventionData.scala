@@ -1,7 +1,8 @@
 package fr.valle.report_generator
 package domain.model
 
-import domain.parser.CsvParser.FileParser
+import domain.parser.CsvParser.FileParserTrait
+import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
 
 case class InterventionData(experimentName: String, date: String, sampleName: String, mass: Double, volume: Double, temperature: Double) {
   override def toString: String = {
@@ -10,7 +11,7 @@ case class InterventionData(experimentName: String, date: String, sampleName: St
 }
 
 object InterventionData {
-  object InterventionDataParser extends FileParser[InterventionData] {
+  object InterventionDataParser extends FileParserTrait[InterventionData] {
     def parse(lines: List[List[String]]): List[InterventionData] = {
       lines.map(row => {
         val experimentName = row(0)
