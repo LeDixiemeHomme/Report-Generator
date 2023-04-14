@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package UI.sections.formsection.forms
+package UI.sections.pagesection.pagecontent.form.formsections
 
 import scalafx.geometry.Pos
 import scalafx.scene.control.Button

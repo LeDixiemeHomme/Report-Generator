@@ -2,7 +2,7 @@ package fr.valle.report_generator
 
 import UI.main._
 import UI.sections._
-import UI.sections.pagesection.pages.{PageOne, PageTwo}
+import UI.sections.pagesection.pages.{InterventionDataFormPage, LogsPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 
 import scalafx.application.{JFXApp3, Platform}
@@ -15,8 +15,8 @@ object MainReportGeneratorJFXApp extends JFXApp3 {
 
   private val mainTitle: MainTitle = MainTitle(words = "Report" :: "Generator" :: Nil)
 
-  private val stageOne: PageOne = PageOne()
-  private val stageTwo: PageTwo = PageTwo()
+  private val stageOne: InterventionDataFormPage = InterventionDataFormPage()
+  private val stageTwo: LogsPage = LogsPage()
 
   private val titleSection: IsASectionTrait = TitleSection(mainTitle = mainTitle)
 

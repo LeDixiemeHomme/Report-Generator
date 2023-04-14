@@ -2,8 +2,8 @@ package fr.valle.report_generator
 package UI.sections
 
 import UI.DebugBorder
-import UI.sections.pagesection.statepattern.PageStateMachine
-import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
+import UI.sections.pagesection.IsAPageSectionTrait
+import UI.sections.pagesection.pages.statepattern.PageStateMachine
 
 import scalafx.geometry.Insets
 import scalafx.scene.control.Button

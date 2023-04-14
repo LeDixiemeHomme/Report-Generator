@@ -1,8 +1,7 @@
 package fr.valle.report_generator
-package UI.sections.formsection.forms
+package UI.sections.pagesection.pagecontent.form.formsections
 
 import UI.DebugBorder
-import UI.sections.formsection.FormSectionTrait
 
 import scalafx.geometry.Pos
 import scalafx.scene.control.{Label, TextField}

@@ -8,7 +8,7 @@ import scalafx.scene.control.{Button, Label}
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 
-class PageTwo extends IsAPageTrait {
+class LogsPage extends IsAPageTrait {
   private val body: VBox = new VBox {
     border = DebugBorder(Color.Purple).border
     alignment = Pos.Center
@@ -22,6 +22,6 @@ class PageTwo extends IsAPageTrait {
   override def myPage: Page = Page(body = body)
 }
 
-object PageTwo {
-  def apply(): PageTwo = new PageTwo()
+object LogsPage {
+  def apply(): LogsPage = new LogsPage()
 }

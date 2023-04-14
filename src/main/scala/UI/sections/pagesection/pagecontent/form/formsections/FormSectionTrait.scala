@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package UI.sections.formsection
+package UI.sections.pagesection.pagecontent.form.formsections
 
 import scalafx.scene.control.TextField
 import scalafx.scene.layout.HBox

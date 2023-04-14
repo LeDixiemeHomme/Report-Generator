@@ -1,11 +1,11 @@
 package fr.valle.report_generator
-package UI.sections.pagesection.statepattern
+package UI.sections.pagesection.pages.statepattern
 
 import UI.sections.pagesection.IsAPageSectionTrait
-import UI.sections.pagesection.statepattern.state.PageOneState
+import UI.sections.pagesection.pages.statepattern.state.InterventionDataFormPageState
 
 class PageStateMachine(pageSection: IsAPageSectionTrait) {
-  private var state: PageStateTrait = new PageOneState(pageSection = pageSection)
+  private var state: PageStateTrait = new InterventionDataFormPageState(pageSection = pageSection)
 
   def input(input: String): Unit = {
     state = state.handle(input)

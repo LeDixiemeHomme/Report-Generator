@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
-import UI.sections.formsection.forms.{LabelTextFieldBrowseFormSection, LabelTextFieldFormSection, SubmitButtonFormSection}
-import UI.sections.formsection.{FormSection, FormSectionTrait}
+import UI.sections.pagesection.pagecontent.form.FormReport
+import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, LabelTextFieldFormSection, SubmitButtonFormSection}
 import domain.model.InterventionData
 import domain.model.InterventionData.InterventionDataParser
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
@@ -12,7 +12,7 @@ import services.processing.{ProcessingCarDataService, ProcessingResult, Processi
 import scalafx.scene.control.TextField
 import scalafx.scene.layout._
 
-class PageOne extends IsAPageTrait {
+class InterventionDataFormPage extends IsAPageTrait {
 
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
   private val parsingInterventionDataCsvService: ParsingServiceTrait[InterventionData] = ParsingCsvService()
@@ -80,11 +80,11 @@ class PageOne extends IsAPageTrait {
     outputFileNameFormSection
   )
 
-  val body: VBox = new FormSection(forms = fields, submitButton = submitButton).myForm
+  val body: VBox = new FormReport(forms = fields, submitButton = submitButton).myForm
 
   override def myPage: Page = Page(body = body)
 }
 
-object PageOne {
-  def apply(): PageOne = new PageOne()
+object InterventionDataFormPage {
+  def apply(): InterventionDataFormPage = new InterventionDataFormPage()
 }
