@@ -8,6 +8,7 @@ import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
 class MainContent(mainVBox: MainVBox) {
+  //todo resize and replace areas
   val mainContent: HBox = new HBox {
     border = DebugBorder(Color.Blue).border
     alignment = Pos.Center
