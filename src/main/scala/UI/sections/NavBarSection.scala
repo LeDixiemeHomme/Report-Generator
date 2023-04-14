@@ -3,7 +3,7 @@ package UI.sections
 
 import UI.DebugBorder
 import UI.sections.pagesection.IsAPageSectionTrait
-import UI.sections.pagesection.pages.statepattern.PageStateMachine
+import UI.sections.pagesection.pages.pagestatepattern.PageStateMachine
 
 import scalafx.geometry.Insets
 import scalafx.scene.control.Button

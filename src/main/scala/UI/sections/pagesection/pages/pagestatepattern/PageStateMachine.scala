@@ -1,8 +1,8 @@
 package fr.valle.report_generator
-package UI.sections.pagesection.pages.statepattern
+package UI.sections.pagesection.pages.pagestatepattern
 
 import UI.sections.pagesection.IsAPageSectionTrait
-import UI.sections.pagesection.pages.statepattern.state.InterventionDataFormPageState
+import UI.sections.pagesection.pages.pagestatepattern.states.InterventionDataFormPageState
 
 class PageStateMachine(pageSection: IsAPageSectionTrait) {
   private var state: PageStateTrait = new InterventionDataFormPageState(pageSection = pageSection)
