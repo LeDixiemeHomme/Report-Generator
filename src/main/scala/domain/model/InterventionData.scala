@@ -24,4 +24,15 @@ object InterventionData {
       })
     }
   }
+
+  object InterventionDataProcessor extends ToMapValueProcessorTrait[InterventionData] {
+    override def toMapValue(inputData: InterventionData): Map[String, String] = {
+      //todo to implement
+      Map(
+        "<Name>" -> inputData.sampleName,
+        "<Age>" -> "30",
+        "<City>" -> "New York"
+      )
+    }
+  }
 }

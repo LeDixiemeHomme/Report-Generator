@@ -5,10 +5,10 @@ import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, LabelTextFieldFormSection, SubmitButtonFormSection}
 import domain.model.InterventionData
-import domain.model.InterventionData.InterventionDataParser
+import domain.model.InterventionData.{InterventionDataParser, InterventionDataProcessor}
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
 import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
-import services.processing.{ProcessingCarDataService, ProcessingResult, ProcessingServiceTrait}
+import services.processing.{ProcessingDataService, ProcessingResult, ProcessingServiceTrait}
 
 import scalafx.scene.control.TextField
 import scalafx.scene.layout._
@@ -17,7 +17,7 @@ class InterventionDataFormPage extends IsAPageTrait {
 
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
   private val parsingInterventionDataCsvService: ParsingServiceTrait[InterventionData] = ParsingCsvService()
-  private val processingCarDataService: ProcessingServiceTrait = ProcessingCarDataService()
+  private val processingInterventionDataService: ProcessingServiceTrait[InterventionData] = ProcessingDataService()
 
   private val dataFilePathTextField: TextField = new TextField()
   private val templateFilePathTextField: TextField = new TextField()
@@ -60,9 +60,9 @@ class InterventionDataFormPage extends IsAPageTrait {
 
     println(parsingResult)
 
-    val processingResult: ProcessingResult = processingCarDataService.process(
-      dataToProcess = parsingResult.parsedData
-    )
+    val processingResult: ProcessingResult = processingInterventionDataService.process(
+      dataToProcess = parsingResult.parsedData(0)
+    )(InterventionDataProcessor)
 
     println(processingResult)
 
