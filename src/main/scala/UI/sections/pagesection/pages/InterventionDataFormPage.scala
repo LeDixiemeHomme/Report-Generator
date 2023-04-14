@@ -2,6 +2,7 @@ package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
 import UI.sections.pagesection.pagecontent.form.FormReport
+import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, LabelTextFieldFormSection, SubmitButtonFormSection}
 import domain.model.InterventionData
 import domain.model.InterventionData.InterventionDataParser
@@ -26,20 +27,22 @@ class InterventionDataFormPage extends IsAPageTrait {
   private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "* Fichier de données (Excel) :",
     myTextField = dataFilePathTextField,
-    required = true
+    required = true,
+    browseStrategy = BrowseFileButtonStrategy
   )
 
   private val templateFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "* Fichier modèle (Word) :",
     myTextField = templateFilePathTextField,
-    required = true
+    required = true,
+    browseStrategy = BrowseFileButtonStrategy
   )
 
-  //todo see if it is possible to browse a dir instead of a file
   private val outputDirectoryFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "* Dossier cible :",
     myTextField = outputDirectoryTextField,
-    required = true
+    required = true,
+    browseStrategy = BrowseDirectoryButtonStrategy
   )
 
   private val outputFileNameFormSection: FormSectionTrait = new LabelTextFieldFormSection(
