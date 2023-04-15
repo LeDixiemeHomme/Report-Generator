@@ -35,6 +35,7 @@ object MainReportGeneratorJFXApp extends JFXApp3 {
       scene = new Scene {
         fill = Color.rgb(38, 38, 38)
         content = mainContent
+        stylesheets = List("style.css")
       }
       // center content when the window is maximized
       maximized.addListener { (_, _, isMaximized) =>
