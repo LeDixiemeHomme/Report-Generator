@@ -1,6 +1,8 @@
 package fr.valle.report_generator
 package services.processing
 
-trait ProcessingServiceTrait {
-  def process(dataToProcess: List[Any]): ProcessingResult
+import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
+
+trait ProcessingServiceTrait[A] {
+  def process(dataToProcess: A)(implicit parser: ToMapValueProcessorTrait[A]): ProcessingResult
 }

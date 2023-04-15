@@ -10,6 +10,7 @@ lazy val root = (project in file("."))
     name := appName,
     idePackagePrefix := Some("fr.valle.report_generator"),
     libraryDependencies ++= Seq(
+      "org.scalatest" %% "scalatest" % "3.2.15" % "test",
       "com.github.tototoshi" %% "scala-csv" % "1.3.10",
       "org.scalafx" %% "scalafx" % "17.0.1-R26",
       "org.openjfx" % "javafx-controls" % "19.0.2.1",
@@ -20,7 +21,7 @@ lazy val root = (project in file("."))
   )
 
 assemblyMergeStrategy in assembly := {
-  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case PathList("META-INF", xs@_*) => MergeStrategy.discard
   case x => MergeStrategy.first
 }
 

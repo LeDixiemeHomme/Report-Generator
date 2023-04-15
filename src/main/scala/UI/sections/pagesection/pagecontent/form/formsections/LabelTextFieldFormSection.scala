@@ -17,6 +17,7 @@ class LabelTextFieldFormSection(label: String, val myTextField: TextField, requi
     alignment = Pos.CenterLeft
     style = "-fx-text-fill: white;"
   }
+
   override def myFormSection: HBox = new HBox {
     border = DebugBorder(Color.Red).border
     prefWidth = 400

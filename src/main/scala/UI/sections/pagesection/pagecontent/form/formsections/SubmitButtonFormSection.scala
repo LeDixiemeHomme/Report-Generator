@@ -5,7 +5,8 @@ import scalafx.geometry.Pos
 import scalafx.scene.control.Button
 
 class SubmitButtonFormSection() {
-  val myButton: Button = new Button{
+  //todo rework the button, text and position
+  val myButton: Button = new Button {
     alignment = Pos.Center
     text = "Click me"
     disable = true
