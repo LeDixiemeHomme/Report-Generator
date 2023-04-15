@@ -32,7 +32,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends IsASectionTrait {
   private val section: HBox = new HBox {
     border = DebugBorder(Color.Orange).border
     spacing = 10
-    padding = Insets(10, 20, 10, 20)
+    padding = Insets(10, 500, 10, 500)
     style = "-fx-background-color: #333;"
     children = Seq(pageOneButton, pageTwoButton)
   }

@@ -13,7 +13,7 @@ class MainVBox(sectionSeq: Seq[IsASectionTrait]) {
     border = DebugBorder(Color.Green).border
     alignment = Pos.Center
     padding = Insets(10)
-    prefWidth = 700
+    prefWidth = 1600
     children = sectionSeq.map(_.mySection)
   }
 }

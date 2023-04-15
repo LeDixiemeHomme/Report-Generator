@@ -4,12 +4,14 @@ package UI.sections
 import UI.DebugBorder
 import UI.main.MainTitle
 
+import scalafx.geometry.Pos
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
 class TitleSection(mainTitle: MainTitle) extends IsASectionTrait {
   private val section: HBox = new HBox {
     border = DebugBorder(Color.Yellow).border
+    alignment = Pos.Center
     children = Seq(mainTitle.titleTextReport, mainTitle.titleTextGenerator)
   }
 
