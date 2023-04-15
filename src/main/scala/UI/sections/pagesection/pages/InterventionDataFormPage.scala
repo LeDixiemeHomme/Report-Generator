@@ -2,8 +2,8 @@ package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
 import UI.sections.pagesection.pagecontent.form.FormReport
-import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy}
-import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, LabelTextFieldFormSection, SubmitButtonFormSection}
+import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
+import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
 import domain.model.InterventionData
 import domain.model.InterventionData.{InterventionDataParser, InterventionDataProcessor}
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
@@ -25,30 +25,31 @@ class InterventionDataFormPage extends IsAPageTrait {
   private val outputFileNameTextField: TextField = new TextField()
 
   private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
-    label = "* Fichier de données (Excel) :",
+    label = "Fichier de données (Excel) :",
     myTextField = dataFilePathTextField,
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
   private val templateFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
-    label = "* Fichier modèle (Word) :",
+    label = "Fichier modèle (Word) :",
     myTextField = templateFilePathTextField,
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
   private val outputDirectoryFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
-    label = "* Dossier cible :",
+    label = "Dossier cible :",
     myTextField = outputDirectoryTextField,
     required = true,
     browseStrategy = BrowseDirectoryButtonStrategy
   )
 
-  private val outputFileNameFormSection: FormSectionTrait = new LabelTextFieldFormSection(
-    label = "Nom du fichier à créer:",
+  private val outputFileNameFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+    label = "Nom du fichier à créer :",
     myTextField = outputFileNameTextField,
-    required = false
+    required = false,
+    browseStrategy = NoneBrowseButtonStrategy
   )
 
   private val submitButton: SubmitButtonFormSection = new SubmitButtonFormSection()
