@@ -13,7 +13,7 @@ class MainContent(mainVBox: MainVBox) {
     border = DebugBorder(Color.Blue).border
     alignment = Pos.Center
     padding = Insets(50, 80, 50, 80)
-    prefWidth = 800
+    prefWidth = 1600
     children = mainVBox.vBox
   }
 }

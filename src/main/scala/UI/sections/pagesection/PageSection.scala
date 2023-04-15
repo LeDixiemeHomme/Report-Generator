@@ -4,6 +4,7 @@ package UI.sections.pagesection
 import UI.DebugBorder
 import UI.sections.pagesection.pages.IsAPageTrait
 
+import scalafx.geometry.Pos
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 
@@ -15,6 +16,7 @@ class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
 
   private val section: HBox = new HBox {
     border = DebugBorder(Color.White).border
+    alignment = Pos.Center
     prefHeight = 400
     children = stackPane
   }

@@ -5,5 +5,5 @@ import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.scene.control.{Button, TextField}
 
 trait BrowseButtonStrategyTrait {
-  def browseButton(myTextField: TextField, stage: PrimaryStage): Button
+  def optionalBrowseButton(myTextField: TextField, stage: PrimaryStage): Option[Button]
 }

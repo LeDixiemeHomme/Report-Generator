@@ -9,15 +9,18 @@ import scalafx.scene.paint.Color
 import scalafx.stage.DirectoryChooser
 
 object BrowseDirectoryButtonStrategy extends BrowseButtonStrategyTrait {
-  override def browseButton(myTextField: TextField, stage: PrimaryStage): Button = new Button {
-    text = "Choisir un dossier"
-    textFill = Color.Red
-    onAction = _ => {
-      val directoryChooser = new DirectoryChooser()
-      val selectedDirectory = directoryChooser.showDialog(stage)
-      if (selectedDirectory != null) {
-        myTextField.text = selectedDirectory.getPath
+  override def optionalBrowseButton(myTextField: TextField, stage: PrimaryStage): Option[Button] = {
+    val button: Button = new Button {
+      prefWidth = 150
+      text = "Choisir un dossier"
+      onAction = _ => {
+        val directoryChooser = new DirectoryChooser()
+        val selectedDirectory = directoryChooser.showDialog(stage)
+        if (selectedDirectory != null) {
+          myTextField.text = selectedDirectory.getPath
+        }
       }
     }
+    Some(button)
   }
 }
