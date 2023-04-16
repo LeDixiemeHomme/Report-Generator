@@ -6,11 +6,11 @@ import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 
 class LogsPageState(pageSection: IsAPageSectionTrait) extends PageStateTrait {
   pageSection.allVisibleFalse()
-  private val pageBody = pageSection.mySection.lookup("#" + PageSection.STACK_PANE_ID).lookup("#" + PageStateMachine.GO_TO_PAGE_TWO)
+  private val pageBody = pageSection.mySection.lookup("#" + PageSection.STACK_PANE_ID).lookup("#" + PageStateMachine.GO_TO_LOGS_PAGE)
   pageBody.visible = true
 
   override def handle(input: String): PageStateTrait = input match {
-    case PageStateMachine.GO_TO_PAGE_ONE => InterventionDataFormPageState(pageSection = pageSection)
+    case PageStateMachine.GO_TO_INTERVENTION_DATA_FORM_PAGE => InterventionDataFormPageState(pageSection = pageSection)
     case _ => println("Invalid input!"); this
   }
 }

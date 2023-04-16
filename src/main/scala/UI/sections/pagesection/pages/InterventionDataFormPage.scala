@@ -94,5 +94,5 @@ class InterventionDataFormPage extends IsAPageTrait {
 
 object InterventionDataFormPage {
   def apply(): InterventionDataFormPage = new InterventionDataFormPage()
-  final val PAGE_ID: String = "PageOne"
+  final val INTERVENTION_DATA_FORM_PAGE_ID: String = "PageOne"
 }

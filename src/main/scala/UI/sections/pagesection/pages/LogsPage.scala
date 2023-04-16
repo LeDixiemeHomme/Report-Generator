@@ -26,6 +26,5 @@ class LogsPage extends IsAPageTrait {
 
 object LogsPage {
   def apply(): LogsPage = new LogsPage()
-
-  final val PAGE_ID: String = "PageTwo"
+  final val LOGS_PAGE_ID: String = "PageTwo"
 }
