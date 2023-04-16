@@ -13,19 +13,25 @@ import scalafx.scene.paint.Color
 class NavBarSection(pageSection: IsAPageSectionTrait) extends IsASectionTrait {
   private val stateMachine = PageStateMachine(pageSection = pageSection)
 
+  private val pageNames: List[String] = pageSection.myPages.map(_.myPageName)
+
   private val pageOneButton: Button = new Button {
-    text = "Page One"
-    style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
+    text = pageNames.head
+    style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
     onAction = _ => {
-      stateMachine.input(PageStateMachine.GO_TO_PAGE_ONE)
+      stateMachine.input(PageStateMachine.GO_TO_INTERVENTION_DATA_FORM_PAGE)
+      style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
+      pageTwoButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     }
   }
 
   private val pageTwoButton: Button = new Button {
-    text = "Page Two"
+    text = pageNames(1)
     style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     onAction = _ => {
-      stateMachine.input(PageStateMachine.GO_TO_PAGE_TWO)
+      stateMachine.input(PageStateMachine.GO_TO_LOGS_PAGE)
+      style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
+      pageOneButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     }
   }
 

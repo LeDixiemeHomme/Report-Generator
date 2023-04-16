@@ -27,6 +27,8 @@ class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
   override def allVisibleFalse(): Unit = {
     stackPane.children.foreach(_.setVisible(false))
   }
+
+  override def myPages: List[IsAPageTrait] = stageList
 }
 
 object PageSection {

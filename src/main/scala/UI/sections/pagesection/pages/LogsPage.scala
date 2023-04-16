@@ -12,7 +12,7 @@ class LogsPage extends IsAPageTrait {
   private val body: VBox = new VBox {
     border = DebugBorder(Color.Purple).border
     alignment = Pos.Center
-    id = LogsPage.PAGE_ID
+    id = myPageID
     children = Seq {
       new Label {
         text = "Pas encore terminé"
@@ -22,6 +22,8 @@ class LogsPage extends IsAPageTrait {
   }
 
   override def myPage: Page = Page(body = body)
+  override def myPageID: String = LogsPage.LOGS_PAGE_ID
+  override def myPageName: String = "Consulter les logs"
 }
 
 object LogsPage {

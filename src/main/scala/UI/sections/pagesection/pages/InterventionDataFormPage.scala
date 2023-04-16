@@ -85,11 +85,13 @@ class InterventionDataFormPage extends IsAPageTrait {
   )
 
   val body: VBox = new VBox {
-    id = InterventionDataFormPage.PAGE_ID
+    id = myPageID
     children = new FormReport(forms = fields, submitButton = submitButton).myForm
   }
 
   override def myPage: Page = Page(body = body)
+  override def myPageID: String = InterventionDataFormPage.INTERVENTION_DATA_FORM_PAGE_ID
+  override def myPageName: String = "Générer un rapport"
 }
 
 object InterventionDataFormPage {
