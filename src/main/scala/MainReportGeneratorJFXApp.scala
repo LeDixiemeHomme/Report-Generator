@@ -7,12 +7,14 @@ import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.titlesection.titles.ReportGeneratorTitle
 import UI.sections.titlesection.{IsATitleTrait, TitleSection}
 
+import fr.valle.report_generator.logging.LogsKeeper
+import org.apache.logging.log4j.scala.Logging
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
 import scalafx.scene.paint.Color
 import scalafx.stage.Screen
 
-object MainReportGeneratorJFXApp extends JFXApp3 {
+object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
   Platform.startup(runnable = () => {})
 
   private val appTitle: IsATitleTrait = ReportGeneratorTitle()
@@ -25,8 +27,10 @@ object MainReportGeneratorJFXApp extends JFXApp3 {
   private val pageSection: IsAPageSectionTrait = PageSection(stageList = stageOne :: stageTwo :: Nil)
   private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
 
+  private val logsSection: IsASectionTrait = LogsSection()
+
   private val mainVBox: MainVBox = MainVBox(sectionSeq = Seq(
-    titleSection, navBarSection, pageSection
+    titleSection, navBarSection, pageSection, logsSection
   ))
 
   private val mainContent = MainContent(mainVBox = mainVBox).mainContent
