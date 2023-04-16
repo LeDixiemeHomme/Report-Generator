@@ -1,12 +1,12 @@
 package fr.valle.report_generator
 package UI.sections.pagesection.pages.pagestatepattern.states
 
-import UI.sections.pagesection.IsAPageSectionTrait
+import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.pagesection.pages.pagestatepattern.{PageStateMachine, PageStateTrait}
 
 class InterventionDataFormPageState(pageSection: IsAPageSectionTrait) extends PageStateTrait {
   pageSection.allVisibleFalse()
-  private val pageBody = pageSection.mySection.lookup("#MainStackPane").lookup("#" + PageStateMachine.GO_TO_PAGE_ONE)
+  private val pageBody = pageSection.mySection.lookup("#" + PageSection.STACK_PANE_ID).lookup("#" + PageStateMachine.GO_TO_PAGE_ONE)
   pageBody.visible = true
 
   override def handle(input: String): PageStateTrait = input match {

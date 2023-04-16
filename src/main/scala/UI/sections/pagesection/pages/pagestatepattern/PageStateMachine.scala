@@ -3,6 +3,7 @@ package UI.sections.pagesection.pages.pagestatepattern
 
 import UI.sections.pagesection.IsAPageSectionTrait
 import UI.sections.pagesection.pages.pagestatepattern.states.InterventionDataFormPageState
+import UI.sections.pagesection.pages.{InterventionDataFormPage, LogsPage}
 
 class PageStateMachine(pageSection: IsAPageSectionTrait) {
   private var state: PageStateTrait = new InterventionDataFormPageState(pageSection = pageSection)
@@ -14,7 +15,6 @@ class PageStateMachine(pageSection: IsAPageSectionTrait) {
 
 object PageStateMachine {
   def apply(pageSection: IsAPageSectionTrait): PageStateMachine = new PageStateMachine(pageSection)
-
-  val GO_TO_PAGE_ONE: String = "PageOne"
-  val GO_TO_PAGE_TWO: String = "PageTwo"
+  final val GO_TO_PAGE_ONE: String = InterventionDataFormPage.PAGE_ID
+  final val GO_TO_PAGE_TWO: String = LogsPage.PAGE_ID
 }

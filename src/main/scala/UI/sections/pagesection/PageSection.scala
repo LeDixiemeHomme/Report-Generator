@@ -9,8 +9,9 @@ import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 
 class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
+
   private val stackPane: StackPane = new StackPane {
-    id = "MainStackPane"
+    id = PageSection.STACK_PANE_ID
     children = stageList.map(_.myPage.myBody)
   }
 
@@ -30,4 +31,5 @@ class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
 
 object PageSection {
   def apply(stageList: List[IsAPageTrait]): PageSection = new PageSection(stageList)
+  final val STACK_PANE_ID: String = "PageSectionStackPane"
 }

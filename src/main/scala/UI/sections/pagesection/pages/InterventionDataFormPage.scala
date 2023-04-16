@@ -84,11 +84,15 @@ class InterventionDataFormPage extends IsAPageTrait {
     outputFileNameFormSection
   )
 
-  val body: VBox = new FormReport(forms = fields, submitButton = submitButton).myForm
+  val body: VBox = new VBox {
+    id = InterventionDataFormPage.PAGE_ID
+    children = new FormReport(forms = fields, submitButton = submitButton).myForm
+  }
 
   override def myPage: Page = Page(body = body)
 }
 
 object InterventionDataFormPage {
   def apply(): InterventionDataFormPage = new InterventionDataFormPage()
+  final val PAGE_ID: String = "PageOne"
 }

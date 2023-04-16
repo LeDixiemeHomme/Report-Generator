@@ -29,14 +29,12 @@ class FormReport(forms: List[FormSectionTrait], submitButton: SubmitButtonFormSe
 
   val myForm: VBox = new VBox {
     border = DebugBorder(Color.Green).border
-    id = "PageOne"
     prefWidth = 1000
     spacing = 20
     padding = Insets(20)
     hgrow = Priority.Always
     children = Seq(formFields, submitButton.myButtonSection)
   }
-
 }
 
 object FormReport {
