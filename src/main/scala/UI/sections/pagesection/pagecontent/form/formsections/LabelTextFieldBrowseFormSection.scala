@@ -11,7 +11,7 @@ import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 
 class LabelTextFieldBrowseFormSection(label: String, val myTextField: TextField, required: Boolean, browseStrategy: BrowseButtonStrategyTrait) extends FormSectionTrait {
-  myTextField.prefWidth = 500
+  myTextField.prefWidth = 490
 
   private val requiredString = if (required) " (*)" else ""
 
@@ -19,9 +19,9 @@ class LabelTextFieldBrowseFormSection(label: String, val myTextField: TextField,
 
   private val myLabel = new Label {
     text = finalLabel
-    prefWidth = 200
+    prefWidth = 220
     alignment = Pos.CenterLeft
-    style = "-fx-text-fill: white;"
+    style = "-fx-font-size: 16px; -fx-text-fill: white;"
   }
 
   private val browseButton = browseStrategy.optionalBrowseButton(myTextField, stage).getOrElse(new HBox())

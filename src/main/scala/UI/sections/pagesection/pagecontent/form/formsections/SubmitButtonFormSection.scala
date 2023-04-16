@@ -3,9 +3,9 @@ package UI.sections.pagesection.pagecontent.form.formsections
 
 import UI.DebugBorder
 
-import scalafx.geometry.Pos
-import scalafx.scene.control.Button
-import scalafx.scene.layout.HBox
+import scalafx.geometry.{Insets, Pos}
+import scalafx.scene.control.{Button, Label}
+import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 
 class SubmitButtonFormSection() {
@@ -19,10 +19,14 @@ class SubmitButtonFormSection() {
     prefWidth = 200
   }
 
-  val myButtonSection: HBox = new HBox {
+  val myButtonSection: VBox = new VBox {
     border = DebugBorder(Color.Yellow).border
     alignment = Pos.Center
-    children = Seq(myButton)
+    children = Seq(myButton, new Label {
+      padding = Insets(5,0,0,0)
+      text = "(*) champs obligatoires"
+      style = "-fx-font-size: 15px; -fx-text-fill: white;"
+    })
   }
 }
 
