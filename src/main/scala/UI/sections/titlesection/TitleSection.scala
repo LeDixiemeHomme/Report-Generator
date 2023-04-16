@@ -1,23 +1,23 @@
 package fr.valle.report_generator
-package UI.sections
+package UI.sections.titlesection
 
 import UI.DebugBorder
-import UI.main.MainTitle
+import UI.sections.IsASectionTrait
 
 import scalafx.geometry.Pos
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
-class TitleSection(mainTitle: MainTitle) extends IsASectionTrait {
+class TitleSection(title: IsATitleTrait) extends IsASectionTrait {
   private val section: HBox = new HBox {
     border = DebugBorder(Color.Yellow).border
     alignment = Pos.Center
-    children = Seq(mainTitle.titleTextReport, mainTitle.titleTextGenerator)
+    children = title.myWords
   }
 
   override def mySection: HBox = section
 }
 
 object TitleSection {
-  def apply(mainTitle: MainTitle): TitleSection = new TitleSection(mainTitle)
+  def apply(title: IsATitleTrait): TitleSection = new TitleSection(title)
 }

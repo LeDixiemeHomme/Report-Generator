@@ -4,6 +4,8 @@ import UI.main._
 import UI.sections._
 import UI.sections.pagesection.pages.{InterventionDataFormPage, LogsPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
+import UI.sections.titlesection.titles.ReportGeneratorTitle
+import UI.sections.titlesection.{IsATitleTrait, TitleSection}
 
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
@@ -13,12 +15,12 @@ import scalafx.stage.Screen
 object MainReportGeneratorJFXApp extends JFXApp3 {
   Platform.startup(runnable = () => {})
 
-  private val mainTitle: MainTitle = MainTitle(words = "Report" :: "Generator" :: Nil)
+  private val appTitle: IsATitleTrait = ReportGeneratorTitle()
 
   private val stageOne: InterventionDataFormPage = InterventionDataFormPage()
   private val stageTwo: LogsPage = LogsPage()
 
-  private val titleSection: IsASectionTrait = TitleSection(mainTitle = mainTitle)
+  private val titleSection: IsASectionTrait = TitleSection(title = appTitle)
 
   private val pageSection: IsAPageSectionTrait = PageSection(stageList = stageOne :: stageTwo :: Nil)
   private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
@@ -31,7 +33,7 @@ object MainReportGeneratorJFXApp extends JFXApp3 {
 
   override def start(): Unit = {
     stage = new JFXApp3.PrimaryStage {
-      title = mainTitle.toTitle
+      title = appTitle.toTitle
       scene = new Scene {
         fill = Color.rgb(38, 38, 38)
         content = mainContent
