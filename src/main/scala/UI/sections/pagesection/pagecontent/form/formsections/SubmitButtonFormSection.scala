@@ -5,7 +5,7 @@ import UI.DebugBorder
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, Label}
-import scalafx.scene.layout.{HBox, VBox}
+import scalafx.scene.layout.VBox
 import scalafx.scene.paint.Color
 
 class SubmitButtonFormSection() {

@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package UI.sections.pagesection.pages.pagestatepattern.states
 
-import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.pagesection.pages.pagestatepattern.{PageStateMachine, PageStateTrait}
+import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 
 class LogsPageState(pageSection: IsAPageSectionTrait) extends PageStateTrait {
   pageSection.allVisibleFalse()
