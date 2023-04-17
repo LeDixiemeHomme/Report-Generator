@@ -2,12 +2,13 @@ package fr.valle.report_generator
 
 import UI.main._
 import UI.sections._
+import UI.sections.logssection.IsALogsSectionTrait
 import UI.sections.pagesection.pages.{InterventionDataFormPage, LogsPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
-import UI.sections.titlesection.titles.ReportGeneratorTitle
-import UI.sections.titlesection.{IsATitleTrait, TitleSection}
+import UI.sections.titlesection.TitleSection
+import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
+import logging.LogsKeeper
 
-import fr.valle.report_generator.logging.LogsKeeper
 import org.apache.logging.log4j.scala.Logging
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
@@ -27,7 +28,8 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
   private val pageSection: IsAPageSectionTrait = PageSection(stageList = stageOne :: stageTwo :: Nil)
   private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
 
-  private val logsSection: IsASectionTrait = LogsSection()
+  private val logsSection: IsALogsSectionTrait = LogsSection()
+  LogsKeeper.setMyLogsSection(aLogsSection = logsSection)
 
   private val mainVBox: MainVBox = MainVBox(sectionSeq = Seq(
     titleSection, navBarSection, pageSection, logsSection
@@ -44,16 +46,16 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
         stylesheets = List("style.css")
       }
       // center content when the window is maximized
-      maximized.addListener { (_, _, isMaximized) =>
-        if (isMaximized) {
-          val bounds = Screen.primary.bounds
-          mainVBox.vBox.translateX = (bounds.width - mainVBox.vBox.width()) / 2
-          mainVBox.vBox.translateY = (bounds.height - mainVBox.vBox.height()) / 2
-        } else {
-          mainVBox.vBox.translateX = 0
-          mainVBox.vBox.translateY = 0
-        }
-      }
+//      maximized.addListener { (_, _, isMaximized) =>
+//        if (isMaximized) {
+//          val bounds = Screen.primary.bounds
+//          mainContent.translateX = (bounds.width - mainContent.width()) / 2
+//          mainContent.translateY = (bounds.height - mainContent.height()) / 2
+//        } else {
+//          mainContent.translateX = 0
+//          mainContent.translateY = 0
+//        }
+//      }
     }
   }
 }

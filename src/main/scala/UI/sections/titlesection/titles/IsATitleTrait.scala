@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package UI.sections.titlesection
+package UI.sections.titlesection.titles
 
 import scalafx.scene.text.Text
 

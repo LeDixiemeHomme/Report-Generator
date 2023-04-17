@@ -12,7 +12,7 @@ class MainContent(mainVBox: MainVBox) {
   val mainContent: HBox = new HBox {
     border = DebugBorder(Color.Blue).border
     alignment = Pos.Center
-    padding = Insets(50, 80, 50, 80)
+    padding = Insets(5, 80, 5, 80)
     prefWidth = 1600
     children = mainVBox.vBox
   }

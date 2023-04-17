@@ -4,6 +4,7 @@ package UI.sections.titlesection
 import UI.DebugBorder
 import UI.sections.IsASectionTrait
 
+import fr.valle.report_generator.UI.sections.titlesection.titles.IsATitleTrait
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color

@@ -1,18 +1,22 @@
 package fr.valle.report_generator
 package logging
 
+import UI.sections.LogsSection
+import UI.sections.logssection.IsALogsSectionTrait
 import customexceptions.UnknownLevelLogsKeeperException
 
 import org.apache.logging.log4j.scala.{Logger, Logging}
-import scalafx.collections.ObservableBuffer
 import scalafx.scene.text.Text
 
 import scala.collection.mutable.ListBuffer
 
 object LogsKeeper extends Logging {
-  private val logs: ListBuffer[String] = new ListBuffer[String]()
-  val buffer: ObservableBuffer[Text] = ObservableBuffer[Text]()
-  buffer.add(new Text("test"))
+  private val logs: ListBuffer[Text] = new ListBuffer[Text]()
+  private var myLogsSection: IsALogsSectionTrait = LogsSection()
+
+  def setMyLogsSection(aLogsSection: IsALogsSectionTrait): Unit = {
+    this.myLogsSection = aLogsSection
+  }
 
   private def displayLog(extLogger: Logger, level: String, message: String): Unit = level match {
     case TRACE => extLogger.trace(message)
@@ -39,9 +43,12 @@ object LogsKeeper extends Logging {
         keepAndLog(extLogger = logger, level = ERROR, message = e.getMessage, classFrom = getClass)
         keepAndLog(extLogger = extLogger, level = ERROR, message = message, classFrom = classFrom)
     }
-    logs += classFrom.getName + ": " + message
-    buffer.add(new Text("ta mere"))
+    logs += new Text(classFrom.getName + ": " + message)
+    this.myLogsSection.myVBox.children.add(new Text {
+      text = classFrom.getName + ": " + message
+      style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
+    })
   }
 
-  def myLogs: List[String] = logs.toList
+  def myLogs: List[Text] = logs.toList
 }
