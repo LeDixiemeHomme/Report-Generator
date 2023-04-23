@@ -4,7 +4,6 @@ package UI.sections
 import UI.DebugBorder
 import UI.sections.pagesection.IsAPageSectionTrait
 import UI.sections.pagesection.pages.pagestatepattern.PageStateMachine
-import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.geometry.{Insets, Pos}
@@ -34,7 +33,6 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASe
       stateMachine.input(PageStateMachine.GO_TO_LOGS_PAGE)
       style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
       pageOneButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
-      LogsKeeper.keepAndLog(extLogger = logger, "LogsKeeper.INFO", "mauvais niveau", classFrom = getClass)
     }
   }
 
