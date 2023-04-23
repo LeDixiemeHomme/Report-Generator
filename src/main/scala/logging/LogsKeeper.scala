@@ -1,17 +1,19 @@
 package fr.valle.report_generator
 package logging
 
-import UI.sections.LogsSection
-import UI.sections.logssection.IsALogsSectionTrait
+import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
 import customexceptions.UnknownLevelLogsKeeperException
 
 import org.apache.logging.log4j.scala.{Logger, Logging}
+import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
 
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import scala.collection.mutable.ListBuffer
 
 object LogsKeeper extends Logging {
-  private val logs: ListBuffer[Text] = new ListBuffer[Text]()
+  private val logs: ListBuffer[String] = new ListBuffer[String]()
   private var myLogsSection: IsALogsSectionTrait = LogsSection()
 
   def setMyLogsSection(aLogsSection: IsALogsSectionTrait): Unit = {
@@ -38,17 +40,27 @@ object LogsKeeper extends Logging {
   def keepAndLog(extLogger: Logger, level: String, message: String, classFrom: Class[_]): Unit = {
     try {
       displayLog(extLogger = extLogger, message = message, level = level)
+
+      val currentDateTime = LocalDateTime.now()
+      val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+      val log: String = logs.length.toString + " -- " + currentDateTime.format(formatter) + " " + classFrom.getName + ": " + message
+      logs += log
+      this.myLogsSection.myVBox.children.add(
+        new Text {
+          text = log
+          fill = Color.Red
+          style = "-fx-font-size: 15px"
+          mouseTransparent = false
+          pickOnBounds = true
+        }
+      )
     } catch {
       case e: UnknownLevelLogsKeeperException =>
         keepAndLog(extLogger = logger, level = ERROR, message = e.getMessage, classFrom = getClass)
         keepAndLog(extLogger = extLogger, level = ERROR, message = message, classFrom = classFrom)
     }
-    logs += new Text(classFrom.getName + ": " + message)
-    this.myLogsSection.myVBox.children.add(new Text {
-      text = classFrom.getName + ": " + message
-      style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
-    })
   }
 
-  def myLogs: List[Text] = logs.toList
+  def myLogs: List[String] = logs.toList
 }
