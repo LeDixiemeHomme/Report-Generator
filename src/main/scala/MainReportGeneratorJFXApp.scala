@@ -2,7 +2,7 @@ package fr.valle.report_generator
 
 import UI.main._
 import UI.sections._
-import UI.sections.logssection.IsALogsSectionTrait
+import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
 import UI.sections.pagesection.pages.{InterventionDataFormPage, LogsPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.titlesection.TitleSection
@@ -13,7 +13,6 @@ import org.apache.logging.log4j.scala.Logging
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
 import scalafx.scene.paint.Color
-import scalafx.stage.Screen
 
 object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
   Platform.startup(runnable = () => {})
