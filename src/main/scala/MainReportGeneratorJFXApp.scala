@@ -45,17 +45,6 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
         content = mainContent
         stylesheets = List("style.css")
       }
-      // center content when the window is maximized
-//      maximized.addListener { (_, _, isMaximized) =>
-//        if (isMaximized) {
-//          val bounds = Screen.primary.bounds
-//          mainContent.translateX = (bounds.width - mainContent.width()) / 2
-//          mainContent.translateY = (bounds.height - mainContent.height()) / 2
-//        } else {
-//          mainContent.translateX = 0
-//          mainContent.translateY = 0
-//        }
-//      }
     }
   }
 }
