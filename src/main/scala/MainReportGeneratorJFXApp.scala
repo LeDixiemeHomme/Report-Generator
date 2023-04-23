@@ -37,6 +37,7 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
   private val mainContent = MainContent(mainVBox = mainVBox).mainContent
 
   override def start(): Unit = {
+    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Starting app", classFrom = getClass)
     stage = new JFXApp3.PrimaryStage {
       title = appTitle.toTitle
       scene = new Scene {
