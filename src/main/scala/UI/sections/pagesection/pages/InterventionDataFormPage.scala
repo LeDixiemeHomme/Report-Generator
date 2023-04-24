@@ -20,11 +20,6 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
   private val parsingInterventionDataCsvService: ParsingServiceTrait[InterventionData] = ParsingCsvService()
   private val processingInterventionDataService: ProcessingServiceTrait[InterventionData] = ProcessingDataService()
 
-  private val dataFilePathTextField: TextField = new TextField()
-  private val templateFilePathTextField: TextField = new TextField()
-  private val outputDirectoryTextField: TextField = new TextField()
-  private val outputFileNameTextField: TextField = new TextField()
-
   private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Fichier de données (Excel) :",
     example = "../données.csv",
