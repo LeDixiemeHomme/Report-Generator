@@ -3,6 +3,9 @@ package domain.model
 
 import domain.parser.CsvParser.FileParserTrait
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
+import logging.LogsKeeper
+
+import org.apache.logging.log4j.scala.Logging
 
 case class InterventionData(experimentName: String, date: String, sampleName: String, mass: Double, volume: Double, temperature: Double) {
   override def toString: String = {
@@ -14,9 +17,12 @@ case class InterventionData(experimentName: String, date: String, sampleName: St
   }
 }
 
-object InterventionData {
+object InterventionData extends Logging {
   object InterventionDataParser extends FileParserTrait[InterventionData] {
     def parse(lines: List[List[String]]): List[InterventionData] = {
+
+      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using InterventionDataParser", classFrom = getClass)
+
       lines.map(row => {
         val experimentName = row(0)
         val date = row(1)
@@ -31,6 +37,9 @@ object InterventionData {
 
   object InterventionDataProcessor extends ToMapValueProcessorTrait[InterventionData] {
     override def toMapValue(inputData: InterventionData): Map[String, String] = {
+
+      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "InterventionDataParser.toMapValue()", classFrom = getClass)
+
       //todo to implement
       Map(
         "<Name>" -> inputData.sampleName,

@@ -59,22 +59,22 @@ class InterventionDataFormPage extends IsAPageTrait {
       filePath = dataFilePathTextField.getText
     )(InterventionDataParser)
 
-    println(parsingResult)
+    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
 
     val processingResult: ProcessingResult = processingInterventionDataService.process(
       dataToProcess = parsingResult.parsedData(0)
     )(InterventionDataProcessor)
 
-    println(processingResult)
+    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
 
-    val result: FillingResult = fillingService.fill(
+    val fillignResult: FillingResult = fillingService.fill(
       templateFilePath = templateFilePathTextField.getText,
       valuesMap = processingResult.processedData,
       outputFilePath = outputDirectoryTextField.getText,
       fileName = Some(outputFileNameTextField.getText)
     )
 
-    println(result)
+    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillignResult.toString, classFrom = getClass)
   }
 
   val fields: List[FormSectionTrait] = List(
