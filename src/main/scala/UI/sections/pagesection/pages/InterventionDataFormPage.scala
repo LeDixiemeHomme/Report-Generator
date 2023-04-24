@@ -55,6 +55,13 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
     var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
     var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
 
+    val debugMode: Boolean = true
+    if (debugMode) {
+      dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\intervention-data.csv"
+      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\AFC Delagrave avec balise.docx"
+      outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
+    }
+
     val parsingResult: ParsingResult[InterventionData] = parsingInterventionDataCsvService.parse(
       filePath = dataPathTemp
     )(InterventionDataParser)
