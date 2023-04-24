@@ -6,8 +6,6 @@
 name: Scala CI
 
 on:
-  push:
-    branches: [ "*" ]
   pull_request:
     branches: [ "*" ]
 
@@ -29,4 +27,3 @@ jobs:
           cache: 'sbt'
       - name: Run tests
         run: sbt test
-        # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
