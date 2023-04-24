@@ -5,12 +5,13 @@ import UI.DebugBorder
 import UI.sections.pagesection.IsAPageSectionTrait
 import UI.sections.pagesection.pages.pagestatepattern.PageStateMachine
 
+import org.apache.logging.log4j.scala.Logging
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
-class NavBarSection(pageSection: IsAPageSectionTrait) extends IsASectionTrait {
+class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASectionTrait {
   private val stateMachine = PageStateMachine(pageSection = pageSection)
 
   private val pageNames: List[String] = pageSection.myPages.map(_.myPageName)

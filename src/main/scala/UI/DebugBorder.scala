@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package UI
 
-import scalafx.scene.layout.{Border, BorderStroke, BorderStrokeStyle, BorderWidths}
+import scalafx.scene.layout.{Border, BorderStroke, BorderWidths}
 import scalafx.scene.paint.Color
 
 class DebugBorder(borderColor: Color) {

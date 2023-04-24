@@ -1,12 +1,17 @@
 package fr.valle.report_generator
 package domain.filler
 
+import logging.LogsKeeper
+
+import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel.{XWPFDocument, XWPFParagraph, XWPFRun}
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 
-class DocxFiller {
+class DocxFiller extends Logging {
   def fillDocx(templateDoc: XWPFDocument, valuesMap: Map[String, String]): XWPFDocument = {
+
+    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "fillDocx()", classFrom = getClass)
 
     val filledTemplateDoc: XWPFDocument = templateDoc
 

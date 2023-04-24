@@ -16,7 +16,8 @@ lazy val root = (project in file("."))
       "org.openjfx" % "javafx-controls" % "19.0.2.1",
       "org.openjfx" % "javafx-media" % "19.0.2.1",
       "org.apache.poi" % "poi-ooxml" % "5.2.2",
-      "org.apache.logging.log4j" % "log4j-core" % "2.20.0"
+      "org.apache.logging.log4j" % "log4j-core" % "2.20.0",
+      "org.apache.logging.log4j" %% "log4j-api-scala" % "12.0"
     )
   )
 

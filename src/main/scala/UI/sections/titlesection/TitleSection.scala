@@ -3,6 +3,7 @@ package UI.sections.titlesection
 
 import UI.DebugBorder
 import UI.sections.IsASectionTrait
+import UI.sections.titlesection.titles.IsATitleTrait
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.layout.HBox

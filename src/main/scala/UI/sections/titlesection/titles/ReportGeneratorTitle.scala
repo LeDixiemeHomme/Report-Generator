@@ -1,8 +1,6 @@
 package fr.valle.report_generator
 package UI.sections.titlesection.titles
 
-import UI.sections.titlesection.IsATitleTrait
-
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.paint.Color.{DarkGray, White}
 import scalafx.scene.paint.{LinearGradient, Stops}

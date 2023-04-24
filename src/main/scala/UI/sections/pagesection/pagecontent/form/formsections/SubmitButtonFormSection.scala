@@ -14,7 +14,7 @@ class SubmitButtonFormSection() {
   val myButton: Button = new Button {
     text = "Créer le rapport"
     style = "-fx-font-size: 20px;"
-    disable = true
+//    disable = true
     prefHeight = 50
     prefWidth = 200
   }
