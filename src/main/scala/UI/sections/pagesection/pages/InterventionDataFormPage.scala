@@ -11,10 +11,10 @@ import services.filling.{FillingDocxToDocxService, FillingResult, FillingService
 import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
 import services.processing.{ProcessingDataService, ProcessingResult, ProcessingServiceTrait}
 
-import scalafx.scene.control.TextField
+import org.apache.logging.log4j.scala.Logging
 import scalafx.scene.layout._
 
-class InterventionDataFormPage extends IsAPageTrait {
+class InterventionDataFormPage extends Logging with IsAPageTrait {
 
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
   private val parsingInterventionDataCsvService: ParsingServiceTrait[InterventionData] = ParsingCsvService()
