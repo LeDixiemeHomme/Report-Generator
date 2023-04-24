@@ -5,6 +5,10 @@
 
 name: Scala CI
 
+on:
+  push:
+    branches: [ "*" ]
+
 permissions:
   contents: read
 
