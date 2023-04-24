@@ -10,8 +10,12 @@ import scalafx.scene.control.{Label, TextField}
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 
-class LabelTextFieldBrowseFormSection(label: String, val myTextField: TextField, required: Boolean, browseStrategy: BrowseButtonStrategyTrait) extends FormSectionTrait {
-  myTextField.prefWidth = 490
+class LabelTextFieldBrowseFormSection(label: String, example: String, required: Boolean, browseStrategy: BrowseButtonStrategyTrait) extends FormSectionTrait {
+
+  private val textField: TextField = new TextField {
+    prefWidth = 490
+    promptText = example
+  }
 
   private val requiredString = if (required) " (*)" else ""
 
@@ -24,7 +28,7 @@ class LabelTextFieldBrowseFormSection(label: String, val myTextField: TextField,
     style = "-fx-font-size: 16px; -fx-text-fill: white;"
   }
 
-  private val browseButton = browseStrategy.optionalBrowseButton(myTextField, stage).getOrElse(new HBox())
+  private val browseButton = browseStrategy.optionalBrowseButton(textField, stage).getOrElse(new HBox())
 
   val myFormSection: HBox = new HBox {
     border = DebugBorder(Color.Red).border
@@ -33,9 +37,12 @@ class LabelTextFieldBrowseFormSection(label: String, val myTextField: TextField,
     children = Seq(myLabel, myTextField, browseButton)
   }
 
+  def myTextField: TextField = textField
+
   override def isRequired: Boolean = required
 }
 
 object LabelTextFieldBrowseFormSection {
-  def apply(label: String, myTextField: TextField, required: Boolean, browseStrategy: BrowseButtonStrategyTrait): LabelTextFieldBrowseFormSection = new LabelTextFieldBrowseFormSection(label, myTextField, required, browseStrategy)
+  def apply(label: String, example: String, required: Boolean, browseStrategy: BrowseButtonStrategyTrait): LabelTextFieldBrowseFormSection =
+    new LabelTextFieldBrowseFormSection(label, example, required, browseStrategy)
 }

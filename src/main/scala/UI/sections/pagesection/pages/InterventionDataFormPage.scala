@@ -27,28 +27,28 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
 
   private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Fichier de données (Excel) :",
-    myTextField = dataFilePathTextField,
+    example = "../données.csv",
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
   private val templateFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Fichier modèle (Word) :",
-    myTextField = templateFilePathTextField,
+    example = "../rapport-template.docx",
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
   private val outputDirectoryFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Dossier cible :",
-    myTextField = outputDirectoryTextField,
+    example = "../dossier-rapports-complets",
     required = true,
     browseStrategy = BrowseDirectoryButtonStrategy
   )
 
   private val outputFileNameFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Nom du fichier à créer :",
-    myTextField = outputFileNameTextField,
+    example = "rapport-loreal-15.docx",
     required = false,
     browseStrategy = NoneBrowseButtonStrategy
   )
@@ -56,8 +56,12 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
   private val submitButton: SubmitButtonFormSection = new SubmitButtonFormSection()
 
   submitButton.myButton.onAction = _ => {
+    var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
+    var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
+    var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
+
     val parsingResult: ParsingResult[InterventionData] = parsingInterventionDataCsvService.parse(
-      filePath = dataFilePathTextField.getText
+      filePath = dataPathTemp
     )(InterventionDataParser)
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
@@ -68,14 +72,14 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
 
-    val fillignResult: FillingResult = fillingService.fill(
-      templateFilePath = templateFilePathTextField.getText,
+    val fillingResult: FillingResult = fillingService.fill(
+      templateFilePath = templatePathTemp,
       valuesMap = processingResult.processedData,
-      outputFilePath = outputDirectoryTextField.getText,
-      fileName = Some(outputFileNameTextField.getText)
+      outputFilePath = outputPathTemp,
+      fileName = if (outputFileNameFormSection.myTextField.getText.equals("")) Some("default-value") else Some(outputFileNameFormSection.myTextField.getText)
     )
 
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillignResult.toString, classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillingResult.toString, classFrom = getClass)
   }
 
   val fields: List[FormSectionTrait] = List(
@@ -91,11 +95,14 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
   }
 
   override def myPage: Page = Page(body = body)
+
   override def myPageID: String = InterventionDataFormPage.INTERVENTION_DATA_FORM_PAGE_ID
+
   override def myPageName: String = "Générer un rapport"
 }
 
 object InterventionDataFormPage {
   def apply(): InterventionDataFormPage = new InterventionDataFormPage()
+
   final val INTERVENTION_DATA_FORM_PAGE_ID: String = "PageOne"
 }
