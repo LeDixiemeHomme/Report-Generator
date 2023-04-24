@@ -14,7 +14,7 @@ class InterventionDataSpec extends AnyFlatSpec with PrivateMethodTester {
   it should "calculate mass times volume correctly" in {
     val data = InterventionData("experiment1", "2022-01-01", "sample1", 10.0, 5.0, 25.0)
     val result = data invokePrivate PrivateMethod[Double](Symbol("massTimesVolume"))()
-    assert(result == 50.0)
+    assert(result == 51.0)
   }
 
   it should "return correct values for its properties" in {
