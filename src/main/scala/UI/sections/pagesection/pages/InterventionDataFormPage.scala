@@ -6,6 +6,7 @@ import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrateg
 import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
 import domain.model.InterventionData
 import domain.model.InterventionData.{InterventionDataParser, InterventionDataProcessor}
+import logging.LogsKeeper
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
 import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
 import services.processing.{ProcessingDataService, ProcessingResult, ProcessingServiceTrait}
