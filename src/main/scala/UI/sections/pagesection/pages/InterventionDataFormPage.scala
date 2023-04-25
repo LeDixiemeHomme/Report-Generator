@@ -36,7 +36,7 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
 
   private val outputDirectoryFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Dossier cible :",
-    example = "../dossier-rapports-complets",
+    example = "../dossier-rapports-complets/",
     required = true,
     browseStrategy = BrowseDirectoryButtonStrategy
   )

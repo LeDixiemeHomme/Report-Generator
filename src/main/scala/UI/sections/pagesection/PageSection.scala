@@ -18,7 +18,7 @@ class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
   private val section: HBox = new HBox {
     border = DebugBorder(Color.White).border
     alignment = Pos.Center
-    prefHeight = 400
+    prefHeight = 450
     children = stackPane
   }
 
