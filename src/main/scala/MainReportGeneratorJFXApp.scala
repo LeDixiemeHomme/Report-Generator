@@ -13,6 +13,7 @@ import org.apache.logging.log4j.scala.Logging
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.scene.Scene
 import scalafx.scene.paint.Color
+import scalafx.stage.Screen
 
 object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
   Platform.startup(runnable = () => {})
@@ -44,6 +45,17 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
         fill = Color.rgb(38, 38, 38)
         content = mainContent
         stylesheets = List("style.css")
+      }
+      //     center content when the window is maximized
+      maximized.addListener { (_, _, isMaximized) =>
+        if (isMaximized) {
+          val bounds = Screen.primary.bounds
+          mainContent.translateX = (bounds.width - mainContent.width()) / 2
+          mainContent.translateY = (bounds.height - mainContent.height()) / 3.5
+        } else {
+          mainContent.translateX = 0
+          mainContent.translateY = 0
+        }
       }
     }
   }

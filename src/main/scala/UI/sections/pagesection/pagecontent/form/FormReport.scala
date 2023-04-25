@@ -29,7 +29,8 @@ class FormReport(forms: List[FormSectionTrait], submitButton: SubmitButtonFormSe
 
   val myForm: VBox = new VBox {
     border = DebugBorder(Color.Green).border
-    prefWidth = 1000
+    prefWidth = 1200
+    prefHeight = 500
     spacing = 20
     padding = Insets(20)
     hgrow = Priority.Always
