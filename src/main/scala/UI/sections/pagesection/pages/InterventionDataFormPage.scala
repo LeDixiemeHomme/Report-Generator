@@ -1,6 +1,7 @@
 package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
+import UI.DebugBorder.DEBUG_MODE
 import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
@@ -50,13 +51,15 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
 
   private val submitButton: SubmitButtonFormSection = new SubmitButtonFormSection()
 
+  if (DEBUG_MODE)
+    submitButton.myButton.disable = false
+
   submitButton.myButton.onAction = _ => {
     var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
     var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
     var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
 
-    val debugMode: Boolean = false
-    if (debugMode) {
+    if (DEBUG_MODE) {
       dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\intervention-data.csv"
       templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\AFC Delagrave avec balise.docx"
       outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
