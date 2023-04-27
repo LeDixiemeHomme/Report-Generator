@@ -46,7 +46,7 @@ object ReportDataV1 extends Logging {
     }
   }
 
-  object InterventionDataProcessor extends ToMapValueProcessorTrait[ReportDataV1] {
+  object ReportDataV1Processor extends ToMapValueProcessorTrait[ReportDataV1] {
     override def toMapValue(inputData: ReportDataV1): Map[String, String] = {
 
       LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "ReportDataV1Parser.toMapValue()", classFrom = getClass)
