@@ -14,7 +14,7 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
   private val docxFiller: DocxFiller = new DocxFiller
   private val docxWriter: DocxWriter = new DocxWriter
 
-  private val defaultValue: String = {
+  private def defaultValue: String = {
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.ERROR,
       "Something went wrong with the name of the file, using default value instead", classFrom = getClass)
     "default-name-value"
