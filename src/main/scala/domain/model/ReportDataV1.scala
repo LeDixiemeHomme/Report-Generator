@@ -31,15 +31,15 @@ object ReportDataV1 extends Logging {
         val nomEtablissement = row(3)
         val ville = row(4)
         val departement = row(5)
-        val adresse = row(5)
-        val codePostal = row(5)
-        val jour = row(5)
-        val intervenant = row(5)
-        val sexe = row(5)
-        val societeSoutraite = row(5)
-        val nom1 = row(5)
-        val nom2 = row(5)
-        val numeroAffaire = row(5)
+        val adresse = row(6)
+        val codePostal = row(7)
+        val jour = row(8)
+        val intervenant = row(9)
+        val sexe = row(10)
+        val societeSoutraite = row(11)
+        val nom1 = row(12)
+        val nom2 = row(13)
+        val numeroAffaire = row(14)
         ReportDataV1(nombreSorbonnes, mois, annee, nomEtablissement, ville, departement, adresse, codePostal,
           jour, intervenant, sexe, societeSoutraite, nom1, nom2, numeroAffaire)
       })
@@ -55,7 +55,19 @@ object ReportDataV1 extends Logging {
       Map(
         "#Nombre_sorbonnes#" -> inputData.nombreSorbonnes,
         "#Mois#" -> inputData.mois,
-        "#Année#" -> inputData.annee
+        "#Annee#" -> inputData.annee,
+        "#Nom_etablissement#" -> inputData.nomEtablissement,
+        "#Ville#" -> inputData.ville,
+        "#Departement#" -> inputData.departement,
+        "#Adresse#" -> inputData.adresse,
+        "#Code_postal#" -> inputData.codePostal,
+        "#Jour#" -> inputData.jour,
+        "#Intervenant#" -> inputData.intervenant,
+        "#Sexe#" -> inputData.sexe,
+        "#Societe_soutraite#" -> inputData.societeSoutraite,
+        "#Nom1#" -> inputData.nom1,
+        "#Nom2#" -> inputData.nom2,
+        "#Numero_d_affaire#" -> inputData.numeroAffaire
       )
     }
   }
