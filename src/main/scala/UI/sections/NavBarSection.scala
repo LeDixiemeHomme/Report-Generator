@@ -23,6 +23,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASe
       stateMachine.input(PageStateMachine.GO_TO_INTERVENTION_DATA_FORM_PAGE)
       style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
       pageTwoButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
+      pageThreeButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     }
   }
 
@@ -30,9 +31,21 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASe
     text = pageNames(1)
     style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     onAction = _ => {
+      stateMachine.input(PageStateMachine.GO_TO_REPORT_DATA_V1_FORM_PAGE)
+      style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
+      pageOneButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
+      pageThreeButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
+    }
+  }
+
+  private val pageThreeButton: Button = new Button {
+    text = pageNames(2)
+    style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
+    onAction = _ => {
       stateMachine.input(PageStateMachine.GO_TO_LOGS_PAGE)
       style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
       pageOneButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
+      pageTwoButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     }
   }
 
@@ -43,7 +56,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASe
     padding = Insets(15, 0, 15, 0)
     margin = Insets(0, 100, 0, 100)
     style = "-fx-background-color: #333;"
-    children = Seq(pageOneButton, pageTwoButton)
+    children = Seq(pageOneButton, pageTwoButton, pageThreeButton)
   }
 
   override def mySection: HBox = section
