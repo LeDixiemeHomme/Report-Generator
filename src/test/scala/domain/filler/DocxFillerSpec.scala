@@ -36,6 +36,6 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester
     // Check that the value was replaced
     assert(document.getParagraphs.get(0).getText == "A text Replaced to test.")
     // Check that the other value was not replaced
-    assert(document.getParagraphs.get(1).getText == "A text DoNotReplaceMe to test.")
+    assert(document.getParagraphs.get(1).getText == "A text #DoNotReplaceMe# to test.")
   }
 }
