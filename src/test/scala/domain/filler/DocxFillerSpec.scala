@@ -2,42 +2,44 @@ package fr.valle.report_generator
 package domain.filler
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument
-import org.scalatest.{BeforeAndAfterEach, PrivateMethodTester}
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}
 
-class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAfterEach {
+import java.io.{File, FileInputStream}
+
+class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAfterEach with GivenWhenThen with Matchers {
   private var document: XWPFDocument = _
   private var docxFiller: DocxFiller = _
   private val valuesMap: Map[String, String] = Map("#ReplaceMe#" -> "Replaced")
 
   override def beforeEach(): Unit = {
-    docxFiller = new DocxFiller
-    document = new XWPFDocument()
+    val templateFile: File = new File(getClass.getResource("/template-test.docx").getPath)
+    val templateStream: FileInputStream = new FileInputStream(templateFile)
+
+    docxFiller = DocxFiller()
+    document = new XWPFDocument(templateStream)
   }
 
-  "An XWPFDocument" should "have its tag replaced by the value in the map" in {
-    // GIVEN // Create a paragraph with the key to replace
-    val paragraph1 = document.createParagraph()
-    val run1 = paragraph1.createRun()
-    run1.setText("A text #ReplaceMe# to test.")
+  "An XWPFDocument" should "have its tags replaced by the value in the map" in {
 
-    // WHEN // Call the function to replace values in the document
+    Given("a paragraph with the key to replace")
+
+    When("using the fillDocx method")
     docxFiller.fillDocx(document, valuesMap)
 
-    // THEN // Check that the value was replaced
-    assert(document.getParagraphs.get(0).getText == "A text Replaced to test.")
+    Then("the value was not replaced")
+    document.getParagraphs.get(0).getText shouldEqual "A text Replaced to test.A text #DoNotReplaceMe# to test."
   }
 
-  "An XWPFDocument" should "not have its tag replaced by the value in the map" in {
-    // GIVEN // Create another paragraph with a different text
-    val paragraph2 = document.createParagraph()
-    val run2 = paragraph2.createRun()
-    run2.setText("A text #DoNotReplaceMe# to test.")
+  "An XWPFDocument" should "have its tags inside its footer replaced by the value in the map" in {
 
-    // WHEN // Call the function to replace values in the document
+    Given("a footer's paragraph with the key to replace")
+
+    When("using the fillDocx method")
     docxFiller.fillDocx(document, valuesMap)
 
-    // THEN // Check that the other value was not replaced
-    assert(document.getParagraphs.get(0).getText == "A text #DoNotReplaceMe# to test.")
+    Then("the value in the footer was not replaced")
+    document.getFooterList.get(0).getParagraphs.get(0).getText shouldEqual "A text Replaced to test.A text #DoNotReplaceMe# to test."
   }
 }
