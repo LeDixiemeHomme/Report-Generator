@@ -17,9 +17,9 @@ import scalafx.scene.layout._
 
 class ReportDataV1FormPage extends Logging with IsAPageTrait {
 
-  private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
   private val parsingReportDataV1CsvService: ParsingServiceTrait[ReportDataV1] = ParsingCsvService()
   private val processingReportDataV1Service: ProcessingServiceTrait[ReportDataV1] = ProcessingDataService()
+  private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
 
   private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Fichier de données (Excel) :",
@@ -61,7 +61,7 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
 
     if (DEBUG_MODE) {
       dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\report-data-v1-2.csv"
-      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-2.docx"
+      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
       outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
     }
 

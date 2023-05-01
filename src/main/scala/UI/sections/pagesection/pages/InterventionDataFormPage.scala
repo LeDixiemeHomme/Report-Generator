@@ -61,7 +61,7 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
 
     if (DEBUG_MODE) {
       dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\intervention-data.csv"
-      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\AFC Delagrave avec balise.docx"
+      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-intervention-data-1.docx"
       outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
     }
 
