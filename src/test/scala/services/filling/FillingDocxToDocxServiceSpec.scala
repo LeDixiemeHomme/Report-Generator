@@ -43,7 +43,7 @@ class FillingDocxToDocxServiceSpec extends AnyFeatureSpecLike with GivenWhenThen
     document = new XWPFDocument()
     val paragraph = document.createParagraph()
     val run = paragraph.createRun()
-    run.setText("#Nombre_sorbonnes#;#Mois#;#Annee#;#Nom_etablissement#;#Ville#;#Departement#;#Adresse#;#Code_postal#;#Jour#;#Intervenant#;#Sexe#;#Societe_soutraite#;#Nom1#;#Nom2#;#Numero_d_affaire#")
+    run.setText("#nombre_sorbonne#;#mois#;#annee#;#nom_etablissement#;#ville#;#departement#;#adresse#;#code_postal#;#jour#;#intervenant#;#sexe#;#societe_soutraite#;#nom1#;#nom2#;#numero_d_affaire#")
 
     document.write(new FileOutputStream(new File(generatedTemplateFileRelativePath)))
     document.close()
@@ -63,21 +63,21 @@ class FillingDocxToDocxServiceSpec extends AnyFeatureSpecLike with GivenWhenThen
       Given("the templateFilePath, a valuesMap, an outputFilePath, a fileName")
       val templateFilePath = generatedTemplateFileRelativePath
       val valuesMap: Map[String, String] = Map(
-        "#Nombre_sorbonnes#" -> reportDataV1_1.nombreSorbonnes,
-        "#Mois#" -> reportDataV1_1.mois,
-        "#Annee#" -> reportDataV1_1.annee,
-        "#Nom_etablissement#" -> reportDataV1_1.nomEtablissement,
-        "#Ville#" -> reportDataV1_1.ville,
-        "#Departement#" -> reportDataV1_1.departement,
-        "#Adresse#" -> reportDataV1_1.adresse,
-        "#Code_postal#" -> reportDataV1_1.codePostal,
-        "#Jour#" -> reportDataV1_1.jour,
-        "#Intervenant#" -> reportDataV1_1.intervenant,
-        "#Sexe#" -> reportDataV1_1.sexe,
-        "#Societe_soutraite#" -> reportDataV1_1.societeSoutraite,
-        "#Nom1#" -> reportDataV1_1.nom1,
-        "#Nom2#" -> reportDataV1_1.nom2,
-        "#Numero_d_affaire#" -> reportDataV1_1.numeroAffaire
+        "#nombre_sorbonne#" -> reportDataV1_1.nombreSorbonnes,
+        "#mois#" -> reportDataV1_1.mois,
+        "#annee#" -> reportDataV1_1.annee,
+        "#nom_etablissement#" -> reportDataV1_1.nomEtablissement,
+        "#ville#" -> reportDataV1_1.ville,
+        "#departement#" -> reportDataV1_1.departement,
+        "#adresse#" -> reportDataV1_1.adresse,
+        "#code_postal#" -> reportDataV1_1.codePostal,
+        "#jour#" -> reportDataV1_1.jour,
+        "#intervenant#" -> reportDataV1_1.intervenant,
+        "#sexe#" -> reportDataV1_1.sexe,
+        "#societe_soutraite#" -> reportDataV1_1.societeSoutraite,
+        "#nom1#" -> reportDataV1_1.nom1,
+        "#nom2#" -> reportDataV1_1.nom2,
+        "#numero_d_affaire#" -> reportDataV1_1.numeroAffaire
       )
 
       When("using the myFillingDocxToDocxService.fill method")

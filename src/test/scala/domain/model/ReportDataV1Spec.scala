@@ -109,21 +109,21 @@ class ReportDataV1Spec extends AnyFlatSpec with PrivateMethodTester with GivenWh
 
   it should "create a map from a ReportDataV1 objects" in {
     val correctMapValues: Map[String, String] = Map(
-      "#Nombre_sorbonnes#" -> reportDataV1_1.nombreSorbonnes,
-      "#Mois#" -> reportDataV1_1.mois,
-      "#Annee#" -> reportDataV1_1.annee,
-      "#Nom_etablissement#" -> reportDataV1_1.nomEtablissement,
-      "#Ville#" -> reportDataV1_1.ville,
-      "#Departement#" -> reportDataV1_1.departement,
-      "#Adresse#" -> reportDataV1_1.adresse,
-      "#Code_postal#" -> reportDataV1_1.codePostal,
-      "#Jour#" -> reportDataV1_1.jour,
-      "#Intervenant#" -> reportDataV1_1.intervenant,
-      "#Sexe#" -> reportDataV1_1.sexe,
-      "#Societe_soutraite#" -> reportDataV1_1.societeSoutraite,
-      "#Nom1#" -> reportDataV1_1.nom1,
-      "#Nom2#" -> reportDataV1_1.nom2,
-      "#Numero_d_affaire#" -> reportDataV1_1.numeroAffaire
+      "#nombre_sorbonne#" -> reportDataV1_1.nombreSorbonnes,
+      "#mois#" -> reportDataV1_1.mois,
+      "#annee#" -> reportDataV1_1.annee,
+      "#nom_etablissement#" -> reportDataV1_1.nomEtablissement,
+      "#ville#" -> reportDataV1_1.ville,
+      "#departement#" -> reportDataV1_1.departement,
+      "#adresse#" -> reportDataV1_1.adresse,
+      "#code_postal#" -> reportDataV1_1.codePostal,
+      "#jour#" -> reportDataV1_1.jour,
+      "#intervenant#" -> reportDataV1_1.intervenant,
+      "#sexe#" -> reportDataV1_1.sexe,
+      "#societe_soutraite#" -> reportDataV1_1.societeSoutraite,
+      "#nom1#" -> reportDataV1_1.nom1,
+      "#nom2#" -> reportDataV1_1.nom2,
+      "#numero_d_affaire#" -> reportDataV1_1.numeroAffaire
     )
 
     Given("a ReportDataV1")
