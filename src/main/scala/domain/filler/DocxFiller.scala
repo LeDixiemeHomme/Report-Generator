@@ -51,7 +51,7 @@ class DocxFiller extends Logging {
               text = text.replace(key, value)
             }
             // Set the new text in the cell
-            cell.setText(text)
+            cell.getParagraphs.get(0).getRuns.get(0).setText(text, 0)
           }
         }
       }
@@ -65,6 +65,7 @@ class DocxFiller extends Logging {
 
     fillParagraphs(templateDoc = templateDoc, valuesMap = valuesMap)
     fillFooters(templateDoc = templateDoc, valuesMap = valuesMap)
+    fillTables(templateDoc = templateDoc, valuesMap = valuesMap)
 
     filledTemplateDoc
   }

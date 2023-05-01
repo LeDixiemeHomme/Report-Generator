@@ -42,4 +42,15 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     Then("the value in the footer was not replaced")
     document.getFooterList.get(0).getParagraphs.get(0).getText shouldEqual "A text Replaced to test.A text #DoNotReplaceMe# to test."
   }
+
+  "An XWPFDocument" should "have its tags inside its tables replaced by the value in the map" in {
+
+    Given("a footer's paragraph with the key to replace")
+
+    When("using the fillDocx method")
+    docxFiller.fillDocx(document, valuesMap)
+
+    Then("the value in the footer was not replaced")
+    document.getTables.get(0).getRows.get(1).getCell(0).getText shouldEqual "A text Replaced to test.A text #DoNotReplaceMe# to test."
+  }
 }
