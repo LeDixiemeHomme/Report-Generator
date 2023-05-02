@@ -1,6 +1,6 @@
 package fr.valle.report_generator
 
-import UI.main._
+import UI.MainContent
 import UI.sections._
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
 import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReportDataV1FormPage}
@@ -25,16 +25,17 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
 
   private val titleSection: IsASectionTrait = TitleSection(title = appTitle)
 
-  private val pageSection: IsAPageSectionTrait = PageSection(pageList = reportDataV1FormPage :: otherReportFormPage :: Nil)
+  private val pageSection: IsAPageSectionTrait = PageSection(
+    pageList = reportDataV1FormPage :: otherReportFormPage :: Nil
+  )
+
   private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
 
   private val logsSection: IsALogsSectionTrait = LogsSection()
 
-  private val mainVBox: MainVBox = MainVBox(sectionSeq = Seq(
-    titleSection, navBarSection, pageSection, logsSection
-  ))
-
-  private val mainContent = MainContent(mainVBox = mainVBox).mainContent
+  private val mainContent = MainContent(
+    listSection = List(titleSection, navBarSection, pageSection, logsSection)
+  ).myMainContent
 
   override def start(): Unit = {
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Starting app", classFrom = getClass)
@@ -45,16 +46,17 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
         content = mainContent
         stylesheets = List("style.css")
       }
-      //     center content when the window is maximized
-      maximized.addListener { (_, _, isMaximized) =>
-        if (isMaximized) {
-          val bounds = Screen.primary.bounds
-          mainContent.translateX = (bounds.width - mainContent.width()) / 2
-          mainContent.translateY = (bounds.height - mainContent.height()) / 3.5
-        } else {
-          mainContent.translateX = 0
-          mainContent.translateY = 0
-        }
+    }
+
+    // center content when the window is maximized
+    stage.maximized.addListener { (_, _, isMaximized) =>
+      if (isMaximized) {
+        val bounds = Screen.primary.bounds
+        mainContent.translateX = (bounds.width - mainContent.width()) / 2
+        mainContent.translateY = (bounds.height - mainContent.height()) / 3.5
+      } else {
+        mainContent.translateX = 0
+        mainContent.translateY = 0
       }
     }
   }
