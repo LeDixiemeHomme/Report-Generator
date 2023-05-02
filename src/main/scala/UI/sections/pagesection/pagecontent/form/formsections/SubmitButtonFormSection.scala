@@ -9,8 +9,6 @@ import scalafx.scene.layout.VBox
 import scalafx.scene.paint.Color
 
 class SubmitButtonFormSection() {
-  //todo rework the button, text and position
-
   val myButton: Button = new Button {
     text = "Créer le rapport"
     style = "-fx-font-size: 20px;"
@@ -23,7 +21,7 @@ class SubmitButtonFormSection() {
     border = DebugBorder(Color.Yellow).border
     alignment = Pos.Center
     children = Seq(myButton, new Label {
-      padding = Insets(5,0,0,0)
+      padding = Insets(5, 0, 0, 0)
       text = "(*) champs obligatoires"
       style = "-fx-font-size: 15px; -fx-text-fill: white;"
     })
