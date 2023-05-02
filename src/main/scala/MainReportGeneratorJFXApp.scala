@@ -29,7 +29,6 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
   private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
 
   private val logsSection: IsALogsSectionTrait = LogsSection()
-  LogsKeeper.addObserver(logsSection)
 
   private val mainVBox: MainVBox = MainVBox(sectionSeq = Seq(
     titleSection, navBarSection, pageSection, logsSection
