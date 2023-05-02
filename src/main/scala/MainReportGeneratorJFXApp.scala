@@ -3,7 +3,7 @@ package fr.valle.report_generator
 import UI.main._
 import UI.sections._
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
-import UI.sections.pagesection.pages.{IsAPageTrait, LogsPage, ReportDataV1FormPage}
+import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReportDataV1FormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.titlesection.TitleSection
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
@@ -20,12 +20,12 @@ object MainReportGeneratorJFXApp extends Logging with JFXApp3 {
 
   private val appTitle: IsATitleTrait = ReportGeneratorTitle()
 
-  private val stageOne: IsAPageTrait = ReportDataV1FormPage()
-  private val stageTwo: IsAPageTrait = LogsPage()
+  private val reportDataV1FormPage: IsAPageTrait = ReportDataV1FormPage()
+  private val otherReportFormPage: IsAPageTrait = OtherReportFormPage()
 
   private val titleSection: IsASectionTrait = TitleSection(title = appTitle)
 
-  private val pageSection: IsAPageSectionTrait = PageSection(stageList = stageOne :: stageTwo :: Nil)
+  private val pageSection: IsAPageSectionTrait = PageSection(pageList = reportDataV1FormPage :: otherReportFormPage :: Nil)
   private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
 
   private val logsSection: IsALogsSectionTrait = LogsSection()

@@ -98,7 +98,8 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
     id = myPageID
     children = new FormReport(forms = fields, submitButton = submitButton).myForm
   }
-  override def myPage: Page = Page(body = body)
+
+  override def myPage: APage = APage(body = body)
 
   override def myPageID: String = ReportDataV1FormPage.REPORT_DATA_V1_FORM_PAGE_ID
 
