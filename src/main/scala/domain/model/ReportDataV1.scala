@@ -53,21 +53,21 @@ object ReportDataV1 extends Logging {
 
       //todo to implement
       Map(
-        "#Nombre_sorbonnes#" -> inputData.nombreSorbonnes,
-        "#Mois#" -> inputData.mois,
-        "#Annee#" -> inputData.annee,
-        "#Nom_etablissement#" -> inputData.nomEtablissement,
-        "#Ville#" -> inputData.ville,
-        "#Departement#" -> inputData.departement,
-        "#Adresse#" -> inputData.adresse,
-        "#Code_postal#" -> inputData.codePostal,
-        "#Jour#" -> inputData.jour,
-        "#Intervenant#" -> inputData.intervenant,
-        "#Sexe#" -> inputData.sexe,
-        "#Societe_soutraite#" -> inputData.societeSoutraite,
-        "#Nom1#" -> inputData.nom1,
-        "#Nom2#" -> inputData.nom2,
-        "#Numero_d_affaire#" -> inputData.numeroAffaire
+        "#nombre_sorbonne#" -> inputData.nombreSorbonnes,
+        "#mois#" -> inputData.mois,
+        "#annee#" -> inputData.annee,
+        "#nom_etablissement#" -> inputData.nomEtablissement,
+        "#ville#" -> inputData.ville,
+        "#departement#" -> inputData.departement,
+        "#adresse#" -> inputData.adresse,
+        "#code_postal#" -> inputData.codePostal,
+        "#jour#" -> inputData.jour,
+        "#intervenant#" -> inputData.intervenant,
+        "#sexe#" -> inputData.sexe,
+        "#societe_soutraite#" -> inputData.societeSoutraite,
+        "#nom1#" -> inputData.nom1,
+        "#nom2#" -> inputData.nom2,
+        "#numero_d_affaire#" -> inputData.numeroAffaire
       )
     }
   }
