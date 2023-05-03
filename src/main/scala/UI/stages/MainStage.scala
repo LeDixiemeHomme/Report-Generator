@@ -3,16 +3,14 @@ package UI.stages
 
 import UI.sections._
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
+import UI.sections.navbars.{IsANavBarSectionTrait, NavBarSection}
 import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReportDataV1FormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
-
-import MainStage.APP_TITLE
 import UI.sections.titlesection.TitleSection
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
 import UI.stages.MainStage.APP_TITLE
 import UI.{DebugBorder, Shaper}
 
-import fr.valle.report_generator.UI.sections.navbars.NavBarSection
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
@@ -27,7 +25,7 @@ class MainStage extends IsAStageTrait {
 
     private val titleSection: IsASectionTrait = TitleSection(title = APP_TITLE)
     private val pageSection: IsAPageSectionTrait = PageSection(pageList = reportDataV1FormPage :: otherReportFormPage :: Nil)
-    private val navBarSection: IsASectionTrait = NavBarSection(pageSection = pageSection)
+    private val navBarSection: IsANavBarSectionTrait = NavBarSection(pageSection = pageSection)
     private val logsSection: IsALogsSectionTrait = LogsSection()
 
     private val listSection: List[IsASectionTrait] = List(titleSection, navBarSection, pageSection, logsSection)
