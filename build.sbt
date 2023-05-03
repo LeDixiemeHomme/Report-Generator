@@ -1,4 +1,4 @@
-val appVersion = "0.1.0-SNAPSHOT"
+val appVersion = "1.0.0"
 val appName = "Report-Generator"
 
 ThisBuild / version := appVersion
@@ -17,8 +17,7 @@ lazy val root = (project in file("."))
       "org.openjfx" % "javafx-media" % "19.0.2.1",
       "org.apache.poi" % "poi-ooxml" % "5.2.2",
       "org.apache.logging.log4j" % "log4j-core" % "2.20.0",
-      "org.apache.logging.log4j" %% "log4j-api-scala" % "12.0",
-      "org.mockito" %% "mockito-scala" % "1.17.12" % Test
+      "org.apache.logging.log4j" %% "log4j-api-scala" % "12.0"
     )
   )
 
