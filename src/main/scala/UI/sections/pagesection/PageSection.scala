@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package UI.sections.pagesection
 
-import UI.DebugBorder
+import UI.{DebugBorder, Shaper}
 import UI.sections.pagesection.pages.IsAPageTrait
 
 import scalafx.geometry.Pos
@@ -18,7 +18,11 @@ class PageSection(pageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
   private val section: HBox = new HBox {
     border = DebugBorder(Color.White).border
     alignment = Pos.Center
-    prefHeight = 450
+    if(Shaper.smallHeightScreenMode) {
+      prefHeight = 300
+    } else {
+      prefHeight = 450
+    }
     children = stackPane
   }
 

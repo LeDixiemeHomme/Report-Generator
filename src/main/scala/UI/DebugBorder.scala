@@ -18,5 +18,5 @@ class DebugBorder(borderColor: Color) {
 object DebugBorder {
   def apply(borderColor: Color): DebugBorder = new DebugBorder(borderColor)
 
-  final val DEBUG_MODE: Boolean = true
+  final val DEBUG_MODE: Boolean = false
 }
