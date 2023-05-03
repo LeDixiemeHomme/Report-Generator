@@ -1,9 +1,9 @@
 package fr.valle.report_generator
 package UI.sections.titlesection
 
-import UI.{DebugBorder, Shaper}
 import UI.sections.IsASectionTrait
 import UI.sections.titlesection.titles.IsATitleTrait
+import UI.{DebugBorder, Shaper}
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.layout.HBox

@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package UI.sections.pagesection
 
-import UI.{DebugBorder, Shaper}
 import UI.sections.pagesection.pages.IsAPageTrait
+import UI.{DebugBorder, Shaper}
 
 import scalafx.geometry.Pos
 import scalafx.scene.layout._
