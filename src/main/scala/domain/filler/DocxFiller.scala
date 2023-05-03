@@ -4,7 +4,7 @@ package domain.filler
 import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
-import org.apache.poi.xwpf.usermodel.{XWPFDocument, XWPFFooter, XWPFParagraph, XWPFRun, XWPFTable, XWPFTableCell, XWPFTableRow}
+import org.apache.poi.xwpf.usermodel._
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 

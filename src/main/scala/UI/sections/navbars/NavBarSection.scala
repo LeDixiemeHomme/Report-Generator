@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package UI.sections
+package UI.sections.navbars
 
 import UI.DebugBorder
 import UI.sections.pagesection.IsAPageSectionTrait
@@ -11,7 +11,7 @@ import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
-class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASectionTrait {
+class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANavBarSectionTrait {
   private val stateMachine = PageStateMachine(pageSection = pageSection)
 
   private val pageNames: List[String] = pageSection.myPages.map(_.myPageName)

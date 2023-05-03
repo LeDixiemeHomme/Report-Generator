@@ -30,11 +30,18 @@ class LabelTextFieldBrowseFormSection(label: String, example: String, required: 
 
   private val browseButton = browseStrategy.optionalBrowseButton(textField, stage).getOrElse(new HBox())
 
+  private val buttonHBox: HBox = new HBox {
+    border = DebugBorder(Color.Red).border
+    alignment = Pos.Center
+    children = browseButton
+    prefWidth = 200
+  }
+
   val myFormSection: HBox = new HBox {
     border = DebugBorder(Color.Red).border
     prefWidth = 400
     spacing = 20
-    children = Seq(myLabel, myTextField, browseButton)
+    children = Seq(myLabel, myTextField, buttonHBox)
   }
 
   def myTextField: TextField = textField

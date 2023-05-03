@@ -1,24 +1,28 @@
 package fr.valle.report_generator
 package UI.sections.pagesection
 
-import UI.DebugBorder
 import UI.sections.pagesection.pages.IsAPageTrait
+import UI.{DebugBorder, Shaper}
 
 import scalafx.geometry.Pos
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 
-class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
+class PageSection(pageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
 
   private val stackPane: StackPane = new StackPane {
     id = PageSection.STACK_PANE_ID
-    children = stageList.map(_.myPage.myBody)
+    children = pageList.map(_.myPage.myBody)
   }
 
   private val section: HBox = new HBox {
     border = DebugBorder(Color.White).border
     alignment = Pos.Center
-    prefHeight = 450
+    if(Shaper.smallHeightScreenMode) {
+      prefHeight = 300
+    } else {
+      prefHeight = 450
+    }
     children = stackPane
   }
 
@@ -28,10 +32,10 @@ class PageSection(stageList: List[IsAPageTrait]) extends IsAPageSectionTrait {
     stackPane.children.foreach(_.setVisible(false))
   }
 
-  override def myPages: List[IsAPageTrait] = stageList
+  override def myPages: List[IsAPageTrait] = pageList
 }
 
 object PageSection {
-  def apply(stageList: List[IsAPageTrait]): PageSection = new PageSection(stageList)
+  def apply(pageList: List[IsAPageTrait]): PageSection = new PageSection(pageList)
   final val STACK_PANE_ID: String = "PageSectionStackPane"
 }
