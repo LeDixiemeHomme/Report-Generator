@@ -1,14 +1,17 @@
 package fr.valle.report_generator
-package UI
+package UI.stages
 
-import UI.MainStage.APP_TITLE
+import UI.DebugBorder
 import UI.sections._
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
 import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReportDataV1FormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
+
+import MainStage.APP_TITLE
 import UI.sections.titlesection.TitleSection
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
 
+import fr.valle.report_generator.UI.sections.navbars.NavBarSection
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
@@ -16,7 +19,7 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.stage.Screen
 
-class MainStage {
+class MainStage extends IsAStageTrait {
 
   private class StageContent() {
     private val reportDataV1FormPage: IsAPageTrait = ReportDataV1FormPage()
@@ -48,7 +51,7 @@ class MainStage {
 
   private val mainContent = new StageContent().myContent
 
-  val myStage: JFXApp3.PrimaryStage = new JFXApp3.PrimaryStage {
+  override def myStage: JFXApp3.PrimaryStage = new JFXApp3.PrimaryStage {
     title = APP_TITLE.toTitle
     scene = new Scene {
       fill = Color.rgb(38, 38, 38)
