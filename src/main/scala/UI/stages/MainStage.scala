@@ -15,9 +15,8 @@ import fr.valle.report_generator.UI.sections.navbars.NavBarSection
 import scalafx.application.JFXApp3
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
-import scalafx.scene.layout.{HBox, VBox}
-import scalafx.scene.paint.Color
-import scalafx.stage.Screen
+import scalafx.scene.layout.{Background, BackgroundFill, HBox, VBox}
+import scalafx.scene.paint.{Color, CycleMethod, LinearGradient}
 
 class MainStage extends IsAStageTrait {
 
