@@ -5,8 +5,8 @@ import UI.DebugBorder.DEBUG_MODE
 import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
-import domain.model.InterventionData
-import domain.model.InterventionData.{InterventionDataParser, InterventionDataProcessor}
+import domain.model.ReportDataV1
+import domain.model.ReportDataV1.{ReportDataV1Parser, ReportDataV1Processor}
 import logging.LogsKeeper
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
 import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
@@ -15,11 +15,11 @@ import services.processing.{ProcessingDataService, ProcessingResult, ProcessingS
 import org.apache.logging.log4j.scala.Logging
 import scalafx.scene.layout._
 
-class InterventionDataFormPage extends Logging with IsAPageTrait {
+class ReportDataV1FormPage extends Logging with IsAPageTrait {
 
+  private val parsingReportDataV1CsvService: ParsingServiceTrait[ReportDataV1] = ParsingCsvService()
+  private val processingReportDataV1Service: ProcessingServiceTrait[ReportDataV1] = ProcessingDataService()
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
-  private val parsingInterventionDataCsvService: ParsingServiceTrait[InterventionData] = ParsingCsvService()
-  private val processingInterventionDataService: ProcessingServiceTrait[InterventionData] = ProcessingDataService()
 
   private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
     label = "Fichier de données (Excel) :",
@@ -60,20 +60,20 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
     var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
 
     if (DEBUG_MODE) {
-      dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\intervention-data.csv"
-      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\AFC Delagrave avec balise.docx"
+      dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\report-data-v1-2.csv"
+      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
       outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
     }
 
-    val parsingResult: ParsingResult[InterventionData] = parsingInterventionDataCsvService.parse(
+    val parsingResult: ParsingResult[ReportDataV1] = parsingReportDataV1CsvService.parse(
       filePath = dataPathTemp
-    )(InterventionDataParser)
+    )(ReportDataV1Parser)
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
 
-    val processingResult: ProcessingResult = processingInterventionDataService.process(
+    val processingResult: ProcessingResult = processingReportDataV1Service.process(
       dataToProcess = parsingResult.parsedData(0)
-    )(InterventionDataProcessor)
+    )(ReportDataV1Processor)
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
 
@@ -99,15 +99,15 @@ class InterventionDataFormPage extends Logging with IsAPageTrait {
     children = new FormReport(forms = fields, submitButton = submitButton).myForm
   }
 
-  override def myPage: Page = Page(body = body)
+  override def myPage: APage = APage(body = body)
 
-  override def myPageID: String = InterventionDataFormPage.INTERVENTION_DATA_FORM_PAGE_ID
+  override def myPageID: String = ReportDataV1FormPage.REPORT_DATA_V1_FORM_PAGE_ID
 
-  override def myPageName: String = "Générer un rapport"
+  override def myPageName: String = "Générer rapport v1"
 }
 
-object InterventionDataFormPage {
-  def apply(): InterventionDataFormPage = new InterventionDataFormPage()
+object ReportDataV1FormPage {
+  def apply(): ReportDataV1FormPage = new ReportDataV1FormPage()
 
-  final val INTERVENTION_DATA_FORM_PAGE_ID: String = "PageOne"
+  final val REPORT_DATA_V1_FORM_PAGE_ID: String = "PageThree"
 }

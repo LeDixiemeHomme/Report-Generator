@@ -1,25 +1,18 @@
 package fr.valle.report_generator
 package logging
 
-import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
 import customexceptions.UnknownLevelLogsKeeperException
+import logging.loggingobserverpattern.LoggingSubject
 
 import org.apache.logging.log4j.scala.{Logger, Logging}
-import scalafx.scene.paint.Color
-import scalafx.scene.text.Text
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import scala.collection.mutable.ListBuffer
 
-object LogsKeeper extends Logging {
+object LogsKeeper extends Logging with LoggingSubject {
+
   private val logs: ListBuffer[String] = new ListBuffer[String]()
-  private var myLogsSection: IsALogsSectionTrait = LogsSection()
-
-  def setMyLogsSection(aLogsSection: IsALogsSectionTrait): Unit = {
-    this.myLogsSection = aLogsSection
-  }
-
   private def displayLog(extLogger: Logger, level: String, message: String): Unit = level match {
     case TRACE => extLogger.trace(message)
     case DEBUG => extLogger.debug(message)
@@ -45,16 +38,11 @@ object LogsKeeper extends Logging {
       val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
       val log: String = logs.length.toString + " -- " + currentDateTime.format(formatter) + " " + classFrom.getName + ": " + message
+
       logs += log
-      this.myLogsSection.myVBox.children.add(
-        new Text {
-          text = log
-          fill = Color.Red
-          style = "-fx-font-size: 15px"
-          mouseTransparent = false
-          pickOnBounds = true
-        }
-      )
+
+      notifyLoggingObservers(log = log)
+
     } catch {
       case e: UnknownLevelLogsKeeperException =>
         keepAndLog(extLogger = logger, level = ERROR, message = e.getMessage, classFrom = getClass)

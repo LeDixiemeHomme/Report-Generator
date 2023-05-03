@@ -18,6 +18,7 @@ class DocxReader extends Logging {
     val templateFile: File = new File(templateFilePath)
     val templateStream: FileInputStream = new FileInputStream(templateFile)
     val templateDoc: XWPFDocument = new XWPFDocument(templateStream)
+    templateStream.close()
 
     templateDoc
   }

@@ -1,9 +1,9 @@
 package fr.valle.report_generator
 package UI.sections.titlesection
 
-import UI.DebugBorder
 import UI.sections.IsASectionTrait
 import UI.sections.titlesection.titles.IsATitleTrait
+import UI.{DebugBorder, Shaper}
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.layout.HBox
@@ -17,7 +17,11 @@ class TitleSection(title: IsATitleTrait) extends IsASectionTrait {
     children = title.myWords
   }
 
-  override def mySection: HBox = section
+  override def mySection: HBox = {
+    if (!Shaper.smallHeightScreenMode)
+      return section
+    new HBox()
+  }
 }
 
 object TitleSection {

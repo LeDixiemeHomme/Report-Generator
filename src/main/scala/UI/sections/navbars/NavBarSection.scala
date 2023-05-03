@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package UI.sections
+package UI.sections.navbars
 
 import UI.DebugBorder
 import UI.sections.pagesection.IsAPageSectionTrait
@@ -11,16 +11,16 @@ import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
-class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASectionTrait {
+class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANavBarSectionTrait {
   private val stateMachine = PageStateMachine(pageSection = pageSection)
 
   private val pageNames: List[String] = pageSection.myPages.map(_.myPageName)
 
-  private val pageOneButton: Button = new Button {
+  private val pageGoToReportDataV1: Button = new Button {
     text = pageNames.head
     style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
     onAction = _ => {
-      stateMachine.input(PageStateMachine.GO_TO_INTERVENTION_DATA_FORM_PAGE)
+      stateMachine.input(PageStateMachine.GO_TO_REPORT_DATA_V1_FORM_PAGE)
       style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
       pageTwoButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     }
@@ -32,7 +32,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASe
     onAction = _ => {
       stateMachine.input(PageStateMachine.GO_TO_LOGS_PAGE)
       style = "-fx-font-size: 20px; -fx-background-color: white; -fx-text-fill: black; -fx-border-color: white; -fx-border-width: 2px;"
-      pageOneButton.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
+      pageGoToReportDataV1.style = "-fx-font-size: 20px; -fx-background-color: transparent; -fx-text-fill: white;"
     }
   }
 
@@ -43,7 +43,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsASe
     padding = Insets(15, 0, 15, 0)
     margin = Insets(0, 100, 0, 100)
     style = "-fx-background-color: #333;"
-    children = Seq(pageOneButton, pageTwoButton)
+    children = Seq(pageGoToReportDataV1, pageTwoButton)
   }
 
   override def mySection: HBox = section

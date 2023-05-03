@@ -8,11 +8,12 @@ import logging.LogsKeeper
 import org.apache.logging.log4j.scala.Logging
 
 class ParsingCsvService[A]() extends Logging with ParsingServiceTrait[A] {
+  private val csvParser: CsvParser = CsvParser()
   override def parse(filePath: String)(implicit parser: FileParserTrait[A]): ParsingResult[A] = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Parsing csv file", classFrom = getClass)
 
-    val dataList: List[A] = CsvParser.parseFile(filePath)
+    val dataList: List[A] = csvParser.parseFile(filePath)
     ParsingResult(dataList)
   }
 }

@@ -8,11 +8,12 @@ import logging.LogsKeeper
 import org.apache.logging.log4j.scala.Logging
 
 class ProcessingDataService[A]() extends Logging with ProcessingServiceTrait[A] {
+  private val inputDataToMapValueProcessor: InputDataToMapValueProcessor = InputDataToMapValueProcessor()
   override def process(dataToProcess: A)(implicit toMapProcessor: ToMapValueProcessorTrait[A]): ProcessingResult = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Processing data", classFrom = getClass)
 
-    val mapValues: Map[String, String] = InputDataToMapValueProcessor.processToMapValue(inputData = dataToProcess)
+    val mapValues: Map[String, String] = inputDataToMapValueProcessor.processToMapValue(inputData = dataToProcess)
     ProcessingResult(mapValues)
   }
 }

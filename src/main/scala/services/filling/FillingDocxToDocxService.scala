@@ -10,11 +10,11 @@ import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 
 class FillingDocxToDocxService extends Logging with FillingServiceTrait {
-  private val docxReader: DocxReader = new DocxReader
-  private val docxFiller: DocxFiller = new DocxFiller
-  private val docxWriter: DocxWriter = new DocxWriter
+  private val docxReader: DocxReader = DocxReader()
+  private val docxFiller: DocxFiller = DocxFiller()
+  private val docxWriter: DocxWriter = DocxWriter()
 
-  private val defaultValue: String = {
+  private def defaultValue: String = {
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.ERROR,
       "Something went wrong with the name of the file, using default value instead", classFrom = getClass)
     "default-name-value"
@@ -30,7 +30,7 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
 
     val result: String = docxWriter.write(filledTemplateDoc, outputFilePath, fileName)
 
-    new FillingResult(completionMessage = result)
+    new FillingResult(completionMessage = result, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
   }
 }
 
