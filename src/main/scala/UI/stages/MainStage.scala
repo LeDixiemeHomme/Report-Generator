@@ -46,6 +46,9 @@ class MainStage extends IsAStageTrait {
       padding = Insets(5, 80, 5, 80)
       prefWidth = 1600
       children = contentVBox
+      background = new Background(Array(
+        new BackgroundFill(new LinearGradient(0, 0, 1, 0, true, CycleMethod.NoCycle),
+          null, null)))
     }
   }
 
@@ -55,19 +58,8 @@ class MainStage extends IsAStageTrait {
     title = APP_TITLE.toTitle
     scene = new Scene {
       fill = Color.rgb(38, 38, 38)
-      content = mainContent
+      root = mainContent
       stylesheets = List("style.css")
-    }
-    // center content when the window is maximized
-    maximized.addListener { (_, _, isMaximized) =>
-      if (isMaximized) {
-        val bounds = Screen.primary.bounds
-        mainContent.translateX = (bounds.width - mainContent.width()) / 2
-        mainContent.translateY = (bounds.height - mainContent.height()) / 3.5
-      } else {
-        mainContent.translateX = 0
-        mainContent.translateY = 0
-      }
     }
   }
 }
