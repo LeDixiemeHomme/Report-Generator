@@ -23,21 +23,21 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
 
   private val dataFilePathFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Fichier de données (Excel) :",
-    example = "../données.csv",
+    example = "..\\données.csv",
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
   private val templateFilePathFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Fichier modèle (Word) :",
-    example = "../rapport-template.docx",
+    example = "..\\rapport-template.docx",
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
   private val outputDirectoryFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Dossier cible :",
-    example = "../dossier-rapports-complets/",
+    example = "..\\dossier-rapports-complets",
     required = true,
     browseStrategy = BrowseDirectoryButtonStrategy
   )
@@ -51,8 +51,7 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
 
   private val submitButton = SubmitButtonFormSection()
 
-  if (DEBUG_MODE)
-    submitButton.myButton.disable = false
+  if (DEBUG_MODE) submitButton.myButton.disable = false
 
   submitButton.myButton.onAction = _ => {
     var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
