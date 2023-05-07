@@ -67,8 +67,8 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANa
     spacing = 10
     alignment = Pos.Center
     padding = Insets(15, 0, 15, 0)
-    margin = Insets(0, 100, 0, 100)
-    style = "-fx-background-color: #333;"
+    margin = Insets(0, 200, 0, 200)
+    style = "-fx-background-color: #333; -fx-background-radius: 20;"
     children = Seq(goToReportDataV1PageButton, goToOtherReportFormPageButton)
   }
 

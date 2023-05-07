@@ -7,6 +7,7 @@ protected class NavBarButton(textButton: String, buttonStyle: String, val pageSt
   override def myButton: Button = new Button {
     text = textButton
     style = buttonStyle
+    prefWidth = 250
   }
 }
 

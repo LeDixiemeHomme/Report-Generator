@@ -4,13 +4,13 @@ package UI.sections.navbarsection.navbarcontent.navbarbutton
 object NavBarButtonStyles {
 
   def selectedEnteredButtonStyle: String = fontSize20Property + whiteBackGColorProp +
-    blackTextFillProperty + whiteBorderColorProp + borderWidth2Property
+    blackTextFillProperty + borderWidth2Property + borderRadius20Property + backgroundRadius20Property
 
   def unselectedEnteredButtonStyle: String = fontSize20Property + transparentBackGColorProp +
-    whiteTextFillProperty + whiteBorderColorProp + borderWidth2Property
+    whiteTextFillProperty + whiteBorderColorProp + borderWidth2Property + borderRadius20Property
 
   def unselectedExitedButtonStyle: String = fontSize20Property + transparentBackGColorProp +
-    whiteTextFillProperty + blackBorderColorProp + borderWidth2Property
+    whiteTextFillProperty + blackBorderColorProp + borderWidth2Property + borderRadius20Property
 
   private val backGroundColorProperty = createFxProperty(propertyName = "background-color") _
   private val borderColorProperty = createFxProperty(propertyName = "border-color") _
@@ -26,6 +26,8 @@ object NavBarButtonStyles {
   private val blackTextFillProperty = textFillProperty("black")
 
   private val fontSize20Property: String = " -fx-font-size: 20px;"
+  private val borderRadius20Property: String = " -fx-border-radius: 20;"
+  private val backgroundRadius20Property: String = " -fx-background-radius: 20;"
   private val borderWidth2Property: String = " -fx-border-width: 2px;"
 
   private def createFxProperty(propertyName: String)(color: String): String = s" -fx-$propertyName: $color;"
