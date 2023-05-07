@@ -29,4 +29,5 @@ class SubmitButtonFormSection() {
 }
 
 object SubmitButtonFormSection {
+  def apply(): SubmitButtonFormSection = new SubmitButtonFormSection()
 }

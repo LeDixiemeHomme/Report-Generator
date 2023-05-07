@@ -3,7 +3,7 @@ package UI.stages
 
 import UI.sections._
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
-import UI.sections.navbars.{IsANavBarSectionTrait, NavBarSection}
+import UI.sections.navbarsection.{IsANavBarSectionTrait, NavBarSection}
 import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReportDataV1FormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.titlesection.TitleSection

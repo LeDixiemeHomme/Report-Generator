@@ -4,7 +4,7 @@ package UI.sections.pagesection.pages
 import UI.DebugBorder.DEBUG_MODE
 import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
-import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
+import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
 import domain.model.ReportDataV1
 import domain.model.ReportDataV1.{ReportDataV1Parser, ReportDataV1Processor}
 import logging.LogsKeeper
@@ -21,35 +21,35 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
   private val processingReportDataV1Service: ProcessingServiceTrait[ReportDataV1] = ProcessingDataService()
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
 
-  private val dataFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+  private val dataFilePathFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Fichier de données (Excel) :",
     example = "../données.csv",
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
-  private val templateFilePathFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+  private val templateFilePathFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Fichier modèle (Word) :",
     example = "../rapport-template.docx",
     required = true,
     browseStrategy = BrowseFileButtonStrategy
   )
 
-  private val outputDirectoryFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+  private val outputDirectoryFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Dossier cible :",
     example = "../dossier-rapports-complets/",
     required = true,
     browseStrategy = BrowseDirectoryButtonStrategy
   )
 
-  private val outputFileNameFormSection: FormSectionTrait = new LabelTextFieldBrowseFormSection(
+  private val outputFileNameFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Nom du fichier à créer :",
     example = "rapport-loreal-15.docx",
     required = false,
     browseStrategy = NoneBrowseButtonStrategy
   )
 
-  private val submitButton: SubmitButtonFormSection = new SubmitButtonFormSection()
+  private val submitButton = SubmitButtonFormSection()
 
   if (DEBUG_MODE)
     submitButton.myButton.disable = false
@@ -87,7 +87,7 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillingResult.toString, classFrom = getClass)
   }
 
-  val fields: List[FormSectionTrait] = List(
+  val fields: List[IsAFormSectionTrait] = List(
     dataFilePathFormSection,
     templateFilePathFormSection,
     outputDirectoryFormSection,
