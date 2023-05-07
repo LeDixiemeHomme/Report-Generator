@@ -14,7 +14,7 @@ class LogsPageState(pageSection: IsAPageSectionTrait) extends Logging with PageS
   pageBody.visible = true
 
   override def handle(input: String): PageStateTrait = input match {
-    case PageStateMachine.GO_TO_REPORT_DATA_V1_FORM_PAGE => ReportDataV1FormPageState(pageSection = pageSection)
+    case PageStateMachine.GO_TO_RECEPTION_REPORT_DATA_FORM_PAGE => ReceptionReportDataFormPageState(pageSection = pageSection)
     case _ => LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Already on page " + OtherReportFormPage().myPageName, classFrom = getClass); this
   }
 }

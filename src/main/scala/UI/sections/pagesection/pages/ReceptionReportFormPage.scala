@@ -5,8 +5,8 @@ import UI.DebugBorder.DEBUG_MODE
 import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
-import domain.model.ReportDataV1
-import domain.model.ReportDataV1.{ReportDataV1Parser, ReportDataV1Processor}
+import domain.model.ReceptionReportData
+import domain.model.ReceptionReportData.{ReceptionReportDataParser, ReceptionReportDataProcessor}
 import logging.LogsKeeper
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
 import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
@@ -15,10 +15,10 @@ import services.processing.{ProcessingDataService, ProcessingResult, ProcessingS
 import org.apache.logging.log4j.scala.Logging
 import scalafx.scene.layout._
 
-class ReportDataV1FormPage extends Logging with IsAPageTrait {
+class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
-  private val parsingReportDataV1CsvService: ParsingServiceTrait[ReportDataV1] = ParsingCsvService()
-  private val processingReportDataV1Service: ProcessingServiceTrait[ReportDataV1] = ProcessingDataService()
+  private val parsingReceptionReportDataCsvService: ParsingServiceTrait[ReceptionReportData] = ParsingCsvService()
+  private val processingReceptionReportDataService: ProcessingServiceTrait[ReceptionReportData] = ProcessingDataService()
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
 
   private val dataFilePathFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
@@ -64,15 +64,15 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
       outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
     }
 
-    val parsingResult: ParsingResult[ReportDataV1] = parsingReportDataV1CsvService.parse(
+    val parsingResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService.parse(
       filePath = dataPathTemp
-    )(ReportDataV1Parser)
+    )(ReceptionReportDataParser)
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
 
-    val processingResult: ProcessingResult = processingReportDataV1Service.process(
+    val processingResult: ProcessingResult = processingReceptionReportDataService.process(
       dataToProcess = parsingResult.parsedData(0)
-    )(ReportDataV1Processor)
+    )(ReceptionReportDataProcessor)
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
 
@@ -100,13 +100,13 @@ class ReportDataV1FormPage extends Logging with IsAPageTrait {
 
   override def myPage: APage = APage(body = body)
 
-  override def myPageID: String = ReportDataV1FormPage.REPORT_DATA_V1_FORM_PAGE_ID
+  override def myPageID: String = ReceptionReportFormPage.RECEPTION_REPORT_DATA_FORM_PAGE_ID
 
-  override def myPageName: String = "Générer rapport v1"
+  override def myPageName: String = "Rapport de Réception"
 }
 
-object ReportDataV1FormPage {
-  def apply(): ReportDataV1FormPage = new ReportDataV1FormPage()
+object ReceptionReportFormPage {
+  def apply(): ReceptionReportFormPage = new ReceptionReportFormPage()
 
-  final val REPORT_DATA_V1_FORM_PAGE_ID: String = "PageThree"
+  final val RECEPTION_REPORT_DATA_FORM_PAGE_ID: String = "receptionReport"
 }

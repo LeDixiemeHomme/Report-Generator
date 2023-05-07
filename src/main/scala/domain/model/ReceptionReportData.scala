@@ -7,22 +7,22 @@ import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
 
-case class ReportDataV1(nombreSorbonnes: String, mois: String, annee: String, nomEtablissement: String,
-                        ville: String, departement: String, adresse: String, codePostal: String,
-                        jour: String, intervenant: String, sexe: String, societeSoutraite: String,
-                        nom1: String, nom2: String, numeroAffaire: String) {
+case class ReceptionReportData(nombreSorbonnes: String, mois: String, annee: String, nomEtablissement: String,
+                               ville: String, departement: String, adresse: String, codePostal: String,
+                               jour: String, intervenant: String, sexe: String, societeSoutraite: String,
+                               nom1: String, nom2: String, numeroAffaire: String) {
   override def toString: String = {
-    s"ReportDataV1{Nombre sorbonnes: $nombreSorbonnes, Mois: $mois, Année: $annee, Nom établissement: $nomEtablissement, " +
+    s"ReceptionReportData{Nombre sorbonnes: $nombreSorbonnes, Mois: $mois, Année: $annee, Nom établissement: $nomEtablissement, " +
       s"Ville: $ville, Département: $departement, Adresse: $adresse, Code postal: $codePostal, Jour: $jour, " +
       s"Intervenant: $intervenant, Sexe: $sexe, Société soutraite: $societeSoutraite, Nom1: $nom1, Nom2: $nom2, Numéro d'affaire: $numeroAffaire}"
   }
 }
 
-object ReportDataV1 extends Logging {
-  object ReportDataV1Parser extends FileParserTrait[ReportDataV1] {
-    def parse(lines: List[List[String]]): List[ReportDataV1] = {
+object ReceptionReportData extends Logging {
+  object ReceptionReportDataParser extends FileParserTrait[ReceptionReportData] {
+    def parse(lines: List[List[String]]): List[ReceptionReportData] = {
 
-      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReportDataV1Parser", classFrom = getClass)
+      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataParser.parse()", classFrom = getClass)
 
       lines.map(row => {
         val nombreSorbonnes = row(0)
@@ -40,15 +40,15 @@ object ReportDataV1 extends Logging {
         val nom1 = row(12)
         val nom2 = row(13)
         val numeroAffaire = row(14)
-        ReportDataV1(nombreSorbonnes, mois, annee, nomEtablissement, ville, departement, adresse, codePostal,
+        ReceptionReportData(nombreSorbonnes, mois, annee, nomEtablissement, ville, departement, adresse, codePostal,
           jour, intervenant, sexe, societeSoutraite, nom1, nom2, numeroAffaire)
       })
     }
   }
 
-  object ReportDataV1Processor extends ToMapValueProcessorTrait[ReportDataV1] {
-    override def toMapValue(inputData: ReportDataV1): Map[String, String] = {
-      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "ReportDataV1Parser.toMapValue()", classFrom = getClass)
+  object ReceptionReportDataProcessor extends ToMapValueProcessorTrait[ReceptionReportData] {
+    override def toMapValue(inputData: ReceptionReportData): Map[String, String] = {
+      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataProcessor.toMapValue()", classFrom = getClass)
 
       Map(
         "#nombre_sorbonne#" -> inputData.nombreSorbonnes,

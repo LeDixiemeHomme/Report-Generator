@@ -6,7 +6,7 @@ import UI.sections.navbarsection.navbarcontent.navbarbutton.NavBarButtonStyles.{
 import UI.sections.navbarsection.navbarcontent.navbarbutton.{IsANavBarButtonTrait, NavBarButton}
 import UI.sections.pagesection.IsAPageSectionTrait
 import UI.sections.pagesection.pages.pagestatepattern.PageStateMachine
-import UI.sections.pagesection.pages.{OtherReportFormPage, ReportDataV1FormPage}
+import UI.sections.pagesection.pages.{OtherReportFormPage, ReceptionReportFormPage}
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.geometry.{Insets, Pos}
@@ -19,10 +19,10 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANa
 
   private val pageNames: List[String] = pageSection.myPages.map(_.myPageName)
 
-  private val goToReportDataV1PageNavBarButton: IsANavBarButtonTrait = NavBarButton(
+  private val goToReceptionReportDataPageNavBarButton: IsANavBarButtonTrait = NavBarButton(
     textButton = pageNames.head,
     buttonStyle = selectedEnteredButtonStyle,
-    PageStateMachine.GO_TO_REPORT_DATA_V1_FORM_PAGE
+    PageStateMachine.GO_TO_RECEPTION_REPORT_DATA_FORM_PAGE
   )
 
   private val goToOtherReportFormPageNavBarButton: IsANavBarButtonTrait = NavBarButton(
@@ -31,19 +31,19 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANa
     PageStateMachine.GO_TO_LOGS_PAGE
   )
 
-  private val goToReportDataV1PageButton: Button = goToReportDataV1PageNavBarButton.myButton
+  private val goToReceptionReportDataPageButton: Button = goToReceptionReportDataPageNavBarButton.myButton
   private val goToOtherReportFormPageButton: Button = goToOtherReportFormPageNavBarButton.myButton
 
-  goToReportDataV1PageButton.onAction = _ => {
-    goToReportDataV1PageButton.style = selectedEnteredButtonStyle
-    pageStateMachine.input(PageStateMachine.GO_TO_REPORT_DATA_V1_FORM_PAGE)
+  goToReceptionReportDataPageButton.onAction = _ => {
+    goToReceptionReportDataPageButton.style = selectedEnteredButtonStyle
+    pageStateMachine.input(PageStateMachine.GO_TO_RECEPTION_REPORT_DATA_FORM_PAGE)
     goToOtherReportFormPageButton.style = unselectedExitedButtonStyle
   }
 
   goToOtherReportFormPageButton.onAction = _ => {
     goToOtherReportFormPageButton.style = selectedEnteredButtonStyle
     pageStateMachine.input(PageStateMachine.GO_TO_LOGS_PAGE)
-    goToReportDataV1PageButton.style = unselectedExitedButtonStyle
+    goToReceptionReportDataPageButton.style = unselectedExitedButtonStyle
   }
 
   private def handleEnteredExitedState(pageState: PageStateMachine, button: Button, strState: String): Unit = {
@@ -59,7 +59,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANa
     }
   }
 
-  handleEnteredExitedState(pageState = pageStateMachine, button = goToReportDataV1PageButton, strState = ReportDataV1FormPage.REPORT_DATA_V1_FORM_PAGE_ID)
+  handleEnteredExitedState(pageState = pageStateMachine, button = goToReceptionReportDataPageButton, strState = ReceptionReportFormPage.RECEPTION_REPORT_DATA_FORM_PAGE_ID)
   handleEnteredExitedState(pageState = pageStateMachine, button = goToOtherReportFormPageButton, strState = OtherReportFormPage.OTHER_REPORT_FORM_PAGE_ID)
 
   private val section: HBox = new HBox {
@@ -69,7 +69,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANa
     padding = Insets(15, 0, 15, 0)
     margin = Insets(0, 200, 0, 200)
     style = "-fx-background-color: #333; -fx-background-radius: 20;"
-    children = Seq(goToReportDataV1PageButton, goToOtherReportFormPageButton)
+    children = Seq(goToReceptionReportDataPageButton, goToOtherReportFormPageButton)
   }
 
   override def mySection: HBox = section
