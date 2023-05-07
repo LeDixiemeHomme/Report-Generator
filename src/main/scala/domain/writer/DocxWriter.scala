@@ -13,8 +13,22 @@ class DocxWriter extends Logging {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Writing " + fileName + " docx to " + outputDirPath, classFrom = getClass)
 
+    var finalPath = outputDirPath + fileName
+
+    val outputDirPathHasSlashAtEnd = outputDirPath.last == '\\' || outputDirPath.last == '/'
+    val fileNameHasSlashAtBeginning = fileName.charAt(0) == '\\' || fileName.charAt(0) == '/'
+
+    val bothHaveSlash = outputDirPathHasSlashAtEnd && fileNameHasSlashAtBeginning
+    val neitherHaveSlash = !outputDirPathHasSlashAtEnd && !fileNameHasSlashAtBeginning
+
+    if (bothHaveSlash || neitherHaveSlash) finalPath = outputDirPath + '/' + fileName
+
+    val docxExtension = ".docx"
+
+    if (!finalPath.endsWith(docxExtension)) finalPath = finalPath + docxExtension
+
     // Write the modified document to the output file
-    val outputStream = new FileOutputStream(outputDirPath + fileName + ".docx")
+    val outputStream = new FileOutputStream(finalPath)
     try {
       templateDoc.write(outputStream)
       outputStream.close()
