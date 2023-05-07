@@ -14,7 +14,7 @@ class SubmitButtonFormSection() {
     style = "-fx-font-size: 20px;"
     disable = true
     prefHeight = 50
-    prefWidth = 200
+    prefWidth = 450
   }
 
   val myButtonSection: VBox = new VBox {
@@ -29,4 +29,5 @@ class SubmitButtonFormSection() {
 }
 
 object SubmitButtonFormSection {
+  def apply(): SubmitButtonFormSection = new SubmitButtonFormSection()
 }

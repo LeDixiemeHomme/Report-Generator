@@ -10,7 +10,6 @@ import scalafx.stage.DirectoryChooser
 object BrowseDirectoryButtonStrategy extends BrowseButtonStrategyTrait {
   override def optionalBrowseButton(myTextField: TextField, stage: PrimaryStage): Option[Button] = {
     val button: Button = new Button {
-      prefWidth = 150
       text = "Choisir un dossier"
       onAction = _ => {
         val directoryChooser = new DirectoryChooser()
