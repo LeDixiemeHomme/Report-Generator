@@ -32,5 +32,5 @@ class OtherReportFormPage extends IsAPageTrait {
 object OtherReportFormPage {
   def apply(): OtherReportFormPage = new OtherReportFormPage()
 
-  final val OTHER_REPORT_FORM_PAGE_ID: String = "PageTwo"
+  final val OTHER_REPORT_FORM_PAGE_ID: String = "otherReport"
 }

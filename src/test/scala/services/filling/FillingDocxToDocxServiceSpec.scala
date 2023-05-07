@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package services.filling
 
-import domain.model.ReportDataV1
+import domain.model.ReceptionReportData
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.featurespec.AnyFeatureSpecLike
@@ -53,7 +53,7 @@ class FillingDocxToDocxServiceSpec extends AnyFeatureSpecLike with GivenWhenThen
 
     Scenario("Using the path of the template and a map value to create a filled docx") {
 
-      val reportDataV1_1: ReportDataV1 = ReportDataV1(nombreSorbonnes = nombreSorbonnes1, mois = mois1, annee = annee1,
+      val receptionReportData_1: ReceptionReportData = ReceptionReportData(nombreSorbonnes = nombreSorbonnes1, mois = mois1, annee = annee1,
         nomEtablissement = nomEtablissement1, ville = ville1, departement = departement1, adresse = adresse1,
         codePostal = codePostal1, jour = jour1, intervenant = intervenant1, sexe = sexe1, societeSoutraite = societeSoutraite1,
         nom1 = nom11, nom2 = nom21, numeroAffaire = numeroAffaire1)
@@ -63,21 +63,21 @@ class FillingDocxToDocxServiceSpec extends AnyFeatureSpecLike with GivenWhenThen
       Given("the templateFilePath, a valuesMap, an outputFilePath, a fileName")
       val templateFilePath = generatedTemplateFileRelativePath
       val valuesMap: Map[String, String] = Map(
-        "#nombre_sorbonne#" -> reportDataV1_1.nombreSorbonnes,
-        "#mois#" -> reportDataV1_1.mois,
-        "#annee#" -> reportDataV1_1.annee,
-        "#nom_etablissement#" -> reportDataV1_1.nomEtablissement,
-        "#ville#" -> reportDataV1_1.ville,
-        "#departement#" -> reportDataV1_1.departement,
-        "#adresse#" -> reportDataV1_1.adresse,
-        "#code_postal#" -> reportDataV1_1.codePostal,
-        "#jour#" -> reportDataV1_1.jour,
-        "#intervenant#" -> reportDataV1_1.intervenant,
-        "#sexe#" -> reportDataV1_1.sexe,
-        "#societe_soutraite#" -> reportDataV1_1.societeSoutraite,
-        "#nom1#" -> reportDataV1_1.nom1,
-        "#nom2#" -> reportDataV1_1.nom2,
-        "#numero_d_affaire#" -> reportDataV1_1.numeroAffaire
+        "#nombre_sorbonne#" -> receptionReportData_1.nombreSorbonnes,
+        "#mois#" -> receptionReportData_1.mois,
+        "#annee#" -> receptionReportData_1.annee,
+        "#nom_etablissement#" -> receptionReportData_1.nomEtablissement,
+        "#ville#" -> receptionReportData_1.ville,
+        "#departement#" -> receptionReportData_1.departement,
+        "#adresse#" -> receptionReportData_1.adresse,
+        "#code_postal#" -> receptionReportData_1.codePostal,
+        "#jour#" -> receptionReportData_1.jour,
+        "#intervenant#" -> receptionReportData_1.intervenant,
+        "#sexe#" -> receptionReportData_1.sexe,
+        "#societe_soutraite#" -> receptionReportData_1.societeSoutraite,
+        "#nom1#" -> receptionReportData_1.nom1,
+        "#nom2#" -> receptionReportData_1.nom2,
+        "#numero_d_affaire#" -> receptionReportData_1.numeroAffaire
       )
 
       When("using the myFillingDocxToDocxService.fill method")

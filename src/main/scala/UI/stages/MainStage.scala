@@ -4,7 +4,7 @@ package UI.stages
 import UI.sections._
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
 import UI.sections.navbarsection.{IsANavBarSectionTrait, NavBarSection}
-import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReportDataV1FormPage}
+import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReceptionReportFormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.titlesection.TitleSection
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
@@ -20,11 +20,11 @@ import scalafx.scene.paint.{Color, CycleMethod, LinearGradient}
 class MainStage extends IsAStageTrait {
 
   private class StageContent() {
-    private val reportDataV1FormPage: IsAPageTrait = ReportDataV1FormPage()
+    private val receptionReportDataFormPage: IsAPageTrait = ReceptionReportFormPage()
     private val otherReportFormPage: IsAPageTrait = OtherReportFormPage()
 
     private val titleSection: IsASectionTrait = TitleSection(title = APP_TITLE)
-    private val pageSection: IsAPageSectionTrait = PageSection(pageList = reportDataV1FormPage :: otherReportFormPage :: Nil)
+    private val pageSection: IsAPageSectionTrait = PageSection(pageList = receptionReportDataFormPage :: otherReportFormPage :: Nil)
     private val navBarSection: IsANavBarSectionTrait = NavBarSection(pageSection = pageSection)
     private val logsSection: IsALogsSectionTrait = LogsSection()
 
