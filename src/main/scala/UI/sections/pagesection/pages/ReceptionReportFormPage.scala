@@ -59,7 +59,7 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
     var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
 
     if (DEBUG_MODE) {
-      dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\report-data-v1-2.csv"
+      dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\reception-report-data-v1-2.csv"
       templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
       outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
     }
@@ -71,7 +71,7 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
 
     val processingResult: ProcessingResult = processingReceptionReportDataService.process(
-      dataToProcess = parsingResult.parsedData(0)
+      dataToProcess = parsingResult.parsedData.head
     )(ReceptionReportDataProcessor)
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)

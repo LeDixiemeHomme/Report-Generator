@@ -13,8 +13,12 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
   private var docxFiller: DocxFiller = _
   private val valuesMap: Map[String, String] = Map("#ReplaceMe#" -> "Replaced")
 
+  private val doNotReplaceValue: String = "A text Replaced to test.A text #DoNotReplaceMe# to test."
+
+  private val templateFilePath: String = getClass.getResource("/template-test.docx").getPath
+
   override def beforeEach(): Unit = {
-    val templateFile: File = new File(getClass.getResource("/template-test.docx").getPath)
+    val templateFile: File = new File(templateFilePath)
     val templateStream: FileInputStream = new FileInputStream(templateFile)
 
     docxFiller = DocxFiller()
@@ -29,7 +33,7 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     docxFiller.fillDocx(document, valuesMap)
 
     Then("the value was not replaced")
-    document.getParagraphs.get(0).getText shouldEqual "A text Replaced to test.A text #DoNotReplaceMe# to test."
+    document.getParagraphs.get(0).getText shouldEqual doNotReplaceValue
   }
 
   "An XWPFDocument" should "have its tags inside its footer replaced by the value in the map" in {
@@ -40,7 +44,7 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     docxFiller.fillDocx(document, valuesMap)
 
     Then("the value in the footer was not replaced")
-    document.getFooterList.get(0).getParagraphs.get(0).getText shouldEqual "A text Replaced to test.A text #DoNotReplaceMe# to test."
+    document.getFooterList.get(0).getParagraphs.get(0).getText shouldEqual doNotReplaceValue
   }
 
   "An XWPFDocument" should "have its tags inside its tables replaced by the value in the map" in {
@@ -51,6 +55,6 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     docxFiller.fillDocx(document, valuesMap)
 
     Then("the value in the footer was not replaced")
-    document.getTables.get(0).getRows.get(1).getCell(0).getText shouldEqual "A text Replaced to test.A text #DoNotReplaceMe# to test."
+    document.getTables.get(0).getRows.get(1).getCell(0).getText shouldEqual doNotReplaceValue
   }
 }
