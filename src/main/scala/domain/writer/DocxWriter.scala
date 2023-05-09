@@ -8,24 +8,14 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument
 
 import java.io.FileOutputStream
 
-class DocxWriter extends Logging {
+class DocxWriter extends Logging with IsAWriterTrait {
+  override def fileExtension() = ".docx"
+
   def write(templateDoc: XWPFDocument, outputDirPath: String, fileName: String): String = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Writing " + fileName + " docx to " + outputDirPath, classFrom = getClass)
 
-    var finalPath = outputDirPath + fileName
-
-    val outputDirPathHasSlashAtEnd = outputDirPath.last == '\\' || outputDirPath.last == '/'
-    val fileNameHasSlashAtBeginning = fileName.charAt(0) == '\\' || fileName.charAt(0) == '/'
-
-    val bothHaveSlash = outputDirPathHasSlashAtEnd && fileNameHasSlashAtBeginning
-    val neitherHaveSlash = !outputDirPathHasSlashAtEnd && !fileNameHasSlashAtBeginning
-
-    if (bothHaveSlash || neitherHaveSlash) finalPath = outputDirPath + '/' + fileName
-
-    val docxExtension = ".docx"
-
-    if (!finalPath.endsWith(docxExtension)) finalPath = finalPath + docxExtension
+    val finalPath = constructFinalPath(outputDirPath = outputDirPath, fileName = fileName, fileExtension = fileExtension())
 
     // Write the modified document to the output file
     val outputStream = new FileOutputStream(finalPath)

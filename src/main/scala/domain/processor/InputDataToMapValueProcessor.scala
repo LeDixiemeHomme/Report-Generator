@@ -8,11 +8,11 @@ import org.apache.logging.log4j.scala.Logging
 
 class InputDataToMapValueProcessor extends Logging {
 
-  def processToMapValue[A](inputData: A)(implicit inputDataType: ToMapValueProcessorTrait[A]): Map[String, String] = {
+  def processToMapValue[A](inputData: A)(implicit processor: ToMapValueProcessorTrait[A]): Map[String, String] = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "InputDataToMapValueProcessor.processToMapValue()", classFrom = getClass)
 
-    inputDataType.toMapValue(inputData)
+    processor.toMapValue(inputData)
   }
 }
 
