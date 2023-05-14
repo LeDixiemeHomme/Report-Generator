@@ -1,6 +1,7 @@
 package fr.valle.report_generator
 package services.filling
 
+import customexceptions.EmptyXWPFDocumentException
 import domain.filler.DocxFiller
 import domain.reader.DocxReader
 import domain.writer.DocxWriter
@@ -24,9 +25,22 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Filling docx document", classFrom = getClass)
 
-    val templateDoc: XWPFDocument = docxReader.readDocx(templateFilePath = templateFilePath)
-    val filledTemplateDoc: XWPFDocument = docxFiller.fillDocx(templateDoc = templateDoc, valuesMap = valuesMap)
+    var filledTemplateDoc: XWPFDocument = new XWPFDocument()
+    var templateDoc: XWPFDocument = new XWPFDocument()
+
     val fileName = optionalFileName.getOrElse(defaultValue)
+
+    try {
+      templateDoc = docxReader.readDocx(templateFilePath = templateFilePath)
+    }
+
+    try {
+      filledTemplateDoc = docxFiller.fillDocx(templateDoc = templateDoc, valuesMap = valuesMap)
+    } catch {
+      case emptyXWPFDocumentException: EmptyXWPFDocumentException =>
+        LogsKeeper.handleError(extLogger = logger, exception = emptyXWPFDocumentException, classFrom = getClass)
+        return new FillingResult(completionMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+    }
 
     val result: String = docxWriter.write(filledTemplateDoc, outputFilePath, fileName)
 

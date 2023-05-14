@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package logging
 
-import customexceptions.UnknownLevelLogsKeeperException
+import customexceptions.{EmptyXWPFDocumentException, UnknownLevelLogsKeeperException}
 import logging.loggingobserverpattern.LoggingSubject
 
 import org.apache.logging.log4j.scala.{Logger, Logging}
@@ -13,7 +13,8 @@ import scala.collection.mutable.ListBuffer
 object LogsKeeper extends Logging with LoggingSubject {
 
   private val logs: ListBuffer[String] = new ListBuffer[String]()
-  private def displayLog(extLogger: Logger, level: String, message: String): Unit = level match {
+
+  private def printLogToConsole(extLogger: Logger, level: String, message: String): Unit = level match {
     case TRACE => extLogger.trace(message)
     case DEBUG => extLogger.debug(message)
     case INFO => extLogger.info(message)
@@ -32,23 +33,35 @@ object LogsKeeper extends Logging with LoggingSubject {
 
   def keepAndLog(extLogger: Logger, level: String, message: String, classFrom: Class[_]): Unit = {
     try {
-      displayLog(extLogger = extLogger, message = message, level = level)
-
-      val currentDateTime = LocalDateTime.now()
-      val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-
-      val log: String = logs.length.toString + " -- " + currentDateTime.format(formatter) + " " + classFrom.getName + ": " + message
-
-      logs += log
-
-      notifyLoggingObservers(log = log)
-
+      printLogToConsole(extLogger = extLogger, message = message, level = level)
+      notifyLogSection(message, classFrom)
     } catch {
-      case e: UnknownLevelLogsKeeperException =>
-        keepAndLog(extLogger = logger, level = ERROR, message = e.getMessage, classFrom = getClass)
-        keepAndLog(extLogger = extLogger, level = ERROR, message = message, classFrom = classFrom)
+      case unknownLevelLogsKeeperException: UnknownLevelLogsKeeperException =>
+        handleError(extLogger = extLogger, exception = unknownLevelLogsKeeperException, classFrom = classFrom)
     }
   }
 
+  def handleError(extLogger: Logger, exception: Exception, classFrom: Class[_]): Unit = exception match {
+    case exc: EmptyXWPFDocumentException =>
+      printLogToConsole(extLogger = extLogger, message = exc.toString, level = ERROR)
+      notifyLogSection("Le modèle de document est vide, il faut ajouter du contenu et des balises pour que le programme génère un rapport", classFrom)
+    case exc: UnknownLevelLogsKeeperException =>
+      printLogToConsole(extLogger = extLogger, message = exc.toString, level = ERROR)
+      notifyLogSection(exc.getMessage, classFrom)
+  }
+
   def myLogs: List[String] = logs.toList
+
+  private def notifyLogSection(message: String, classFrom: Class[_]): Unit = {
+    val log: String = buildLogMessage(message, classFrom)
+    logs += log
+    notifyLoggingObservers(log = log)
+  }
+
+  private def buildLogMessage(message: String, classFrom: Class[_]): String = {
+    val currentDateTime = LocalDateTime.now()
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+    logs.length.toString + " -- " + currentDateTime.format(formatter) + " " + classFrom.getName + ": " + message
+  }
 }

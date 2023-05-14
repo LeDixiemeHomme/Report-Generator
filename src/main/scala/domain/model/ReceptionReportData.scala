@@ -1,7 +1,6 @@
 package fr.valle.report_generator
 package domain.model
 
-import domain.parser.CsvParser.FileParserTrait
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
 import logging.LogsKeeper
 
@@ -19,33 +18,6 @@ case class ReceptionReportData(nombreSorbonnes: String, mois: String, annee: Str
 }
 
 object ReceptionReportData extends Logging {
-  object ReceptionReportDataParser extends FileParserTrait[ReceptionReportData] {
-    def parse(lines: List[List[String]]): List[ReceptionReportData] = {
-
-      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataParser.parse()", classFrom = getClass)
-
-      lines.map(row => {
-        val nombreSorbonnes = row(0)
-        val mois = row(1)
-        val annee = row(2)
-        val nomEtablissement = row(3)
-        val ville = row(4)
-        val departement = row(5)
-        val adresse = row(6)
-        val codePostal = row(7)
-        val jour = row(8)
-        val intervenant = row(9)
-        val sexe = row(10)
-        val societeSoutraite = row(11)
-        val nom1 = row(12)
-        val nom2 = row(13)
-        val numeroAffaire = row(14)
-        ReceptionReportData(nombreSorbonnes, mois, annee, nomEtablissement, ville, departement, adresse, codePostal,
-          jour, intervenant, sexe, societeSoutraite, nom1, nom2, numeroAffaire)
-      })
-    }
-  }
-
   object ReceptionReportDataProcessor extends ToMapValueProcessorTrait[ReceptionReportData] {
     override def toMapValue(inputData: ReceptionReportData): Map[String, String] = {
       LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataProcessor.toMapValue()", classFrom = getClass)
@@ -69,5 +41,4 @@ object ReceptionReportData extends Logging {
       )
     }
   }
-
 }
