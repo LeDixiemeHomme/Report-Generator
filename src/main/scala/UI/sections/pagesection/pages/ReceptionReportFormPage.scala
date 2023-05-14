@@ -6,7 +6,9 @@ import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
 import domain.model.ReceptionReportData
-import domain.model.ReceptionReportData.{ReceptionReportDataParser, ReceptionReportDataProcessor}
+import domain.model.ReceptionReportData.ReceptionReportDataProcessor
+import domain.parser.tototoshiCSVparser.TototoshiCsvFileParser
+import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
 import logging.LogsKeeper
 import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
 import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
@@ -17,7 +19,7 @@ import scalafx.scene.layout._
 
 class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
-  private val parsingReceptionReportDataCsvService: ParsingServiceTrait[ReceptionReportData] = ParsingCsvService()
+  private val parsingReceptionReportDataCsvService: ParsingServiceTrait[ReceptionReportData] = ParsingCsvService(TototoshiCsvFileParser())
   private val processingReceptionReportDataService: ProcessingServiceTrait[ReceptionReportData] = ProcessingDataService()
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
 
@@ -66,7 +68,7 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
     val parsingResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService.parse(
       filePath = dataPathTemp
-    )(ReceptionReportDataParser)
+    )(ReceptionReportDataTototoshiParser())
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
 
