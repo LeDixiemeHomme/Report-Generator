@@ -9,14 +9,13 @@ import scalafx.stage.FileChooser
 
 object BrowseFileButtonStrategy extends BrowseButtonStrategyTrait {
   override def optionalBrowseButton(myTextField: TextField, stage: PrimaryStage): Option[Button] = {
-    val button: Button = new Button {
-      text = "Choisir un fichier"
-      onAction = _ => {
-        val fileChooser = new FileChooser()
-        val selectedFile = fileChooser.showOpenDialog(stage)
-        if (selectedFile != null) {
-          myTextField.text = selectedFile.getPath
-        }
+    val button: Button = browseButton
+    button.text = "Choisir un fichier"
+    button.onAction = _ => {
+      val fileChooser = new FileChooser()
+      val selectedFile = fileChooser.showOpenDialog(stage)
+      if (selectedFile != null) {
+        myTextField.text = selectedFile.getPath
       }
     }
     Some(button)
