@@ -1,6 +1,7 @@
 package fr.valle.report_generator
 package domain.processor
 
+import customexceptions.IncompleteObjectInstantiationException
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
 import logging.LogsKeeper
 
@@ -20,6 +21,10 @@ object InputDataToMapValueProcessor {
   def apply(): InputDataToMapValueProcessor = new InputDataToMapValueProcessor()
 
   trait ToMapValueProcessorTrait[A] {
+    /**
+     * @throws IncompleteObjectInstantiationException if the `inputData` has a null value
+     */
+    @throws(classOf[IncompleteObjectInstantiationException])
     def toMapValue(inputData: A): Map[String, String]
   }
 }

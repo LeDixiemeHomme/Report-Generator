@@ -14,8 +14,9 @@ import scala.util.{Failure, Success, Try}
 class ReceptionReportDataTototoshiParser extends IsAnObjectParserTrait[ReceptionReportData] with Logging {
 
   /**
-   * @throws MissingCSVColumnException if the `reader` has a missing column
+   * @throws NoRowInCSVException if there is no data row in the `reader`
    */
+  @throws(classOf[NoRowInCSVException])
   def parse(reader: Object): List[ReceptionReportData] = {
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataTototoshiParser.parse()", classFrom = getClass)
 

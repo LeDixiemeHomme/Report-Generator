@@ -13,16 +13,33 @@ import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}
 import java.io.File
 
 class ReceptionReportDataTototoshiParserSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAfterEach with GivenWhenThen with Matchers with TableDrivenPropertyChecks {
+  implicit object MyFormat extends DefaultCSVFormat {
+    override val delimiter = ';'
+  }
 
+  var filePath: String = _
   var receptionReportData_1: ReceptionReportData = _
   var receptionReportData_2: ReceptionReportData = _
+
   var receptionReportDataTototoshiParser: ReceptionReportDataTototoshiParser = _
-  var filePath: String = _
 
   override def beforeEach(): Unit = {
     receptionReportData_1 = TestDataProvider.provideReceptionReportData_1
     receptionReportData_2 = TestDataProvider.provideReceptionReportData_2
     receptionReportDataTototoshiParser = ReceptionReportDataTototoshiParser()
+  }
+
+  it should "parse a list of receptionReportData when using ReceptionReportDataTototoshiParser Trait" in {
+    val listExpected = List(TestDataProvider.provideReceptionReportDataMissingValues_1, TestDataProvider.provideReceptionReportDataMissingValues_2)
+
+    Given("a file path to a well formatted csv file containing the properties (some empty) of objects provideReceptionReportDataMissingValues_1 and provideReceptionReportDataMissingValues_2")
+    filePath = getClass.getResource("/reception-report-data-test-missing-values.csv").getPath
+
+    When("using the parse method with the tototoshi.csv.CSVReader with the filePath as argument")
+    val listOfReceptionReportData: List[ReceptionReportData] = receptionReportDataTototoshiParser.parse(reader = CSVReader.open(new File(filePath)))
+
+    Then("the created list should equal the correct one")
+    listOfReceptionReportData shouldEqual listExpected
   }
 
   it should "take a tototoshi.csv.CSVReader with a filePath to a well formatted file and parse it into a list of ReceptionReportData objects" in {
@@ -37,9 +54,6 @@ class ReceptionReportDataTototoshiParserSpec extends AnyFlatSpec with PrivateMet
       (filePath: String) => {
         Given("a file path to a well formatted csv file containing the properties of objects receptionReportData_1 and receptionReportData_2")
         println("filePath = " + filePath)
-        implicit object MyFormat extends DefaultCSVFormat {
-          override val delimiter = ';'
-        }
 
         When("using the parse method with the tototoshi.csv.CSVReader with the filePath as argument")
         val listOfReceptionReportData: List[ReceptionReportData] = receptionReportDataTototoshiParser.parse(reader = CSVReader.open(new File(filePath)))
@@ -63,6 +77,11 @@ class ReceptionReportDataTototoshiParserSpec extends AnyFlatSpec with PrivateMet
         getClass.getResource("/reception-report-data-test-without-row-data.csv").getPath,
         "Le fichier de données CSV ne contient pas de données.",
         classOf[NoRowInCSVException],
+        ""),
+      (
+        getClass.getResource("/reception-report-data-test-empty.csv").getPath,
+        "Le fichier de données CSV ne contient pas de données.",
+        classOf[NoRowInCSVException],
         "")
     )
 
@@ -70,9 +89,6 @@ class ReceptionReportDataTototoshiParserSpec extends AnyFlatSpec with PrivateMet
       (wrongFilePath: String, caughtExceptionMessage: String, exceptionType: Class[_ <: Exception], exceptionCauseType: String) => {
         Given("a file path to a not well formatted csv file containing the properties of objects receptionReportData_1 and receptionReportData_2")
         println("wrongFilePath = " + wrongFilePath)
-        implicit object MyFormat extends DefaultCSVFormat {
-          override val delimiter = ';'
-        }
         When("using the parse method with the tototoshi.csv.CSVReader with the wrongFilePath as argument")
         val caughtException = intercept[Exception] {
           receptionReportDataTototoshiParser.parse(reader = CSVReader.open(new File(wrongFilePath)))

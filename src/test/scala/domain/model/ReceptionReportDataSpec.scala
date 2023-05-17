@@ -1,6 +1,7 @@
 package fr.valle.report_generator
 package domain.model
 
+import customexceptions.IncompleteObjectInstantiationException
 import domain.model.ReceptionReportData.ReceptionReportDataProcessor
 
 import org.scalatest.flatspec.AnyFlatSpec
@@ -63,5 +64,22 @@ class ReceptionReportDataSpec extends AnyFlatSpec with PrivateMethodTester with 
 
     Then("the created list should equal the correct one")
     mapValues shouldEqual correctMapValues
+  }
+
+  it should "create a map from a ReceptionReportData objects with null values and throw a IncompleteObjectInstantiationException" in {
+    val receptionReportDataNullValues: ReceptionReportData = TestDataProvider.provideReceptionReportNullValues_1
+    val expectedExceptionMessage: String = "Un objet " + receptionReportDataNullValues.getClass +
+        " possède une valeur null ce qui ne permet pas de construire le dictionnaire."
+
+    Given("a ReceptionReportData with null values")
+    println(receptionReportDataNullValues)
+
+    When("using the parse method")
+    val caughtException = intercept[IncompleteObjectInstantiationException] {
+      ReceptionReportDataProcessor.toMapValue(receptionReportDataNullValues)
+    }
+
+    Then("the created list should equal the correct one")
+    caughtException.getMessage shouldEqual expectedExceptionMessage
   }
 }

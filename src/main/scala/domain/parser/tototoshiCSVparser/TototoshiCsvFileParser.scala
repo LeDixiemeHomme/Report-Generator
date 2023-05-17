@@ -13,9 +13,6 @@ import scala.util.{Failure, Success, Try}
 
 class TototoshiCsvFileParser extends IsACSVFileParserTrait with Logging {
 
-  /**
-   * @throws DataFileNotFoundException if the `filePath` is not actually an existing file
-   */
   override def parseFile[A](csvFilePath: String)(implicit objectParser: IsAnObjectParserTrait[A]): List[A] = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Parsing csv " + csvFilePath, classFrom = getClass)

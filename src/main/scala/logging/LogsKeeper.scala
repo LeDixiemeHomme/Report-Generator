@@ -14,6 +14,10 @@ object LogsKeeper extends Logging with LoggingSubject {
 
   private val logs: ListBuffer[String] = new ListBuffer[String]()
 
+  /**
+   * @throws UnknownLevelLogsKeeperException if the `level` is not actually an existing level
+   */
+  @throws(classOf[UnknownLevelLogsKeeperException])
   private def printLogToConsole(extLogger: Logger, level: String, message: String): Unit = level match {
     case TRACE => extLogger.trace(message)
     case DEBUG => extLogger.debug(message)
