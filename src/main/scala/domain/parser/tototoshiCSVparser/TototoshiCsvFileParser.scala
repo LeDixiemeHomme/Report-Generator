@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package domain.parser.tototoshiCSVparser
 
-import customexceptions.DataFileNotFoundException
+import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, NoRowInCSVException}
 import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
 import logging.LogsKeeper
 
@@ -20,6 +20,8 @@ class TototoshiCsvFileParser extends IsACSVFileParserTrait with Logging {
     val listOfParsedObjects: List[A] = tryParseFileSafely(filePath = csvFilePath)(objectParser) match {
       case Success(parsedListOfA) => parsedListOfA
       case Failure(fileNotFoundException: FileNotFoundException) => throw new DataFileNotFoundException(filePath = csvFilePath, cause = Some(fileNotFoundException))
+      case Failure(missingCSVColumnException: MissingCSVColumnException) => throw missingCSVColumnException
+      case Failure(noRowInCSVException: NoRowInCSVException) => throw noRowInCSVException
       case Failure(exception) => throw exception
     }
 

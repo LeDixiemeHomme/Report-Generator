@@ -52,6 +52,9 @@ object LogsKeeper extends Logging with LoggingSubject {
     case exc: UnknownLevelLogsKeeperException =>
       printLogToConsole(extLogger = extLogger, message = exc.toString, level = ERROR)
       notifyLogSection(exc.getMessage, classFrom)
+    case defaultExc: Exception =>
+      printLogToConsole(extLogger = extLogger, message = "Default exception handling !!!!!! : " + defaultExc.toString, level = ERROR)
+      notifyLogSection(defaultExc.getMessage, classFrom)
   }
 
   def myLogs: List[String] = logs.toList

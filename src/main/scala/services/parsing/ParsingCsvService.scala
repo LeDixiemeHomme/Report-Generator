@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package services.parsing
 
-import customexceptions.DataFileNotFoundException
+import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, NoRowInCSVException}
 import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
 import logging.LogsKeeper
 
@@ -23,6 +23,12 @@ class ParsingCsvService[A](csvParserTrait: IsACSVFileParserTrait) extends Loggin
     } catch {
       case dataFileNotFoundException: DataFileNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = dataFileNotFoundException, classFrom = getClass)
+        return ParsingResult(Nil)
+      case missingCSVColumnException: MissingCSVColumnException =>
+        LogsKeeper.handleError(extLogger = logger, exception = missingCSVColumnException, classFrom = getClass)
+        return ParsingResult(Nil)
+      case noRowInCSVException: NoRowInCSVException =>
+        LogsKeeper.handleError(extLogger = logger, exception = noRowInCSVException, classFrom = getClass)
         return ParsingResult(Nil)
     }
 
