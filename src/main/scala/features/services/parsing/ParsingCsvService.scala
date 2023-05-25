@@ -1,8 +1,9 @@
 package fr.valle.report_generator
-package services.parsing
+package features.services.parsing
 
 import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, NoRowInCSVException}
 import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
+import features.results.ParsingResult
 import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
@@ -23,16 +24,16 @@ class ParsingCsvService[A](csvParserTrait: IsACSVFileParserTrait) extends Loggin
     } catch {
       case dataFileNotFoundException: DataFileNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = dataFileNotFoundException, classFrom = getClass)
-        return ParsingResult(Nil)
+        return ParsingResult(isSuccess = false, Nil)
       case missingCSVColumnException: MissingCSVColumnException =>
         LogsKeeper.handleError(extLogger = logger, exception = missingCSVColumnException, classFrom = getClass)
-        return ParsingResult(Nil)
+        return ParsingResult(isSuccess = false, Nil)
       case noRowInCSVException: NoRowInCSVException =>
         LogsKeeper.handleError(extLogger = logger, exception = noRowInCSVException, classFrom = getClass)
-        return ParsingResult(Nil)
+        return ParsingResult(isSuccess = false, Nil)
     }
 
-    ParsingResult(dataList.toList)
+    ParsingResult(isSuccess = true, dataList.toList)
   }
 }
 

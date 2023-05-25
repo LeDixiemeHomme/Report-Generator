@@ -1,9 +1,10 @@
 package fr.valle.report_generator
-package services.processing
+package features.services.processing
 
 import customexceptions.IncompleteObjectInstantiationException
 import domain.processor.InputDataToMapValueProcessor
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
+import features.results.ProcessingResult
 import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
@@ -22,10 +23,10 @@ class ProcessingDataService[A]() extends Logging with ProcessingServiceTrait[A] 
     } catch {
       case incompleteObjectInstantiationException: IncompleteObjectInstantiationException =>
         LogsKeeper.handleError(extLogger = logger, exception = incompleteObjectInstantiationException, classFrom = getClass)
-        return ProcessingResult(mapValues)
+        return ProcessingResult(isSuccess = false, mapValues)
     }
 
-    ProcessingResult(mapValues)
+    ProcessingResult(isSuccess = true, mapValues)
   }
 }
 

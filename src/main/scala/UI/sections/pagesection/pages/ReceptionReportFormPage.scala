@@ -2,10 +2,11 @@ package fr.valle.report_generator
 package UI.sections.pagesection.pages
 
 import UI.DebugBorder.DEBUG_MODE
-import UI.facade.GenerateReceptionReportFeature
 import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
+import features.GenerateReceptionReportFeature
+import features.results.GenerateReceptionReportFeatureResult
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.scene.layout._
@@ -49,14 +50,27 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
   var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
 
   if (DEBUG_MODE) {
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-without-row-data.csv"
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-random-colomn-order.csv"
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-values.csv"
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-column.csv"
     //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-empty.csv"
     dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test.csv"
-    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
+    //    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
+    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-test-empty.docx"
     outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
   }
 
   submitButton.myButton.onAction = _ => {
-    GenerateReceptionReportFeature().action(dataPathTemp = dataPathTemp, templatePathTemp = templatePathTemp, outputPathTemp = outputPathTemp, outputFileName = outputFileNameFormSection.myTextField.getText)
+    val result: GenerateReceptionReportFeatureResult = GenerateReceptionReportFeature().action(
+      dataPathTemp = dataPathTemp,
+      templatePathTemp = templatePathTemp,
+      outputPathTemp = outputPathTemp,
+      outputFileName = outputFileNameFormSection.myTextField.getText
+    )
+    println(result.popUpMessage)
+    println(result.isSuccess)
+    println(result.fileLocation.getOrElse("empty"))
   }
 
   val fields: List[IsAFormSectionTrait] = List(

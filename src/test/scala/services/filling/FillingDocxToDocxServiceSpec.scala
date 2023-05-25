@@ -1,6 +1,8 @@
 package fr.valle.report_generator
 package services.filling
 
+import features.services.filling.FillingDocxToDocxService
+
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}

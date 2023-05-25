@@ -3,6 +3,8 @@ package services.processing
 
 import domain.model.ReceptionReportData
 import domain.model.ReceptionReportData.ReceptionReportDataProcessor
+import features.results.ProcessingResult
+import features.services.processing.{ProcessingDataService, ProcessingServiceTrait}
 
 import org.scalatest.featurespec.AnyFeatureSpecLike
 import org.scalatest.matchers.should.Matchers
@@ -20,7 +22,7 @@ class ProcessingDataServiceFeatureSpec extends AnyFeatureSpecLike with GivenWhen
 
     Scenario("Using a ReceptionReportData object to create a processingResult containing an mapValues") {
 
-      val expectedProcessingResult: ProcessingResult = new ProcessingResult(TestDataProvider.provideReceptionReportData_1MapValues)
+      val expectedProcessingResult: ProcessingResult = ProcessingResult(isSuccess = true, TestDataProvider.provideReceptionReportData_1MapValues)
 
       Given("a ReceptionReportData object")
       val receptionReportData: ReceptionReportData = TestDataProvider.provideReceptionReportData_1

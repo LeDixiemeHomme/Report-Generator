@@ -1,6 +1,8 @@
 package fr.valle.report_generator
 package services.filling
 
+import features.services.filling.FillingDocxToDocxService
+
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.featurespec.AnyFeatureSpecLike
 import org.scalatest.matchers.should.Matchers

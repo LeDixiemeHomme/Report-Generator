@@ -1,14 +1,15 @@
 package fr.valle.report_generator
-package UI.facade
+package features
 
 import domain.model.ReceptionReportData
 import domain.model.ReceptionReportData.ReceptionReportDataProcessor
 import domain.parser.tototoshiCSVparser.TototoshiCsvFileParser
 import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
+import features.results.{FillingResult, GenerateReceptionReportFeatureResult, ParsingResult, ProcessingResult}
+import features.services.filling.{FillingDocxToDocxService, FillingServiceTrait}
+import features.services.parsing.{ParsingCsvService, ParsingServiceTrait}
+import features.services.processing.{ProcessingDataService, ProcessingServiceTrait}
 import logging.LogsKeeper
-import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
-import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
-import services.processing.{ProcessingDataService, ProcessingResult, ProcessingServiceTrait}
 
 import org.apache.logging.log4j.scala.Logging
 
@@ -18,17 +19,29 @@ class GenerateReceptionReportFeature extends Logging {
   private val processingReceptionReportDataService: ProcessingServiceTrait[ReceptionReportData] = ProcessingDataService()
   private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
 
-  def action(dataPathTemp: String, templatePathTemp: String, outputPathTemp: String, outputFileName: String): Unit = {
+  def action(dataPathTemp: String, templatePathTemp: String, outputPathTemp: String, outputFileName: String): GenerateReceptionReportFeatureResult = {
 
     val parsingResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService.parse(
       filePath = dataPathTemp
     )(ReceptionReportDataTototoshiParser())
+
+    if (parsingResult.parsedData.isEmpty) return GenerateReceptionReportFeatureResult(
+      isSuccess = false,
+      popUpMessage = "parsingResult.parsedData.isEmpty",
+      fileLocation = None
+    )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
 
     val processingResult: ProcessingResult = processingReceptionReportDataService.process(
       dataToProcess = parsingResult.parsedData.head
     )(ReceptionReportDataProcessor)
+
+    if (processingResult.processedData.isEmpty) return GenerateReceptionReportFeatureResult(
+      isSuccess = false,
+      popUpMessage = "processingResult.processedData.isEmpty",
+      fileLocation = None
+    )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
 
@@ -40,6 +53,12 @@ class GenerateReceptionReportFeature extends Logging {
     )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillingResult.toString, classFrom = getClass)
+
+    GenerateReceptionReportFeatureResult(
+      isSuccess = true,
+      popUpMessage = "Successfully generated",
+      fileLocation = Some("location")
+    )
   }
 }
 
