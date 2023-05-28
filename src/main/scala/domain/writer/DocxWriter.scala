@@ -1,17 +1,22 @@
 package fr.valle.report_generator
 package domain.writer
 
+import customexceptions.OutputDirNotFoundException
 import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 
-import java.io.FileOutputStream
+import java.io.{FileNotFoundException, FileOutputStream}
 import scala.util.{Failure, Success, Try}
 
 class DocxWriter extends Logging with IsAWriterTrait {
   override def fileExtension() = ".docx"
 
+  /**
+   * @throws OutputDirNotFoundException if the `outputDirPath` does not exists
+   */
+  @throws(classOf[OutputDirNotFoundException])
   def write(templateDoc: XWPFDocument, outputDirPath: String, fileName: String): String = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Writing " + fileName + " docx to " + outputDirPath, classFrom = getClass)
@@ -20,6 +25,8 @@ class DocxWriter extends Logging with IsAWriterTrait {
 
     val outputMessage: String = tryWriteDocxSafely(templateDoc = templateDoc, finalPath = finalPath) match {
       case Success(_) => s"Successfully written in $outputDirPath"
+
+      case Failure(fileNotFoundException: FileNotFoundException) => throw new OutputDirNotFoundException(outputDirPath = outputDirPath, cause = Some(fileNotFoundException))
       case Failure(exception: Exception) => throw exception
     }
 

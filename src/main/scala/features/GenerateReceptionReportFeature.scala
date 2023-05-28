@@ -52,6 +52,12 @@ class GenerateReceptionReportFeature extends Logging {
       fileName = if (outputFileName.equals("")) Some("default-value") else Some(outputFileName)
     )
 
+    if (!fillingResult.isSuccess) return GenerateReceptionReportFeatureResult(
+      isSuccess = false,
+      popUpMessage = fillingResult.completionMessage,
+      fileLocation = None
+    )
+
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillingResult.toString, classFrom = getClass)
 
     GenerateReceptionReportFeatureResult(
