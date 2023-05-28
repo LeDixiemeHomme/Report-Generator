@@ -2,11 +2,11 @@ package fr.valle.report_generator
 package UI.sections.navbarsection
 
 import UI.DebugBorder
-import UI.sections.navbarsection.navbarcontent.navbarbutton.NavBarButtonStyles.{selectedEnteredButtonStyle, unselectedEnteredButtonStyle, unselectedExitedButtonStyle}
 import UI.sections.navbarsection.navbarcontent.navbarbutton.{IsANavBarButtonTrait, NavBarButton}
 import UI.sections.pagesection.IsAPageSectionTrait
 import UI.sections.pagesection.pages.pagestatepattern.PageStateMachine
 import UI.sections.pagesection.pages.{OtherReportFormPage, ReceptionReportFormPage}
+import UI.styles.NavBarButtonStyles.{selectedEnteredButtonStyle, unselectedEnteredButtonStyle, unselectedExitedButtonStyle}
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.geometry.{Insets, Pos}

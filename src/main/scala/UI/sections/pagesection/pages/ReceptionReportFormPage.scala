@@ -5,21 +5,13 @@ import UI.DebugBorder.DEBUG_MODE
 import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
-import domain.model.ReceptionReportData
-import domain.model.ReceptionReportData.{ReceptionReportDataParser, ReceptionReportDataProcessor}
-import logging.LogsKeeper
-import services.filling.{FillingDocxToDocxService, FillingResult, FillingServiceTrait}
-import services.parsing.{ParsingCsvService, ParsingResult, ParsingServiceTrait}
-import services.processing.{ProcessingDataService, ProcessingResult, ProcessingServiceTrait}
+import features.GenerateReceptionReportFeature
+import features.results.GenerateReceptionReportFeatureResult
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.scene.layout._
 
 class ReceptionReportFormPage extends Logging with IsAPageTrait {
-
-  private val parsingReceptionReportDataCsvService: ParsingServiceTrait[ReceptionReportData] = ParsingCsvService()
-  private val processingReceptionReportDataService: ProcessingServiceTrait[ReceptionReportData] = ProcessingDataService()
-  private val fillingService: FillingServiceTrait = FillingDocxToDocxService()
 
   private val dataFilePathFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
     label = "Fichier de données (Excel) :",
@@ -53,37 +45,32 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
   if (DEBUG_MODE) submitButton.myButton.disable = false
 
+  var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
+  var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
+  var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
+
+  if (DEBUG_MODE) {
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-without-row-data.csv"
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-random-colomn-order.csv"
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-values.csv"
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-column.csv"
+    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-empty.csv"
+    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test.csv"
+    //    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
+    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-test-empty.docx"
+    outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
+  }
+
   submitButton.myButton.onAction = _ => {
-    var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
-    var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
-    var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
-
-    if (DEBUG_MODE) {
-      dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\data\\reception-report-data-v1-2.csv"
-      templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
-      outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
-    }
-
-    val parsingResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService.parse(
-      filePath = dataPathTemp
-    )(ReceptionReportDataParser)
-
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
-
-    val processingResult: ProcessingResult = processingReceptionReportDataService.process(
-      dataToProcess = parsingResult.parsedData.head
-    )(ReceptionReportDataProcessor)
-
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
-
-    val fillingResult: FillingResult = fillingService.fill(
-      templateFilePath = templatePathTemp,
-      valuesMap = processingResult.processedData,
-      outputFilePath = outputPathTemp,
-      fileName = if (outputFileNameFormSection.myTextField.getText.equals("")) Some("default-value") else Some(outputFileNameFormSection.myTextField.getText)
+    val result: GenerateReceptionReportFeatureResult = GenerateReceptionReportFeature().action(
+      dataPathTemp = dataPathTemp,
+      templatePathTemp = templatePathTemp,
+      outputPathTemp = outputPathTemp,
+      outputFileName = outputFileNameFormSection.myTextField.getText
     )
-
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillingResult.toString, classFrom = getClass)
+    println(result.popUpMessage)
+    println(result.isSuccess)
+    println(result.fileLocation.getOrElse("empty"))
   }
 
   val fields: List[IsAFormSectionTrait] = List(

@@ -1,6 +1,7 @@
 package fr.valle.report_generator
 package domain.filler
 
+import customexceptions.EmptyXWPFDocumentException
 import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
@@ -9,18 +10,27 @@ import org.apache.poi.xwpf.usermodel._
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 class DocxFiller extends Logging {
-  private def replaceText(valuesMap: Map[String, String], runs: Iterable[XWPFRun]): Unit = {
-    for (run: XWPFRun <- runs) {
-      var text = run.getText(0)
-      if (text != null) {
-        // Replace all occurrences of the values with the corresponding values in the map
-        for ((key, value) <- valuesMap) {
-          text = text.replace(key, value)
-        }
-        // Set the new text in the run
-        run.setText(text, 0)
-      }
-    }
+  /**
+   * @throws EmptyXWPFDocumentException si le document `templateDoc` est vide
+   */
+  @throws(classOf[EmptyXWPFDocumentException])
+  def fillDocx(templateDoc: XWPFDocument, valuesMap: Map[String, String]): XWPFDocument = {
+    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "fillDocx()", classFrom = getClass)
+
+    if (isEmptyDoc(templateDoc = templateDoc)) throw new EmptyXWPFDocumentException()
+
+    val filledTemplateDoc: XWPFDocument = templateDoc
+
+    fillParagraphs(templateDoc = templateDoc, valuesMap = valuesMap)
+    fillFooters(templateDoc = templateDoc, valuesMap = valuesMap)
+    fillTables(templateDoc = templateDoc, valuesMap = valuesMap)
+
+    filledTemplateDoc
+  }
+
+  private def isEmptyDoc(templateDoc: XWPFDocument): Boolean = {
+    val hasNoParagraph: Boolean = templateDoc.getParagraphs.size() == 1 && templateDoc.getParagraphs.get(0).getText == ""
+    hasNoParagraph && templateDoc.getFooterList.isEmpty && templateDoc.getTables.isEmpty
   }
 
   private def fillParagraphs(templateDoc: XWPFDocument, valuesMap: Map[String, String]): Unit = {
@@ -35,6 +45,20 @@ class DocxFiller extends Logging {
     for (footer: XWPFFooter <- templateDoc.getFooterList.asScala) {
       for (para: XWPFParagraph <- footer.getParagraphs.asScala) {
         replaceText(valuesMap, para.getRuns.asScala)
+      }
+    }
+  }
+
+  private def replaceText(valuesMap: Map[String, String], runs: Iterable[XWPFRun]): Unit = {
+    for (run: XWPFRun <- runs) {
+      var text = run.getText(0)
+      if (text != null) {
+        // Replace all occurrences of the values with the corresponding values in the map
+        for ((key, value) <- valuesMap) {
+          text = text.replace(key, value)
+        }
+        // Set the new text in the run
+        run.setText(text, 0)
       }
     }
   }
@@ -56,18 +80,6 @@ class DocxFiller extends Logging {
         }
       }
     }
-  }
-
-  def fillDocx(templateDoc: XWPFDocument, valuesMap: Map[String, String]): XWPFDocument = {
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "fillDocx()", classFrom = getClass)
-
-    val filledTemplateDoc: XWPFDocument = templateDoc
-
-    fillParagraphs(templateDoc = templateDoc, valuesMap = valuesMap)
-    fillFooters(templateDoc = templateDoc, valuesMap = valuesMap)
-    fillTables(templateDoc = templateDoc, valuesMap = valuesMap)
-
-    filledTemplateDoc
   }
 }
 

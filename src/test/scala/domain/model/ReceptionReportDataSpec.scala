@@ -1,7 +1,8 @@
 package fr.valle.report_generator
 package domain.model
 
-import domain.model.ReceptionReportData.{ReceptionReportDataParser, ReceptionReportDataProcessor}
+import customexceptions.IncompleteObjectInstantiationException
+import domain.model.ReceptionReportData.ReceptionReportDataProcessor
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -52,33 +53,6 @@ class ReceptionReportDataSpec extends AnyFlatSpec with PrivateMethodTester with 
     receptionReportData_1.numeroAffaire shouldEqual TestDataProvider.numeroAffaire1
   }
 
-  it should "parse a list of lists of string values into a list of ReceptionReportData objects" in {
-    val list1: List[String] = TestDataProvider.nombreSorbonnes1 :: TestDataProvider.mois1 :: TestDataProvider.annee1 ::
-      TestDataProvider.nomEtablissement1 :: TestDataProvider.ville1 :: TestDataProvider.departement1 ::
-      TestDataProvider.adresse1 :: TestDataProvider.codePostal1 :: TestDataProvider.jour1 :: TestDataProvider.intervenant1 ::
-      TestDataProvider.sexe1 :: TestDataProvider.societeSoutraite1 :: TestDataProvider.nom11 :: TestDataProvider.nom21 ::
-      TestDataProvider.numeroAffaire1 :: Nil
-
-    val list2: List[String] = TestDataProvider.nombreSorbonnes2 :: TestDataProvider.mois2 :: TestDataProvider.annee2 ::
-      TestDataProvider.nomEtablissement2 :: TestDataProvider.ville2 :: TestDataProvider.departement2 ::
-      TestDataProvider.adresse2 :: TestDataProvider.codePostal2 :: TestDataProvider.jour2 :: TestDataProvider.intervenant2 ::
-      TestDataProvider.sexe2 :: TestDataProvider.societeSoutraite2 :: TestDataProvider.nom12 :: TestDataProvider.nom22 ::
-      TestDataProvider.numeroAffaire2 :: Nil
-
-    receptionReportData_2 = TestDataProvider.provideReceptionReportData_2
-
-    val correctListOfReceptionReportData: List[ReceptionReportData] = receptionReportData_1 :: receptionReportData_2 :: Nil
-
-    Given("a list of lists of string values containing the properties of objects receptionReportData_1 and receptionReportData_2")
-    val listOfListOfString: List[List[String]] = List(list1, list2)
-
-    When("using the parse method with the listOfListOfString")
-    val listOfReceptionReportData: List[ReceptionReportData] = ReceptionReportDataParser.parse(lines = listOfListOfString)
-
-    Then("the created list should equal the correct one")
-    listOfReceptionReportData shouldEqual correctListOfReceptionReportData
-  }
-
   it should "create a map from a ReceptionReportData objects" in {
     val correctMapValues: Map[String, String] = TestDataProvider.provideReceptionReportData_1MapValues
 
@@ -90,5 +64,22 @@ class ReceptionReportDataSpec extends AnyFlatSpec with PrivateMethodTester with 
 
     Then("the created list should equal the correct one")
     mapValues shouldEqual correctMapValues
+  }
+
+  it should "create a map from a ReceptionReportData objects with null values and throw a IncompleteObjectInstantiationException" in {
+    val receptionReportDataNullValues: ReceptionReportData = TestDataProvider.provideReceptionReportNullValues_1
+    val expectedExceptionMessage: String = "Un objet " + receptionReportDataNullValues.getClass +
+        " possède une valeur null ce qui ne permet pas de construire le dictionnaire."
+
+    Given("a ReceptionReportData with null values")
+    println(receptionReportDataNullValues)
+
+    When("using the parse method")
+    val caughtException = intercept[IncompleteObjectInstantiationException] {
+      ReceptionReportDataProcessor.toMapValue(receptionReportDataNullValues)
+    }
+
+    Then("the created list should equal the correct one")
+    caughtException.getMessage shouldEqual expectedExceptionMessage
   }
 }

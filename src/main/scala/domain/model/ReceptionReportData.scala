@@ -1,11 +1,13 @@
 package fr.valle.report_generator
 package domain.model
 
-import domain.parser.CsvParser.FileParserTrait
+import customexceptions.IncompleteObjectInstantiationException
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
 import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
+
+import scala.util.{Failure, Success, Try}
 
 case class ReceptionReportData(nombreSorbonnes: String, mois: String, annee: String, nomEtablissement: String,
                                ville: String, departement: String, adresse: String, codePostal: String,
@@ -19,55 +21,59 @@ case class ReceptionReportData(nombreSorbonnes: String, mois: String, annee: Str
 }
 
 object ReceptionReportData extends Logging {
-  object ReceptionReportDataParser extends FileParserTrait[ReceptionReportData] {
-    def parse(lines: List[List[String]]): List[ReceptionReportData] = {
-
-      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataParser.parse()", classFrom = getClass)
-
-      lines.map(row => {
-        val nombreSorbonnes = row(0)
-        val mois = row(1)
-        val annee = row(2)
-        val nomEtablissement = row(3)
-        val ville = row(4)
-        val departement = row(5)
-        val adresse = row(6)
-        val codePostal = row(7)
-        val jour = row(8)
-        val intervenant = row(9)
-        val sexe = row(10)
-        val societeSoutraite = row(11)
-        val nom1 = row(12)
-        val nom2 = row(13)
-        val numeroAffaire = row(14)
-        ReceptionReportData(nombreSorbonnes, mois, annee, nomEtablissement, ville, departement, adresse, codePostal,
-          jour, intervenant, sexe, societeSoutraite, nom1, nom2, numeroAffaire)
-      })
-    }
+  private def isNotPossessingNull(data: ReceptionReportData): Boolean = {
+    Option(data.nombreSorbonnes).isDefined &&
+      Option(data.mois).isDefined &&
+      Option(data.annee).isDefined &&
+      Option(data.nomEtablissement).isDefined &&
+      Option(data.ville).isDefined &&
+      Option(data.departement).isDefined &&
+      Option(data.adresse).isDefined &&
+      Option(data.codePostal).isDefined &&
+      Option(data.jour).isDefined &&
+      Option(data.intervenant).isDefined &&
+      Option(data.sexe).isDefined &&
+      Option(data.societeSoutraite).isDefined &&
+      Option(data.nom1).isDefined &&
+      Option(data.nom2).isDefined &&
+      Option(data.numeroAffaire).isDefined
   }
-
   object ReceptionReportDataProcessor extends ToMapValueProcessorTrait[ReceptionReportData] {
     override def toMapValue(inputData: ReceptionReportData): Map[String, String] = {
       LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataProcessor.toMapValue()", classFrom = getClass)
 
-      Map(
-        "#nombre_sorbonne#" -> inputData.nombreSorbonnes,
-        "#mois#" -> inputData.mois,
-        "#annee#" -> inputData.annee,
-        "#nom_etablissement#" -> inputData.nomEtablissement,
-        "#ville#" -> inputData.ville,
-        "#departement#" -> inputData.departement,
-        "#adresse#" -> inputData.adresse,
-        "#code_postal#" -> inputData.codePostal,
-        "#jour#" -> inputData.jour,
-        "#intervenant#" -> inputData.intervenant,
-        "#sexe#" -> inputData.sexe,
-        "#societe_soutraite#" -> inputData.societeSoutraite,
-        "#nom1#" -> inputData.nom1,
-        "#nom2#" -> inputData.nom2,
-        "#numero_d_affaire#" -> inputData.numeroAffaire
-      )
+      val mapValue: Map[String, String] = tryToMapValueSafely(inputData = inputData) match {
+        case Success(mapValue: Map[String, String]) => mapValue
+
+        case Failure(nullPointerException: NullPointerException) => throw new IncompleteObjectInstantiationException(
+          wronglyInstantiateObject = inputData, cause = Some(nullPointerException))
+        case Failure(exception) => throw exception
+      }
+
+      mapValue
+    }
+
+    private def tryToMapValueSafely(inputData: ReceptionReportData): Try[Map[String, String]] = {
+      Try {
+        if (!isNotPossessingNull(data = inputData)) throw new NullPointerException()
+        Map(
+          "#nombre_sorbonne#" -> inputData.nombreSorbonnes,
+          "#mois#" -> inputData.mois,
+          "#annee#" -> inputData.annee,
+          "#nom_etablissement#" -> inputData.nomEtablissement,
+          "#ville#" -> inputData.ville,
+          "#departement#" -> inputData.departement,
+          "#adresse#" -> inputData.adresse,
+          "#code_postal#" -> inputData.codePostal,
+          "#jour#" -> inputData.jour,
+          "#intervenant#" -> inputData.intervenant,
+          "#sexe#" -> inputData.sexe,
+          "#societe_soutraite#" -> inputData.societeSoutraite,
+          "#nom1#" -> inputData.nom1,
+          "#nom2#" -> inputData.nom2,
+          "#numero_d_affaire#" -> inputData.numeroAffaire
+        )
+      }
     }
   }
-
 }

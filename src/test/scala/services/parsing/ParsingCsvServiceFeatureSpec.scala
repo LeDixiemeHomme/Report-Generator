@@ -2,7 +2,10 @@ package fr.valle.report_generator
 package services.parsing
 
 import domain.model.ReceptionReportData
-import domain.model.ReceptionReportData.ReceptionReportDataParser
+import domain.parser.tototoshiCSVparser.TototoshiCsvFileParser
+import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
+import features.results.ParsingResult
+import features.services.parsing.{ParsingCsvService, ParsingServiceTrait}
 
 import org.scalatest.featurespec.AnyFeatureSpecLike
 import org.scalatest.matchers.should.Matchers
@@ -14,15 +17,15 @@ class ParsingCsvServiceFeatureSpec extends AnyFeatureSpecLike with GivenWhenThen
   private var filePath: String = _
 
   override def beforeEach(): Unit = {
-    parsingReceptionReportDataCsvService = ParsingCsvService()
+    parsingReceptionReportDataCsvService = ParsingCsvService(TototoshiCsvFileParser())
   }
 
-  Feature("Using ParsingServiceTrait, with the ReceptionReportData type, parse method with the ReceptionReportDataParser") {
+  Feature("Using ParsingServiceTrait, with the ReceptionReportData type, parse method with the ReceptionReportDataTototoshiParser") {
 
     Scenario("Using a filePath to create a parsingReceptionReportDataResult containing a list of ReceptionReportData objects") {
 
       val expectedParsingReceptionReportDataResult: ParsingResult[ReceptionReportData] =
-        new ParsingResult(parsedData = List(
+        ParsingResult(isSuccess = false, parsedData = List(
           TestDataProvider.provideReceptionReportData_1,
           TestDataProvider.provideReceptionReportData_2)
         )
@@ -30,8 +33,9 @@ class ParsingCsvServiceFeatureSpec extends AnyFeatureSpecLike with GivenWhenThen
       Given("a filePath")
       filePath = getClass.getResource("/reception-report-data-test.csv").getPath
 
-      When("using the ParsingServiceTrait.process method with the ReceptionReportDataParser")
-      val parsingReceptionReportDataResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService.parse(filePath = filePath)(ReceptionReportDataParser)
+      When("using the ParsingServiceTrait.process method with the ReceptionReportDataTototoshiParser")
+      val parsingReceptionReportDataResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService
+        .parse(filePath = filePath)(ReceptionReportDataTototoshiParser())
 
       Then("the result should be correct")
       parsingReceptionReportDataResult.toString shouldEqual expectedParsingReceptionReportDataResult.toString

@@ -1,6 +1,8 @@
 package fr.valle.report_generator
 package services.filling
 
+import features.results.FillingResult
+
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}
@@ -14,7 +16,7 @@ class FillingResultSpec extends AnyFlatSpec with PrivateMethodTester with Before
   var fillingResult: FillingResult = _
 
   override def beforeEach(): Unit = {
-    fillingResult = FillingResult(completionMessage = completionMessage,
+    fillingResult = FillingResult(isSuccess = true, completionMessage = completionMessage,
       filledDocRelativePath = filledDocRelativePath, outputFilePath = outputFilePath)
   }
 
