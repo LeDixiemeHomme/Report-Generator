@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 
+import UI.stages.primarystages.{IsAPrimaryStageTrait, MainPrimaryStage}
 import logging.LogsKeeper
-import fr.valle.report_generator.UI.stages.primarystages.{IsAPrimaryStageTrait, MainPrimaryStage}
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.application.{JFXApp3, Platform}
