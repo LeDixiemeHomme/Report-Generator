@@ -70,7 +70,7 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
     templatePathTemp = Paths.get(resourcePath, templatePathTempValue).toString
 
-    outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
+    outputPathTemp = Paths.get("").toAbsolutePath.toString
   }
 
   submitButton.myButton.onAction = _ => {
