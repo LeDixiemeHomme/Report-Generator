@@ -13,6 +13,8 @@ import features.results.GenerateReceptionReportFeatureResult
 import org.apache.logging.log4j.scala.Logging
 import scalafx.scene.layout._
 
+import java.nio.file.Paths
+
 class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
   private val dataFilePathFormSection: IsAFormSectionTrait = LabelTextFieldBrowseFormSection(
@@ -52,14 +54,22 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
   var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
 
   if (DEBUG_MODE) {
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-without-row-data.csv"
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-random-colomn-order.csv"
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-values.csv"
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-column.csv"
-        dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-empty.csv"
-//    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test.csv"
-    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
-    //    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-test-empty.docx"
+    val resourcePath = "src/test/resources"
+
+    //    val dataPathTempValue = "reception-report-data-test-without-row-data.csv"
+    //    val dataPathTempValue = "reception-report-data-test-random-colomn-order.csv"
+    //    val dataPathTempValue = "reception-report-data-test-missing-values.csv"
+    //    val dataPathTempValue = "reception-report-data-test-missing-column.csv"
+    //    val dataPathTempValue = "reception-report-data-test-empty.csv"
+    val dataPathTempValue = "reception-report-data-test.csv"
+
+    //    val templatePathTempValue = "template-test-empty.docx"
+    val templatePathTempValue = "template-test.docx"
+
+    dataPathTemp = Paths.get(resourcePath, dataPathTempValue).toString
+
+    templatePathTemp = Paths.get(resourcePath, templatePathTempValue).toString
+
     outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
   }
 
