@@ -63,7 +63,7 @@ class GenerateReceptionReportFeature extends Logging {
     GenerateReceptionReportFeatureResult(
       isSuccess = true,
       popUpMessage = "Successfully generated",
-      fileLocation = Some("location")
+      fileLocation = Some(fillingResult.outputFilePath)
     )
   }
 }

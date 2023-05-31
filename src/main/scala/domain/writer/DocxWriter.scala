@@ -17,14 +17,14 @@ class DocxWriter extends Logging with IsAWriterTrait {
    * @throws OutputDirNotFoundException if the `outputDirPath` does not exists
    */
   @throws(classOf[OutputDirNotFoundException])
-  def write(templateDoc: XWPFDocument, outputDirPath: String, fileName: String): String = {
+  def write(templateDoc: XWPFDocument, outputDirPath: String, fileName: String): WriteResult = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Writing " + fileName + " docx to " + outputDirPath, classFrom = getClass)
 
     val finalPath = constructFinalPath(outputDirPath = outputDirPath, fileName = fileName, fileExtension = fileExtension())
 
-    val outputMessage: String = tryWriteDocxSafely(templateDoc = templateDoc, finalPath = finalPath) match {
-      case Success(_) => s"Successfully written in $outputDirPath"
+    val outputMessage: WriteResult = tryWriteDocxSafely(templateDoc = templateDoc, finalPath = finalPath) match {
+      case Success(_) => new WriteResult(outputPath = finalPath, outputMessage = s"Successfully written in $outputDirPath")
 
       case Failure(fileNotFoundException: FileNotFoundException) => throw new OutputDirNotFoundException(outputDirPath = outputDirPath, cause = Some(fileNotFoundException))
       case Failure(exception: Exception) => throw exception

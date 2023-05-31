@@ -4,7 +4,7 @@ package features.services.filling
 import customexceptions.{EmptyXWPFDocumentException, OutputDirNotFoundException, TemplateFileNotFoundException}
 import domain.filler.DocxFiller
 import domain.reader.DocxReader
-import domain.writer.DocxWriter
+import domain.writer.{DocxWriter, WriteResult}
 import features.results.FillingResult
 import logging.LogsKeeper
 
@@ -47,17 +47,17 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
         return FillingResult(isSuccess = false, completionMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
-    var result: String = ""
+    var writeResult: WriteResult = new WriteResult("", "")
 
     try {
-      result = docxWriter.write(filledTemplateDoc, outputFilePath, fileName)
+      writeResult = docxWriter.write(filledTemplateDoc, outputFilePath, fileName)
     } catch {
       case outputDirNotFoundException: OutputDirNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = outputDirNotFoundException, classFrom = getClass)
         return FillingResult(isSuccess = false, completionMessage = outputDirNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
-    FillingResult(isSuccess = true, completionMessage = result, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+    FillingResult(isSuccess = true, completionMessage = writeResult.outputMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = writeResult.outputPath)
   }
 }
 

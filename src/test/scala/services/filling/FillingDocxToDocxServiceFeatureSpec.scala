@@ -50,7 +50,7 @@ class FillingDocxToDocxServiceFeatureSpec extends AnyFeatureSpecLike with GivenW
 
       Then("the result should be correct")
       fillingResult.completionMessage shouldEqual s"Successfully written in $outputFilePath"
-      fillingResult.outputFilePath shouldEqual outputFilePath
+      fillingResult.outputFilePath shouldEqual outputFilePath + generatedTemplateFileName + docxFileExtension
       fillingResult.filledDocRelativePath shouldEqual generatedTemplateFileRelativePath
       paragraphFromTheFilledDoc shouldEqual expectedDocxContentAfterFilling
     }

@@ -9,6 +9,7 @@ import scalafx.stage.{Modality, Stage}
 class PopupStage(popupMessage: String, fileLocation: String, isSuccess: Boolean) extends IsAPopupStageTrait {
 
   private val myStage: Stage = {
+
     val fileLocText = if (isSuccess) new Text(fileLocation) else new Text("vbenoitaàeraerdf")
     fileLocText.fill = Color.White
     val closeButton = createCloseButton
@@ -16,7 +17,8 @@ class PopupStage(popupMessage: String, fileLocation: String, isSuccess: Boolean)
       createResultTextHBox(isSuccess = isSuccess),
       createPopupMessageHBox(popupMessage),
       createFileLocationTextHBox(isSuccess = isSuccess, fileLocation = fileLocation),
-      createCloseButtonHBox(closeButton = closeButton)
+      createCloseButtonHBox(closeButton = closeButton),
+      createOpenFileImageHBox(isSuccess = isSuccess, fileLocation = fileLocation)
     )
     createStage(closeButton = closeButton, titleValue = "Success", childrenValue = childrenValue)
   }
