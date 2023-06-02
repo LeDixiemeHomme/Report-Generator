@@ -36,19 +36,4 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     document.getFooterList.get(0).getParagraphs.get(0).getText shouldEqual doNotReplaceValue
     document.getTables.get(0).getRows.get(1).getCell(0).getText shouldEqual doNotReplaceValue
   }
-
-  "An empty XWPFDocument" should "when filled should throws a EmptyXWPFDocumentException" in {
-    templateFilePath = getClass.getResource("/template-test-empty.docx").getPath
-
-    Given("an empty document")
-    document = new XWPFDocument(new FileInputStream(new File(templateFilePath)))
-
-    When("using the fillDocx method")
-    val caughtException = intercept[EmptyXWPFDocumentException] {
-      docxFiller.fillDocx(document, valuesMap)
-    }
-
-    Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le document word template est vide."
-  }
 }

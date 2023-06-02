@@ -49,31 +49,33 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
   if (DEBUG_MODE) submitButton.myButton.disable = false
 
-  var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
-  var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
-  var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
-
-  if (DEBUG_MODE) {
-    val resourcePath = "src/test/resources"
-
-    //    val dataPathTempValue = "reception-report-data-test-without-row-data.csv"
-    //    val dataPathTempValue = "reception-report-data-test-random-colomn-order.csv"
-    //    val dataPathTempValue = "reception-report-data-test-missing-values.csv"
-    //    val dataPathTempValue = "reception-report-data-test-missing-column.csv"
-    //    val dataPathTempValue = "reception-report-data-test-empty.csv"
-    val dataPathTempValue = "reception-report-data-test.csv"
-
-    //    val templatePathTempValue = "template-test-empty.docx"
-    val templatePathTempValue = "template-test.docx"
-
-    dataPathTemp = Paths.get(resourcePath, dataPathTempValue).toString
-
-    templatePathTemp = Paths.get(resourcePath, templatePathTempValue).toString
-
-    outputPathTemp = Paths.get("").toAbsolutePath.toString
-  }
-
   submitButton.myButton.onAction = _ => {
+
+    var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
+    var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
+    var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
+
+    if (DEBUG_MODE) {
+      val resourcePath = "src/test/resources"
+
+      //    val dataPathTempValue = "reception-report-data-test-without-row-data.csv"
+      //    val dataPathTempValue = "reception-report-data-test-random-colomn-order.csv"
+      //    val dataPathTempValue = "reception-report-data-test-missing-values.csv"
+      //    val dataPathTempValue = "reception-report-data-test-missing-column.csv"
+      //    val dataPathTempValue = "reception-report-data-test-empty.csv"
+      val dataPathTempValue = "reception-report-data-test.csv"
+
+      //    val templatePathTempValue = "template-test-empty.docx"
+      val templatePathTempValue = "template-test.docx"
+
+      dataPathTemp = Paths.get(resourcePath, dataPathTempValue).toString
+
+      templatePathTemp = Paths.get(resourcePath, templatePathTempValue).toString
+
+      outputPathTemp = Paths.get("").toAbsolutePath.toString
+    }
+
+
     val result: GenerateReceptionReportFeatureResult = GenerateReceptionReportFeature().action(
       dataPathTemp = dataPathTemp,
       templatePathTemp = templatePathTemp,

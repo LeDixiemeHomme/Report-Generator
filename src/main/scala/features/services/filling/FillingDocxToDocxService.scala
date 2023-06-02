@@ -37,6 +37,9 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
       case templateFileNotFoundException: TemplateFileNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = templateFileNotFoundException, classFrom = getClass)
         return FillingResult(isSuccess = false, popUpMessage = templateFileNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+      case emptyXWPFDocumentException: EmptyXWPFDocumentException =>
+        LogsKeeper.handleError(extLogger = logger, exception = emptyXWPFDocumentException, classFrom = getClass)
+        return FillingResult(isSuccess = false, popUpMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
     try {

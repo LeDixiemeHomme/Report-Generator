@@ -10,14 +10,8 @@ import org.apache.poi.xwpf.usermodel._
 import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 class DocxFiller extends Logging {
-  /**
-   * @throws EmptyXWPFDocumentException si le document `templateDoc` est vide
-   */
-  @throws(classOf[EmptyXWPFDocumentException])
   def fillDocx(templateDoc: XWPFDocument, valuesMap: Map[String, String]): XWPFDocument = {
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "fillDocx()", classFrom = getClass)
-
-    if (isEmptyDoc(templateDoc = templateDoc)) throw new EmptyXWPFDocumentException()
 
     val filledTemplateDoc: XWPFDocument = templateDoc
 
@@ -26,11 +20,6 @@ class DocxFiller extends Logging {
     fillTables(templateDoc = templateDoc, valuesMap = valuesMap)
 
     filledTemplateDoc
-  }
-
-  private def isEmptyDoc(templateDoc: XWPFDocument): Boolean = {
-    val hasNoParagraph: Boolean = templateDoc.getParagraphs.size() == 1 && templateDoc.getParagraphs.get(0).getText == ""
-    hasNoParagraph && templateDoc.getFooterList.isEmpty && templateDoc.getTables.isEmpty
   }
 
   private def fillParagraphs(templateDoc: XWPFDocument, valuesMap: Map[String, String]): Unit = {
