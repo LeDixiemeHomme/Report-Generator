@@ -23,10 +23,10 @@ class ProcessingDataService[A]() extends Logging with ProcessingServiceTrait[A] 
     } catch {
       case incompleteObjectInstantiationException: IncompleteObjectInstantiationException =>
         LogsKeeper.handleError(extLogger = logger, exception = incompleteObjectInstantiationException, classFrom = getClass)
-        return ProcessingResult(isSuccess = false, mapValues)
+        return ProcessingResult(isSuccess = false, popUpMessage = incompleteObjectInstantiationException.getMessage, processedData = mapValues)
     }
 
-    ProcessingResult(isSuccess = true, mapValues)
+    ProcessingResult(isSuccess = true, popUpMessage = "Successfully processed", processedData = mapValues)
   }
 }
 

@@ -16,7 +16,7 @@ class FillingResultSpec extends AnyFlatSpec with PrivateMethodTester with Before
   var fillingResult: FillingResult = _
 
   override def beforeEach(): Unit = {
-    fillingResult = FillingResult(isSuccess = true, completionMessage = completionMessage,
+    fillingResult = FillingResult(isSuccess = true, popUpMessage = completionMessage,
       filledDocRelativePath = filledDocRelativePath, outputFilePath = outputFilePath)
   }
 
@@ -27,7 +27,7 @@ class FillingResultSpec extends AnyFlatSpec with PrivateMethodTester with Before
   it should "return correct values for its properties" in {
 
     Then("all properties have the right value")
-    fillingResult.completionMessage shouldEqual completionMessage
+    fillingResult.popUpMessage shouldEqual completionMessage
     fillingResult.filledDocRelativePath shouldEqual filledDocRelativePath
     fillingResult.outputFilePath shouldEqual outputFilePath
   }

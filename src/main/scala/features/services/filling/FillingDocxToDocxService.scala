@@ -36,7 +36,7 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
     } catch {
       case templateFileNotFoundException: TemplateFileNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = templateFileNotFoundException, classFrom = getClass)
-        return FillingResult(isSuccess = false, completionMessage = templateFileNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+        return FillingResult(isSuccess = false, popUpMessage = templateFileNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
     try {
@@ -44,7 +44,7 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
     } catch {
       case emptyXWPFDocumentException: EmptyXWPFDocumentException =>
         LogsKeeper.handleError(extLogger = logger, exception = emptyXWPFDocumentException, classFrom = getClass)
-        return FillingResult(isSuccess = false, completionMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+        return FillingResult(isSuccess = false, popUpMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
     var writeResult: WriteResult = new WriteResult("", "")
@@ -54,10 +54,10 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
     } catch {
       case outputDirNotFoundException: OutputDirNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = outputDirNotFoundException, classFrom = getClass)
-        return FillingResult(isSuccess = false, completionMessage = outputDirNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+        return FillingResult(isSuccess = false, popUpMessage = outputDirNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
-    FillingResult(isSuccess = true, completionMessage = writeResult.outputMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = writeResult.outputPath)
+    FillingResult(isSuccess = true, popUpMessage = writeResult.outputMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = writeResult.outputPath)
   }
 }
 

@@ -49,6 +49,6 @@ class DocxFillerSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     }
 
     Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le XWPFDocument est vide."
+    caughtException.getMessage shouldEqual "Le document word template est vide."
   }
 }

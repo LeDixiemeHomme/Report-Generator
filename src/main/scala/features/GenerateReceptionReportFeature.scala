@@ -27,7 +27,7 @@ class GenerateReceptionReportFeature extends Logging {
 
     if (parsingResult.parsedData.isEmpty) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
-      popUpMessage = "parsingResult.parsedData.isEmpty",
+      popUpMessage = parsingResult.popUpMessage,
       fileLocation = None
     )
 
@@ -39,7 +39,7 @@ class GenerateReceptionReportFeature extends Logging {
 
     if (processingResult.processedData.isEmpty) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
-      popUpMessage = "processingResult.processedData.isEmpty",
+      popUpMessage = parsingResult.popUpMessage,
       fileLocation = None
     )
 
@@ -54,7 +54,7 @@ class GenerateReceptionReportFeature extends Logging {
 
     if (!fillingResult.isSuccess) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
-      popUpMessage = fillingResult.completionMessage,
+      popUpMessage = fillingResult.popUpMessage,
       fileLocation = None
     )
 
@@ -62,7 +62,7 @@ class GenerateReceptionReportFeature extends Logging {
 
     GenerateReceptionReportFeatureResult(
       isSuccess = true,
-      popUpMessage = "Successfully generated",
+      popUpMessage = "Rapport de réception généré avec succès.",
       fileLocation = Some(fillingResult.outputFilePath)
     )
   }

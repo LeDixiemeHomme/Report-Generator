@@ -24,16 +24,16 @@ class ParsingCsvService[A](csvParserTrait: IsACSVFileParserTrait) extends Loggin
     } catch {
       case dataFileNotFoundException: DataFileNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = dataFileNotFoundException, classFrom = getClass)
-        return ParsingResult(isSuccess = false, Nil)
+        return ParsingResult(isSuccess = false, popUpMessage = dataFileNotFoundException.getMessage, parsedData = Nil)
       case missingCSVColumnException: MissingCSVColumnException =>
         LogsKeeper.handleError(extLogger = logger, exception = missingCSVColumnException, classFrom = getClass)
-        return ParsingResult(isSuccess = false, Nil)
+        return ParsingResult(isSuccess = false, popUpMessage = missingCSVColumnException.getMessage, parsedData = Nil)
       case noRowInCSVException: NoRowInCSVException =>
         LogsKeeper.handleError(extLogger = logger, exception = noRowInCSVException, classFrom = getClass)
-        return ParsingResult(isSuccess = false, Nil)
+        return ParsingResult(isSuccess = false, popUpMessage = noRowInCSVException.getMessage, parsedData = Nil)
     }
 
-    ParsingResult(isSuccess = true, dataList.toList)
+    ParsingResult(isSuccess = true, popUpMessage = "Successfully parsed", parsedData = dataList.toList)
   }
 }
 
