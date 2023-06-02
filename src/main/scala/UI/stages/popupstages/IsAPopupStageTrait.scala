@@ -15,39 +15,37 @@ import scala.sys.process.stringSeqToProcess
 
 trait IsAPopupStageTrait extends IsAStageTrait {
 
+  private def createImageView(imageFileName: String) = {
+    val imageView = new ImageView(
+      new Image("file:" + Paths.get("src/main/resources/images/", imageFileName).toAbsolutePath.toString)
+    )
+    imageView.fitHeight = 70
+    imageView.fitWidth = 70
+    imageView
+  }
+
   def createOpenFileImageHBox(isSuccess: Boolean, fileLocation: String): HBox = {
     val resourcePath = "src/main/resources/images/"
     val openFilePath = Paths.get(resourcePath, "open-file-100.png").toAbsolutePath.toString
     val openFileOverPath = Paths.get(resourcePath, "open-file-over-100.png").toAbsolutePath.toString
-    val openFileFailureCrossPath = Paths.get(resourcePath, "open-file-failure-cross-100.png").toAbsolutePath.toString
 
-    val image = new Image("file:" + openFilePath)
-    val imageOver = new Image("file:" + openFileOverPath)
-    val imageFailure = new Image("file:" + openFileFailureCrossPath)
-    var imageView = new ImageView(imageFailure)
+    var imageView = createImageView(imageFileName = "open-file-failure-cross-100.png")
 
     if (isSuccess) {
-      imageView = new ImageView(image)
+      imageView = createImageView(imageFileName = "open-file-100.png")
       imageView.setOnMouseClicked(_ => {
-        // faire quelque chose lorsqu'on clique sur l'image
-        println("L'image a été cliquée")
         Seq("cmd", "/c", "start", fileLocation).!
       })
 
-      imageView.setOnMouseEntered(_ => {
-        println("setOnMouseEntered")
-        imageView.setImage(imageOver)
-      })
-
-      imageView.setOnMouseExited(_ => {
-        println("setOnMouseExited")
-        imageView.setImage(image)
-      })
+      imageView.setOnMouseExited(_ => imageView.setImage(new Image("file:" + openFilePath)))
+      imageView.setOnMouseEntered(_ => imageView.setImage(new Image("file:" + openFileOverPath)))
     }
+
     new HBox {
       children = imageView
     }
   }
+
   def createPopupMessageHBox(popupMessage: String): HBox = new HBox {
     border = DebugBorder(Color.Red).border
     children = new Text {
