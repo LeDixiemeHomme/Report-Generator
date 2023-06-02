@@ -1,24 +1,31 @@
 package fr.valle.report_generator
 package UI.stages.popupstages
 
+import UI.DebugBorder
+
 import scalafx.scene.Node
+import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
 import scalafx.stage.{Modality, Stage}
 
-class PopupStage(popupMessage: String, fileLocation: String, isSuccess: Boolean) extends IsAPopupStageTrait {
+class PopupStage(val popupMessage: String, val fileLocation: String, val isSuccess: Boolean) extends IsAPopupStageTrait {
 
-  private val myStage: Stage = {
+  private def myStage: Stage = {
 
     val fileLocText = if (isSuccess) new Text(fileLocation) else new Text("vbenoitaàeraerdf")
     fileLocText.fill = Color.White
     val closeButton = createCloseButton
     val childrenValue: Seq[Node] = Seq(
-      createResultTextHBox(isSuccess = isSuccess),
+      new HBox {
+        border = DebugBorder(Color.Blue).border
+        children = Seq(
+          createResultTextHBox(isSuccess = isSuccess),
+          createOpenFileImageHBox(isSuccess = isSuccess, fileLocation = fileLocation)
+        )
+      },
       createPopupMessageHBox(popupMessage),
-      createFileLocationTextHBox(isSuccess = isSuccess, fileLocation = fileLocation),
       createCloseButtonHBox(closeButton = closeButton),
-      createOpenFileImageHBox(isSuccess = isSuccess, fileLocation = fileLocation)
     )
     createStage(closeButton = closeButton, titleValue = "Success", childrenValue = childrenValue)
   }
