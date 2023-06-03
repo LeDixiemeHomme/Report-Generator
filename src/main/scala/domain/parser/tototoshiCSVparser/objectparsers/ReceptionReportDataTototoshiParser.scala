@@ -44,7 +44,7 @@ class ReceptionReportDataTototoshiParser extends IsAnObjectParserTrait[Reception
           val jour = row("Jour")
           val intervenant = row("Intervenant")
           val sexe = row("Sexe")
-          val societeSoutraite = row("Societe_soutraite")
+          val societeSoutraite = row("Societe_sous_traite")
           val nom1 = row("Nom1")
           val nom2 = row("Nom2")
           val numeroAffaire = row("Numero_d_affaire")

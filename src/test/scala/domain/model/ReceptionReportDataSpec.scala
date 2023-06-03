@@ -18,7 +18,7 @@ class ReceptionReportDataSpec extends AnyFlatSpec with PrivateMethodTester with 
   }
 
   it should "have a correct string representation" in {
-    val correctStringValue: String = "ReceptionReportData{Nombre sorbonnes: 2, Mois: Janvier, Année: 2023, Nom établissement: Université Sorbonne Paris Nord, Ville: Villetaneuse, Département: Seine-Saint-Denis, Adresse: 1 Rue de la Croix Faron, Code postal: 93430, Jour: 15, Intervenant: John Doe, Sexe: M, Société soutraite: FabCorp, Nom1: Robert, Nom2: Dupont, Numéro d'affaire: ABC123}"
+    val correctStringValue: String = "ReceptionReportData{Nombre sorbonnes: 2, Mois: Janvier, Année: 2023, Nom établissement: Université Sorbonne Paris Nord, Ville: Villetaneuse, Département: Seine-Saint-Denis, Adresse: 1 Rue de la Croix Faron, Code postal: 93430, Jour: 15, Intervenant: John Doe, Sexe: M, Société sous-traite: FabCorp, Nom1: Robert, Nom2: Dupont, Numéro d'affaire: ABC123}"
 
     Given("a ReceptionReportData")
     println(receptionReportData_1)
@@ -47,7 +47,7 @@ class ReceptionReportDataSpec extends AnyFlatSpec with PrivateMethodTester with 
     receptionReportData_1.jour shouldEqual TestDataProvider.jour1
     receptionReportData_1.intervenant shouldEqual TestDataProvider.intervenant1
     receptionReportData_1.sexe shouldEqual TestDataProvider.sexe1
-    receptionReportData_1.societeSoutraite shouldEqual TestDataProvider.societeSoutraite1
+    receptionReportData_1.societeSousTraite shouldEqual TestDataProvider.societeSoutraite1
     receptionReportData_1.nom1 shouldEqual TestDataProvider.nom11
     receptionReportData_1.nom2 shouldEqual TestDataProvider.nom21
     receptionReportData_1.numeroAffaire shouldEqual TestDataProvider.numeroAffaire1

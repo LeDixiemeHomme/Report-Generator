@@ -11,12 +11,12 @@ import scala.util.{Failure, Success, Try}
 
 case class ReceptionReportData(nombreSorbonnes: String, mois: String, annee: String, nomEtablissement: String,
                                ville: String, departement: String, adresse: String, codePostal: String,
-                               jour: String, intervenant: String, sexe: String, societeSoutraite: String,
+                               jour: String, intervenant: String, sexe: String, societeSousTraite: String,
                                nom1: String, nom2: String, numeroAffaire: String) {
   override def toString: String = {
     s"ReceptionReportData{Nombre sorbonnes: $nombreSorbonnes, Mois: $mois, Année: $annee, Nom établissement: $nomEtablissement, " +
       s"Ville: $ville, Département: $departement, Adresse: $adresse, Code postal: $codePostal, Jour: $jour, " +
-      s"Intervenant: $intervenant, Sexe: $sexe, Société soutraite: $societeSoutraite, Nom1: $nom1, Nom2: $nom2, Numéro d'affaire: $numeroAffaire}"
+      s"Intervenant: $intervenant, Sexe: $sexe, Société sous-traite: $societeSousTraite, Nom1: $nom1, Nom2: $nom2, Numéro d'affaire: $numeroAffaire}"
   }
 }
 
@@ -33,7 +33,7 @@ object ReceptionReportData extends Logging {
       Option(data.jour).isDefined &&
       Option(data.intervenant).isDefined &&
       Option(data.sexe).isDefined &&
-      Option(data.societeSoutraite).isDefined &&
+      Option(data.societeSousTraite).isDefined &&
       Option(data.nom1).isDefined &&
       Option(data.nom2).isDefined &&
       Option(data.numeroAffaire).isDefined
@@ -68,7 +68,7 @@ object ReceptionReportData extends Logging {
           "#jour#" -> inputData.jour,
           "#intervenant#" -> inputData.intervenant,
           "#sexe#" -> inputData.sexe,
-          "#societe_soutraite#" -> inputData.societeSoutraite,
+          "#societe_soutraite#" -> inputData.societeSousTraite,
           "#nom1#" -> inputData.nom1,
           "#nom2#" -> inputData.nom2,
           "#numero_d_affaire#" -> inputData.numeroAffaire
