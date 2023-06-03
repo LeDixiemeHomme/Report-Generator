@@ -25,7 +25,7 @@ class ParsingCsvServiceFeatureSpec extends AnyFeatureSpecLike with GivenWhenThen
     Scenario("Using a filePath to create a parsingReceptionReportDataResult containing a list of ReceptionReportData objects") {
 
       val expectedParsingReceptionReportDataResult: ParsingResult[ReceptionReportData] =
-        ParsingResult(isSuccess = false, parsedData = List(
+        ParsingResult(isSuccess = false, popUpMessage = "", parsedData = List(
           TestDataProvider.provideReceptionReportData_1,
           TestDataProvider.provideReceptionReportData_2)
         )

@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package customexceptions
 
-class EmptyXWPFDocumentException(val cause: Option[Throwable] = None)
-  extends Exception(String.format("Le XWPFDocument est vide.")) {
+case class EmptyXWPFDocumentException(templateFilePath: String, cause: Option[Throwable] = None)
+  extends Exception(String.format("Le document word template %s est vide.", templateFilePath)) {
   initCause(cause.orNull)
 }

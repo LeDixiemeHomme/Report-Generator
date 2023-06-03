@@ -1,10 +1,10 @@
 package fr.valle.report_generator
 package features.services.filling
 
-import customexceptions.{EmptyXWPFDocumentException, OutputDirNotFoundException, TemplateFileNotFoundException}
+import customexceptions.{EmptyXWPFDocumentException, OutputDirNotFoundException, TemplateFileNotFoundException, WrongFileFormatException}
 import domain.filler.DocxFiller
 import domain.reader.DocxReader
-import domain.writer.DocxWriter
+import domain.writer.{DocxWriter, WriteResult}
 import features.results.FillingResult
 import logging.LogsKeeper
 
@@ -36,7 +36,13 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
     } catch {
       case templateFileNotFoundException: TemplateFileNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = templateFileNotFoundException, classFrom = getClass)
-        return FillingResult(isSuccess = false, completionMessage = templateFileNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+        return FillingResult(isSuccess = false, popUpMessage = templateFileNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+      case emptyXWPFDocumentException: EmptyXWPFDocumentException =>
+        LogsKeeper.handleError(extLogger = logger, exception = emptyXWPFDocumentException, classFrom = getClass)
+        return FillingResult(isSuccess = false, popUpMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+    case wrongFileFormatException: WrongFileFormatException =>
+        LogsKeeper.handleError(extLogger = logger, exception = wrongFileFormatException, classFrom = getClass)
+        return FillingResult(isSuccess = false, popUpMessage = wrongFileFormatException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
     try {
@@ -44,20 +50,20 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
     } catch {
       case emptyXWPFDocumentException: EmptyXWPFDocumentException =>
         LogsKeeper.handleError(extLogger = logger, exception = emptyXWPFDocumentException, classFrom = getClass)
-        return FillingResult(isSuccess = false, completionMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+        return FillingResult(isSuccess = false, popUpMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
-    var result: String = ""
+    var writeResult: WriteResult = new WriteResult("", "")
 
     try {
-      result = docxWriter.write(filledTemplateDoc, outputFilePath, fileName)
+      writeResult = docxWriter.write(filledTemplateDoc, outputFilePath, fileName)
     } catch {
       case outputDirNotFoundException: OutputDirNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = outputDirNotFoundException, classFrom = getClass)
-        return FillingResult(isSuccess = false, completionMessage = outputDirNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+        return FillingResult(isSuccess = false, popUpMessage = outputDirNotFoundException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
-    FillingResult(isSuccess = true, completionMessage = result, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+    FillingResult(isSuccess = true, popUpMessage = writeResult.outputMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = writeResult.outputPath)
   }
 }
 

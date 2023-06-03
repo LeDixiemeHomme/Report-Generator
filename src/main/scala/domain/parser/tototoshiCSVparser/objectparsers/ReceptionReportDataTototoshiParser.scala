@@ -20,9 +20,9 @@ class ReceptionReportDataTototoshiParser extends IsAnObjectParserTrait[Reception
 
     val receptionReportDataIterator: List[ReceptionReportData] = tryReadSafely(reader = tototoshiCSVReader) match {
       case Success(list: List[ReceptionReportData]) if list.nonEmpty => list
-      case Success(_: List[ReceptionReportData]) => throw new NoRowInCSVException()
+      case Success(_: List[ReceptionReportData]) => throw NoRowInCSVException()
 
-      case Failure(noSuchElementException: NoSuchElementException) => throw new MissingCSVColumnException(noSuchElementExceptionMessage = noSuchElementException.getMessage, cause = Some(noSuchElementException))
+      case Failure(noSuchElementException: NoSuchElementException) => throw MissingCSVColumnException(noSuchElementExceptionMessage = noSuchElementException.getMessage, cause = Some(noSuchElementException))
       case Failure(exception) => throw exception
     }
 

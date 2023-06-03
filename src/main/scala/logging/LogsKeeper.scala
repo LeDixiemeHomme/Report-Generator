@@ -25,7 +25,7 @@ object LogsKeeper extends Logging with LoggingSubject {
     case WARN => extLogger.warn(message)
     case ERROR => extLogger.error(message)
     case FATAL => extLogger.fatal(message)
-    case _ => throw new UnknownLevelLogsKeeperException(level = level)
+    case _ => throw UnknownLevelLogsKeeperException(level = level)
   }
 
   final val TRACE: String = "TRACE"

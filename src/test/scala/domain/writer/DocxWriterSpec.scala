@@ -26,10 +26,10 @@ class DocxWriterSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     fileName = "file-result"
 
     When("using the write method")
-    val result: String = docxWriter.write(templateDoc = document, outputDirPath = outputDirPath, fileName = fileName)
+    val result: WriteResult = docxWriter.write(templateDoc = document, outputDirPath = outputDirPath, fileName = fileName)
 
     Then("the result should be correct")
-    result shouldEqual "Successfully written in " + outputDirPath
+    result.outputMessage shouldEqual "Successfully written in " + outputDirPath
   }
 
   it should "have a built final path" in {

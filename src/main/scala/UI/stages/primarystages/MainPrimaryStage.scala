@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package UI.stages
+package UI.stages.primarystages
 
 import UI.sections._
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
@@ -8,7 +8,7 @@ import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, Recepti
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.titlesection.TitleSection
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
-import UI.stages.MainStage.APP_TITLE
+import UI.stages.primarystages.MainPrimaryStage.APP_TITLE
 import UI.{DebugBorder, Shaper}
 
 import scalafx.application.JFXApp3
@@ -17,7 +17,7 @@ import scalafx.scene.Scene
 import scalafx.scene.layout.{Background, BackgroundFill, HBox, VBox}
 import scalafx.scene.paint.{Color, CycleMethod, LinearGradient}
 
-class MainStage extends IsAStageTrait {
+class MainPrimaryStage extends IsAPrimaryStageTrait {
 
   private class StageContent() {
     private val receptionReportDataFormPage: IsAPageTrait = ReceptionReportFormPage()
@@ -60,7 +60,7 @@ class MainStage extends IsAStageTrait {
 
   private val mainContent = new StageContent().myContent
 
-  override def myStage: JFXApp3.PrimaryStage = new JFXApp3.PrimaryStage {
+  override def myPrimaryStage: JFXApp3.PrimaryStage = new JFXApp3.PrimaryStage {
     title = APP_TITLE.toTitle
     scene = new Scene {
       fill = Color.rgb(38, 38, 38)
@@ -70,8 +70,8 @@ class MainStage extends IsAStageTrait {
   }
 }
 
-object MainStage {
+object MainPrimaryStage {
   final val APP_TITLE: IsATitleTrait = ReportGeneratorTitle()
 
-  def apply(): MainStage = new MainStage()
+  def apply(): MainPrimaryStage = new MainPrimaryStage()
 }

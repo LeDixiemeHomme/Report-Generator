@@ -5,11 +5,15 @@ import UI.DebugBorder.DEBUG_MODE
 import UI.sections.pagesection.pagecontent.form.FormReport
 import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrategypattern.stategies.{BrowseDirectoryButtonStrategy, BrowseFileButtonStrategy, NoneBrowseButtonStrategy}
 import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
+import UI.stages.IsAStageTrait
+import UI.stages.popupstages.PopupStage
 import features.GenerateReceptionReportFeature
 import features.results.GenerateReceptionReportFeatureResult
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.scene.layout._
+
+import java.nio.file.Paths
 
 class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
@@ -45,32 +49,43 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
 
   if (DEBUG_MODE) submitButton.myButton.disable = false
 
-  var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
-  var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
-  var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
-
-  if (DEBUG_MODE) {
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-without-row-data.csv"
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-random-colomn-order.csv"
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-values.csv"
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-missing-column.csv"
-    //    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test-empty.csv"
-    dataPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\test\\resources\\reception-report-data-test.csv"
-    //    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-report-data-v1-3-mini.docx"
-    templatePathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\src\\main\\resources\\inputs\\templates\\template-test-empty.docx"
-    outputPathTemp = "C:\\Users\\benoi\\Dev\\Projects\\Report-Generator\\outputs\\"
-  }
-
   submitButton.myButton.onAction = _ => {
+
+    var dataPathTemp: String = dataFilePathFormSection.myTextField.getText
+    var templatePathTemp: String = templateFilePathFormSection.myTextField.getText
+    var outputPathTemp: String = outputDirectoryFormSection.myTextField.getText
+
+    if (DEBUG_MODE) {
+      val resourcePath = "src/test/resources"
+
+      //    val dataPathTempValue = "reception-report-data-test-without-row-data.csv"
+      //    val dataPathTempValue = "reception-report-data-test-random-colomn-order.csv"
+      //    val dataPathTempValue = "reception-report-data-test-missing-values.csv"
+      //    val dataPathTempValue = "reception-report-data-test-missing-column.csv"
+      //    val dataPathTempValue = "reception-report-data-test-empty.csv"
+      val dataPathTempValue = "reception-report-data-test.csv"
+
+      //    val templatePathTempValue = "template-test-empty.docx"
+      val templatePathTempValue = "template-test.docx"
+
+      dataPathTemp = Paths.get(resourcePath, dataPathTempValue).toString
+
+      templatePathTemp = Paths.get(resourcePath, templatePathTempValue).toString
+
+      outputPathTemp = Paths.get("").toAbsolutePath.toString
+    }
+
+
     val result: GenerateReceptionReportFeatureResult = GenerateReceptionReportFeature().action(
       dataPathTemp = dataPathTemp,
       templatePathTemp = templatePathTemp,
       outputPathTemp = outputPathTemp,
       outputFileName = outputFileNameFormSection.myTextField.getText
     )
-    println(result.popUpMessage)
-    println(result.isSuccess)
-    println(result.fileLocation.getOrElse("empty"))
+
+    val popupStage: IsAStageTrait = PopupStage(popupMessage = result.popUpMessage, fileLocation = result.fileLocation.getOrElse(""), isSuccess = result.isSuccess)
+
+    popupStage.showMyStage()
   }
 
   val fields: List[IsAFormSectionTrait] = List(
