@@ -45,7 +45,7 @@ object ReceptionReportData extends Logging {
       val mapValue: Map[String, String] = tryToMapValueSafely(inputData = inputData) match {
         case Success(mapValue: Map[String, String]) => mapValue
 
-        case Failure(nullPointerException: NullPointerException) => throw new IncompleteObjectInstantiationException(
+        case Failure(nullPointerException: NullPointerException) => throw IncompleteObjectInstantiationException(
           wronglyInstantiateObject = inputData, cause = Some(nullPointerException))
         case Failure(exception) => throw exception
       }

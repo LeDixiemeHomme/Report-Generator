@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package features.services.filling
 
-import customexceptions.{EmptyXWPFDocumentException, OutputDirNotFoundException, TemplateFileNotFoundException}
+import customexceptions.{EmptyXWPFDocumentException, OutputDirNotFoundException, TemplateFileNotFoundException, WrongFileFormatException}
 import domain.filler.DocxFiller
 import domain.reader.DocxReader
 import domain.writer.{DocxWriter, WriteResult}
@@ -40,6 +40,9 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
       case emptyXWPFDocumentException: EmptyXWPFDocumentException =>
         LogsKeeper.handleError(extLogger = logger, exception = emptyXWPFDocumentException, classFrom = getClass)
         return FillingResult(isSuccess = false, popUpMessage = emptyXWPFDocumentException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
+    case wrongFileFormatException: WrongFileFormatException =>
+        LogsKeeper.handleError(extLogger = logger, exception = wrongFileFormatException, classFrom = getClass)
+        return FillingResult(isSuccess = false, popUpMessage = wrongFileFormatException.getMessage, filledDocRelativePath = outputFilePath + fileName + ".docx", outputFilePath = outputFilePath)
     }
 
     try {

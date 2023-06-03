@@ -26,7 +26,7 @@ class DocxWriter extends Logging with IsAWriterTrait {
     val outputMessage: WriteResult = tryWriteDocxSafely(templateDoc = templateDoc, finalPath = finalPath) match {
       case Success(_) => new WriteResult(outputPath = finalPath, outputMessage = s"Successfully written in $outputDirPath")
 
-      case Failure(fileNotFoundException: FileNotFoundException) => throw new OutputDirNotFoundException(outputDirPath = outputDirPath, cause = Some(fileNotFoundException))
+      case Failure(fileNotFoundException: FileNotFoundException) => throw OutputDirNotFoundException(outputDirPath = outputDirPath, cause = Some(fileNotFoundException))
       case Failure(exception: Exception) => throw exception
     }
 
