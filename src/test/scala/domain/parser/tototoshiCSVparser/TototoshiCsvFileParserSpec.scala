@@ -4,6 +4,7 @@ package domain.parser.tototoshiCSVparser
 import customexceptions.DataFileNotFoundException
 import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
 
+import fr.valle.report_generator.domain.path.FilePath
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}
@@ -24,7 +25,7 @@ class TototoshiCsvFileParserSpec extends AnyFlatSpec with PrivateMethodTester wi
     filePath = getClass.getResource("/reception-report-data-test.csv").getPath
 
     When("using the parseFile method with the ReceptionReportDataTototoshiParser Trait")
-    val parsedReceptionReportDataList = csvParser.parseFile(csvFilePath = filePath)(ReceptionReportDataTototoshiParser())
+    val parsedReceptionReportDataList = csvParser.parseFile(csvFilePath = FilePath.stringToFilePath(filePath))(ReceptionReportDataTototoshiParser())
 
     Then("the list created from the parsing is equal to the listExpected")
     parsedReceptionReportDataList shouldEqual listExpected
@@ -38,10 +39,10 @@ class TototoshiCsvFileParserSpec extends AnyFlatSpec with PrivateMethodTester wi
 
     When("using the parseFile method with the ReceptionReportDataTototoshiParser Trait")
     val caughtException = intercept[DataFileNotFoundException] {
-      csvParser.parseFile(csvFilePath = filePath + "/does-not-exist")(ReceptionReportDataTototoshiParser())
+      csvParser.parseFile(csvFilePath = FilePath.stringToFilePath(filePath + "/does-not-exist.csv"))(ReceptionReportDataTototoshiParser())
     }
 
     Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le fichier de données \"" + getClass.getResource("/reception-report-data-test.csv").getPath + "/does-not-exist\" est introuvable."
+    caughtException.getMessage shouldEqual "Le fichier de données \"" + getClass.getResource("/reception-report-data-test.csv").getPath + "/does-not-exist.csv\" est introuvable."
   }
 }

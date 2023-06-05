@@ -7,6 +7,7 @@ import UI.sections.pagesection.pagecontent.form.formsections.browsebuttonstrateg
 import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, LabelTextFieldBrowseFormSection, SubmitButtonFormSection}
 import UI.stages.IsAStageTrait
 import UI.stages.popupstages.PopupStage
+import domain.path.FilePath
 import features.GenerateReceptionReportFeature
 import features.results.GenerateReceptionReportFeatureResult
 
@@ -83,7 +84,11 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
       outputFileName = outputFileNameFormSection.myTextField.getText
     )
 
-    val popupStage: IsAStageTrait = PopupStage(popupMessage = result.popUpMessage, fileLocation = result.fileLocationPath.getOrElse(""), isSuccess = result.isSuccess)
+    val popupStage: IsAStageTrait = PopupStage(
+      popupMessage = result.popUpMessage,
+      fileLocation = result.fileLocationPath.getOrElse("").asInstanceOf[FilePath].constructFinalPath,
+      isSuccess = result.isSuccess
+    )
 
     popupStage.showMyStage()
   }

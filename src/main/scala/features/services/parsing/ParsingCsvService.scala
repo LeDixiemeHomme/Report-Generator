@@ -3,6 +3,7 @@ package features.services.parsing
 
 import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, NoRowInCSVException}
 import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
+import domain.path.FilePath
 import features.results.ParsingResult
 import logging.LogsKeeper
 
@@ -13,7 +14,7 @@ import scala.collection.mutable.ListBuffer
 class ParsingCsvService[A](csvParserTrait: IsACSVFileParserTrait) extends Logging with ParsingServiceTrait[A] {
   private val csvParser: IsACSVFileParserTrait = csvParserTrait
 
-  override def parse(filePath: String)(implicit parser: IsAnObjectParserTrait[A]): ParsingResult[A] = {
+  override def parse(filePath: FilePath)(implicit parser: IsAnObjectParserTrait[A]): ParsingResult[A] = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Parsing csv file", classFrom = getClass)
 

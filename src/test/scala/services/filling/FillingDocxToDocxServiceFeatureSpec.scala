@@ -3,6 +3,7 @@ package services.filling
 
 import features.services.filling.FillingDocxToDocxService
 
+import fr.valle.report_generator.domain.path.FilePath
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.featurespec.AnyFeatureSpecLike
 import org.scalatest.matchers.should.Matchers
@@ -43,15 +44,14 @@ class FillingDocxToDocxServiceFeatureSpec extends AnyFeatureSpecLike with GivenW
       val valuesMap: Map[String, String] = TestDataProvider.provideReceptionReportData_1MapValues
 
       When("using the FillingDocxToDocxService.fill method")
-      val fillingResult = fillingDocxToDocxService.fill(templateFilePath = templateFilePath, valuesMap = valuesMap,
-        outputFilePath = outputFilePath, optionalFileName = Some(generatedTemplateFileName))
+      val fillingResult = fillingDocxToDocxService.fill(templateFilePath = FilePath.stringToFilePath(templateFilePath), valuesMap = valuesMap,
+        outputFilePath = FilePath.stringToFilePath(generatedTemplateFileRelativePath))
 
-      val paragraphFromTheFilledDoc = new XWPFDocument(new FileInputStream(new File(fillingResult.filledDocRelativePath))).getParagraphs.get(0).getText()
+      val paragraphFromTheFilledDoc = new XWPFDocument(new FileInputStream(new File(fillingResult.filledDocRelativePath.get.constructFinalPath))).getParagraphs.get(0).getText()
 
       Then("the result should be correct")
-      fillingResult.popUpMessage shouldEqual s"Successfully written in $outputFilePath"
-      fillingResult.outputFilePath shouldEqual outputFilePath + generatedTemplateFileName + docxFileExtension
-      fillingResult.filledDocRelativePath shouldEqual generatedTemplateFileRelativePath
+      fillingResult.popUpMessage shouldEqual s"Successfully written $generatedTemplateFileName$docxFileExtension in $outputFilePath"
+      fillingResult.filledDocRelativePath.get.constructFinalPath shouldEqual generatedTemplateFileRelativePath
       paragraphFromTheFilledDoc shouldEqual expectedDocxContentAfterFilling
     }
   }

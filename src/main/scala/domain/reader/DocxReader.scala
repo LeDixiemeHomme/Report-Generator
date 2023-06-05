@@ -39,7 +39,7 @@ class DocxReader extends Logging {
     }
 
 
-    if (isEmptyDoc(templateDoc = templateDoc)) throw EmptyXWPFDocumentException(templateFilePath = templateFilePath)
+    if (isEmptyDoc(templateDoc = templateDoc)) throw EmptyXWPFDocumentException(templateFilePath = templateFilePath.constructFinalPath)
     templateDoc
   }
 

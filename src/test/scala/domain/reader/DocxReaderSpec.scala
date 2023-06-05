@@ -3,6 +3,7 @@ package domain.reader
 
 import customexceptions.{EmptyXWPFDocumentException, TemplateFileNotFoundException}
 
+import fr.valle.report_generator.domain.path.FilePath
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -23,7 +24,7 @@ class DocxReaderSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     templateFilePath = getClass.getResource("/template-test.docx").getPath
 
     When("using the readDocx method")
-    val document = docxReader.readDocx(templateFilePath = templateFilePath)
+    val document = docxReader.readDocx(templateFilePath = FilePath.stringToFilePath(templateFilePath))
 
     Then("the caught exception should be correct")
     document shouldEqual document
@@ -35,11 +36,11 @@ class DocxReaderSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
 
     When("using the readDocx method")
     val caughtException = intercept[TemplateFileNotFoundException] {
-      docxReader.readDocx(templateFilePath = templateFilePath + "/does-not-exist")
+      docxReader.readDocx(templateFilePath =FilePath.stringToFilePath(templateFilePath + "/does-not-exist.docx"))
     }
 
     Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le fichier template \"" + getClass.getResource("/template-test-empty.docx").getPath + "/does-not-exist\" est introuvable."
+    caughtException.getMessage shouldEqual "Le fichier template \"" + getClass.getResource("/template-test-empty.docx").getPath + "/does-not-exist.docx\" est introuvable."
   }
 
   "An empty XWPFDocument" should "when read should throws a EmptyXWPFDocumentException" in {
@@ -49,7 +50,7 @@ class DocxReaderSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
 
     When("using the fillDocx method")
     val caughtException = intercept[EmptyXWPFDocumentException] {
-      docxReader.readDocx(templateFilePath)
+      docxReader.readDocx(FilePath.stringToFilePath(templateFilePath))
     }
 
     Then("the caught exception should be correct")

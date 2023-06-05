@@ -22,7 +22,7 @@ class ProcessingDataServiceFeatureSpec extends AnyFeatureSpecLike with GivenWhen
 
     Scenario("Using a ReceptionReportData object to create a processingResult containing an mapValues") {
 
-      val expectedProcessingResult: ProcessingResult = ProcessingResult(isSuccess = true, popUpMessage = "", processedData = TestDataProvider.provideReceptionReportData_1MapValues)
+      val expectedProcessingResult: ProcessingResult = ProcessingResult(isSuccess = true, popUpMessage = "Successfully processed", processedData = TestDataProvider.provideReceptionReportData_1MapValues)
 
       Given("a ReceptionReportData object")
       val receptionReportData: ReceptionReportData = TestDataProvider.provideReceptionReportData_1

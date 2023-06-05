@@ -16,7 +16,13 @@ class FilePathSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAf
   it should "afficher l'objet normalement avec toString" in {
     filePath = FilePath(basePath = "C:basePath", fileName = FileName(value = "a/file/name"), extension = Extensions.csv)
 
-    filePath.toString shouldEqual "FilePath{ basePath: C:basePath, fileName: a/file/name, extension: csv }"
+    filePath.toString shouldEqual "FilePath{ basePath: C:basePath/, fileName: a/file/name, extension: csv }"
+  }
+
+  it should "seulement nom fichier" in {
+    filePath = FilePath(basePath = "C:basePath", fileName = FileName(value = "a/file/name.docx"), extension = Extensions.csv)
+
+    filePath.fileName.value shouldEqual "a/file/name"
   }
 
   it should "stringToFilePath1" in {
@@ -55,7 +61,7 @@ class FilePathSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAf
       ("outputDirPath", "/fileName", Extensions.csv, "outputDirPath/fileName.csv"),
       ("outputDirPath", "/fileName.csv", Extensions.csv, "outputDirPath/fileName.csv"),
       ("outputDirPath\\", "\\fileName", Extensions.csv, "outputDirPath\\fileName.csv"),
-      ("outputDirPath\\", "fileName.csv", Extensions.csv, "outputDirPath\\fileName.csv"),
+      ("outputDirPath\\", "fileName.csv", Extensions.csv, "outputDirPath/fileName.csv"),
       ("outputDirPath", "\\fileName.csv", Extensions.csv, "outputDirPath\\fileName.csv"),
       ("outputDirPath", "fileName", Extensions.csv, "outputDirPath/fileName.csv"),
     )
