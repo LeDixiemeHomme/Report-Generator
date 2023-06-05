@@ -28,7 +28,7 @@ class GenerateReceptionReportFeature extends Logging {
     if (parsingResult.parsedData.isEmpty) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
       popUpMessage = parsingResult.popUpMessage,
-      fileLocation = None
+      fileLocationPath = None
     )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
@@ -40,7 +40,7 @@ class GenerateReceptionReportFeature extends Logging {
     if (processingResult.processedData.isEmpty) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
       popUpMessage = parsingResult.popUpMessage,
-      fileLocation = None
+      fileLocationPath = None
     )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
@@ -49,13 +49,13 @@ class GenerateReceptionReportFeature extends Logging {
       templateFilePath = templatePathTemp,
       valuesMap = processingResult.processedData,
       outputFilePath = outputPathTemp,
-      fileName = if (outputFileName.equals("")) Some("default-value") else Some(outputFileName)
+      fileName = if (outputFileName.equals("")) Some(parsingResult.parsedData.head.createFileName) else Some(outputFileName)
     )
 
     if (!fillingResult.isSuccess) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
       popUpMessage = fillingResult.popUpMessage,
-      fileLocation = None
+      fileLocationPath = None
     )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillingResult.toString, classFrom = getClass)
@@ -63,7 +63,7 @@ class GenerateReceptionReportFeature extends Logging {
     GenerateReceptionReportFeatureResult(
       isSuccess = true,
       popUpMessage = "Rapport de réception généré avec succès.",
-      fileLocation = Some(fillingResult.outputFilePath)
+      fileLocationPath = Some(fillingResult.outputFilePath)
     )
   }
 }

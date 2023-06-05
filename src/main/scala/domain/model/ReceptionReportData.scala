@@ -18,6 +18,9 @@ case class ReceptionReportData(nombreSorbonnes: String, mois: String, annee: Str
       s"Ville: $ville, Département: $departement, Adresse: $adresse, Code postal: $codePostal, Jour: $jour, " +
       s"Intervenant: $intervenant, Sexe: $sexe, Société sous-traite: $societeSousTraite, Nom1: $nom1, Nom2: $nom2, Numéro d'affaire: $numeroAffaire}"
   }
+
+  def createFileName: String =
+    s"AFC ${this.societeSousTraite} - Rapport de réception ${this.nomEtablissement} (${this.departement}) - ${this.mois} ${this.annee}"
 }
 
 object ReceptionReportData extends Logging {
@@ -39,6 +42,7 @@ object ReceptionReportData extends Logging {
       Option(data.numeroAffaire).isDefined
   }
   object ReceptionReportDataProcessor extends ToMapValueProcessorTrait[ReceptionReportData] {
+
     override def toMapValue(inputData: ReceptionReportData): Map[String, String] = {
       LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataProcessor.toMapValue()", classFrom = getClass)
 

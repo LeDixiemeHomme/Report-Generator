@@ -8,6 +8,7 @@ import domain.writer.{DocxWriter, WriteResult}
 import features.results.FillingResult
 import logging.LogsKeeper
 
+import fr.valle.report_generator.domain.path.FilePath
 import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 
@@ -22,7 +23,7 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
     "default-name-value"
   }
 
-  def fill(templateFilePath: String, valuesMap: Map[String, String], outputFilePath: String, optionalFileName: Option[String] = None): FillingResult = {
+  def fill(templateFilePath: FilePath, valuesMap: Map[String, String], outputFilePath: String, optionalFileName: Option[String] = None): FillingResult = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Filling docx document", classFrom = getClass)
 

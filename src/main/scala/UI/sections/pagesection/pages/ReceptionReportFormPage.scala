@@ -83,7 +83,7 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
       outputFileName = outputFileNameFormSection.myTextField.getText
     )
 
-    val popupStage: IsAStageTrait = PopupStage(popupMessage = result.popUpMessage, fileLocation = result.fileLocation.getOrElse(""), isSuccess = result.isSuccess)
+    val popupStage: IsAStageTrait = PopupStage(popupMessage = result.popUpMessage, fileLocation = result.fileLocationPath.getOrElse(""), isSuccess = result.isSuccess)
 
     popupStage.showMyStage()
   }
