@@ -3,7 +3,7 @@ package UI.stages.popupstages
 
 import UI.DebugBorder
 import UI.stages.IsAStageTrait
-import features.services.StringToParagraphService
+import features.services.{OpenDocxReport, StringToParagraphService}
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
@@ -57,7 +57,10 @@ trait IsAPopupStageTrait extends IsAStageTrait {
 
     if (isSuccess) {
       box.setOnMouseClicked(_ => {
-        Seq("cmd", "/c", "start", s"'$fileLocation'").!
+//        Seq("cmd", "/c", "start", s"'$fileLocation'").!
+
+        OpenDocxReport().open(fileLocation = fileLocation)
+
       })
       box.setOnMouseExited(_ => {
         imageView.setImage(new Image("file:" + openFilePath))
