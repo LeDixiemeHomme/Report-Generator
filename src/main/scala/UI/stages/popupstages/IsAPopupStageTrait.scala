@@ -57,10 +57,7 @@ trait IsAPopupStageTrait extends IsAStageTrait {
 
     if (isSuccess) {
       box.setOnMouseClicked(_ => {
-//        Seq("cmd", "/c", "start", s"'$fileLocation'").!
-
         OpenDocxReport().open(fileLocation = fileLocation)
-
       })
       box.setOnMouseExited(_ => {
         imageView.setImage(new Image("file:" + openFilePath))
