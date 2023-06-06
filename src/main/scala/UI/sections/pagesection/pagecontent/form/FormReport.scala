@@ -2,14 +2,14 @@ package fr.valle.report_generator
 package UI.sections.pagesection.pagecontent.form
 
 import UI.DebugBorder
-import UI.sections.pagesection.pagecontent.form.formsections.{FormSectionTrait, SubmitButtonFormSection}
+import UI.sections.pagesection.pagecontent.form.formsections.{IsAFormSectionTrait, SubmitButtonFormSection}
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.TextField
 import scalafx.scene.layout._
 import scalafx.scene.paint.Color
 
-class FormReport(forms: List[FormSectionTrait], submitButton: SubmitButtonFormSection) extends IsAFormTrait {
+class FormReport(forms: List[IsAFormSectionTrait], submitButton: SubmitButtonFormSection) extends IsAFormTrait {
   // Add a listener to the fields to enable/disable the submit button
   val fields: Seq[TextField] = forms.filter(_.isRequired).map(_.myTextField)
   fields.foreach { field =>
@@ -39,7 +39,7 @@ class FormReport(forms: List[FormSectionTrait], submitButton: SubmitButtonFormSe
 }
 
 object FormReport {
-  def apply(forms: List[FormSectionTrait],
+  def apply(forms: List[IsAFormSectionTrait],
             submitButton: SubmitButtonFormSection
            ): FormReport =
     new FormReport(forms, submitButton)

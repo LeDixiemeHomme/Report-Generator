@@ -2,6 +2,7 @@ package fr.valle.report_generator
 package UI.sections.pagesection.pagecontent.form.formsections
 
 import UI.DebugBorder
+import UI.styles.SubmitButtonStyles.{unselectedEnteredButtonStyle, unselectedExitedButtonStyle}
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, Label}
@@ -11,10 +12,12 @@ import scalafx.scene.paint.Color
 class SubmitButtonFormSection() {
   val myButton: Button = new Button {
     text = "Créer le rapport"
-    style = "-fx-font-size: 20px;"
+    style = unselectedExitedButtonStyle
+    onMouseEntered = _ => style = unselectedEnteredButtonStyle
+    onMouseExited = _ => style = unselectedExitedButtonStyle
     disable = true
     prefHeight = 50
-    prefWidth = 200
+    prefWidth = 450
   }
 
   val myButtonSection: VBox = new VBox {
@@ -29,4 +32,5 @@ class SubmitButtonFormSection() {
 }
 
 object SubmitButtonFormSection {
+  def apply(): SubmitButtonFormSection = new SubmitButtonFormSection()
 }
