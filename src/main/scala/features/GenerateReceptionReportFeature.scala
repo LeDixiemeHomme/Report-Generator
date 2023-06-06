@@ -5,6 +5,7 @@ import domain.model.ReceptionReportData
 import domain.model.ReceptionReportData.ReceptionReportDataProcessor
 import domain.parser.tototoshiCSVparser.TototoshiCsvFileParser
 import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
+import domain.path.{Extensions, FileName, FilePath}
 import features.results.{FillingResult, GenerateReceptionReportFeatureResult, ParsingResult, ProcessingResult}
 import features.services.filling.{FillingDocxToDocxService, FillingServiceTrait}
 import features.services.parsing.{ParsingCsvService, ParsingServiceTrait}
@@ -22,13 +23,13 @@ class GenerateReceptionReportFeature extends Logging {
   def action(dataPathTemp: String, templatePathTemp: String, outputPathTemp: String, outputFileName: String): GenerateReceptionReportFeatureResult = {
 
     val parsingResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService.parse(
-      filePath = dataPathTemp
+      filePath = FilePath.stringToFilePath(stringValue = dataPathTemp)
     )(ReceptionReportDataTototoshiParser())
 
     if (parsingResult.parsedData.isEmpty) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
       popUpMessage = parsingResult.popUpMessage,
-      fileLocation = None
+      fileLocationPath = None
     )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, parsingResult.toString, classFrom = getClass)
@@ -40,22 +41,26 @@ class GenerateReceptionReportFeature extends Logging {
     if (processingResult.processedData.isEmpty) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
       popUpMessage = parsingResult.popUpMessage,
-      fileLocation = None
+      fileLocationPath = None
     )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, processingResult.toString, classFrom = getClass)
 
+    val outputFilePath = if (outputFileName.equals(""))
+      FilePath(basePath = outputPathTemp, fileName = FileName(value = parsingResult.parsedData.head.createFileName), extension = Extensions.docx)
+    else
+      FilePath(basePath = outputPathTemp, fileName = FileName(value = outputFileName), extension = Extensions.docx)
+
     val fillingResult: FillingResult = fillingService.fill(
-      templateFilePath = templatePathTemp,
+      templateFilePath = FilePath.stringToFilePath(stringValue = templatePathTemp),
       valuesMap = processingResult.processedData,
-      outputFilePath = outputPathTemp,
-      fileName = if (outputFileName.equals("")) Some("default-value") else Some(outputFileName)
+      outputFilePath = outputFilePath
     )
 
     if (!fillingResult.isSuccess) return GenerateReceptionReportFeatureResult(
       isSuccess = false,
       popUpMessage = fillingResult.popUpMessage,
-      fileLocation = None
+      fileLocationPath = None
     )
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.DEBUG, fillingResult.toString, classFrom = getClass)
@@ -63,7 +68,7 @@ class GenerateReceptionReportFeature extends Logging {
     GenerateReceptionReportFeatureResult(
       isSuccess = true,
       popUpMessage = "Rapport de réception généré avec succès.",
-      fileLocation = Some(fillingResult.outputFilePath)
+      fileLocationPath = fillingResult.filledDocRelativePath
     )
   }
 }

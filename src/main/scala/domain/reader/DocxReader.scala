@@ -2,6 +2,7 @@ package fr.valle.report_generator
 package domain.reader
 
 import customexceptions.{EmptyXWPFDocumentException, TemplateFileNotFoundException, WrongFileFormatException}
+import domain.path.FilePath
 import logging.LogsKeeper
 
 import org.apache.logging.log4j.scala.Logging
@@ -21,24 +22,24 @@ class DocxReader extends Logging {
   @throws(classOf[TemplateFileNotFoundException])
   @throws(classOf[EmptyXWPFDocumentException])
   @throws(classOf[WrongFileFormatException])
-  def readDocx(templateFilePath: String): XWPFDocument = {
+  def readDocx(templateFilePath: FilePath): XWPFDocument = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Reading docx " + templateFilePath, classFrom = getClass)
 
     // Read the template file into a XWPFDocument object
-    val templateFile: File = new File(templateFilePath)
+    val templateFile: File = new File(templateFilePath.constructFinalPath)
 
     val templateDoc: XWPFDocument = tryReadDocxSafely(templateFile = templateFile) match {
       case Success(templateDoc: XWPFDocument) => templateDoc
 
-      case Failure(fileNotFoundException: FileNotFoundException) => throw TemplateFileNotFoundException(filePath = templateFilePath, cause = Some(fileNotFoundException))
-      case Failure(notOfficeXmlFileException: NotOfficeXmlFileException) => throw WrongFileFormatException(fileType = getFilePathExtension(templateFilePath = templateFilePath), cause = Some(notOfficeXmlFileException))
+      case Failure(fileNotFoundException: FileNotFoundException) => throw TemplateFileNotFoundException(filePath = templateFilePath.constructFinalPath, cause = Some(fileNotFoundException))
+      case Failure(notOfficeXmlFileException: NotOfficeXmlFileException) => throw WrongFileFormatException(fileType = getFilePathExtension(templateFilePath = templateFilePath.constructFinalPath), cause = Some(notOfficeXmlFileException))
 
       case Failure(exception: Exception) => throw exception
     }
 
 
-    if (isEmptyDoc(templateDoc = templateDoc)) throw EmptyXWPFDocumentException(templateFilePath = templateFilePath)
+    if (isEmptyDoc(templateDoc = templateDoc)) throw EmptyXWPFDocumentException(templateFilePath = templateFilePath.constructFinalPath)
     templateDoc
   }
 

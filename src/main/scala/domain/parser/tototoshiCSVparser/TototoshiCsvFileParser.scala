@@ -6,6 +6,7 @@ import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
 import logging.LogsKeeper
 
 import com.github.tototoshi.csv.{CSVReader, DefaultCSVFormat}
+import fr.valle.report_generator.domain.path.FilePath
 import org.apache.logging.log4j.scala.Logging
 
 import java.io.{File, FileNotFoundException}
@@ -13,13 +14,13 @@ import scala.util.{Failure, Success, Try}
 
 class TototoshiCsvFileParser extends IsACSVFileParserTrait with Logging {
 
-  override def parseFile[A](csvFilePath: String)(implicit objectParser: IsAnObjectParserTrait[A]): List[A] = {
+  override def parseFile[A](csvFilePath: FilePath)(implicit objectParser: IsAnObjectParserTrait[A]): List[A] = {
 
     LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Parsing csv " + csvFilePath, classFrom = getClass)
 
-    val listOfParsedObjects: List[A] = tryParseFileSafely(filePath = csvFilePath)(objectParser) match {
+    val listOfParsedObjects: List[A] = tryParseFileSafely(filePath = csvFilePath.constructFinalPath)(objectParser) match {
       case Success(parsedListOfA) => parsedListOfA
-      case Failure(fileNotFoundException: FileNotFoundException) => throw DataFileNotFoundException(filePath = csvFilePath, cause = Some(fileNotFoundException))
+      case Failure(fileNotFoundException: FileNotFoundException) => throw DataFileNotFoundException(filePath = csvFilePath.constructFinalPath, cause = Some(fileNotFoundException))
       case Failure(missingCSVColumnException: MissingCSVColumnException) => throw missingCSVColumnException
       case Failure(noRowInCSVException: NoRowInCSVException) => throw noRowInCSVException
       case Failure(exception) => throw exception

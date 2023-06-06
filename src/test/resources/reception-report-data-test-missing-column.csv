@@ -1,4 +1,4 @@
-Nombre_sorbonnes;Mois;Annee;Nom_etablissement;Ville;Adresse;Code_postal;Jour;Intervenant;Sexe;Societe_soutraite;Nom1;Nom2;Numero_d_affaire
+Nombre_sorbonnes;Mois;Annee;Nom_etablissement;Ville;Adresse;Code_postal;Jour;Intervenant;Sexe;Societe_sous_traite;Nom1;Nom2;Numero_d_affaire
 2;Janvier;2023;Université Sorbonne Paris Nord;Villetaneuse;1 Rue de la Croix Faron;93430;15;John Doe;M;FabCorp;Robert;Dupont;ABC123
 1;Février;2023;Sorbonne Université;Paris;4 Place Jussieu;75005;23;Jane Smith;F;CoolCorp;Martin;Chen;XYZ789
 3;Mars;2023;Université Paris 1 Panthéon-Sorbonne;Paris;12 Rue de l'école de Médecine;75006;10;Bob Johnson;M;GreatCorp;David;Lee;DEF456

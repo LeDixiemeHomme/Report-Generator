@@ -37,27 +37,27 @@ object TestDataProvider {
 
   def provideReceptionReportData_1: ReceptionReportData = ReceptionReportData(nombreSorbonnes = nombreSorbonnes1, mois = mois1, annee = annee1,
     nomEtablissement = nomEtablissement1, ville = ville1, departement = departement1, adresse = adresse1,
-    codePostal = codePostal1, jour = jour1, intervenant = intervenant1, sexe = sexe1, societeSoutraite = societeSoutraite1,
+    codePostal = codePostal1, jour = jour1, intervenant = intervenant1, sexe = sexe1, societeSousTraite = societeSoutraite1,
     nom1 = nom11, nom2 = nom21, numeroAffaire = numeroAffaire1)
 
   def provideReceptionReportData_2: ReceptionReportData = ReceptionReportData(nombreSorbonnes = nombreSorbonnes2, mois = mois2, annee = annee2,
     nomEtablissement = nomEtablissement2, ville = ville2, departement = departement2, adresse = adresse2,
-    codePostal = codePostal2, jour = jour2, intervenant = intervenant2, sexe = sexe2, societeSoutraite = societeSoutraite2,
+    codePostal = codePostal2, jour = jour2, intervenant = intervenant2, sexe = sexe2, societeSousTraite = societeSoutraite2,
     nom1 = nom12, nom2 = nom22, numeroAffaire = numeroAffaire2)
 
   def provideReceptionReportDataMissingValues_1: ReceptionReportData = ReceptionReportData(nombreSorbonnes = nombreSorbonnes1, mois = mois1, annee = annee1,
     nomEtablissement = nomEtablissement1, ville = ville1, departement = "", adresse = adresse1,
-    codePostal = codePostal1, jour = jour1, intervenant = intervenant1, sexe = sexe1, societeSoutraite = societeSoutraite1,
+    codePostal = codePostal1, jour = jour1, intervenant = intervenant1, sexe = sexe1, societeSousTraite = societeSoutraite1,
     nom1 = nom11, nom2 = nom21, numeroAffaire = numeroAffaire1)
 
   def provideReceptionReportDataMissingValues_2: ReceptionReportData = ReceptionReportData(nombreSorbonnes = nombreSorbonnes2, mois = mois2, annee = annee2,
     nomEtablissement = "", ville = "", departement = departement2, adresse = adresse2,
-    codePostal = codePostal2, jour = jour2, intervenant = intervenant2, sexe = sexe2, societeSoutraite = societeSoutraite2,
+    codePostal = codePostal2, jour = jour2, intervenant = intervenant2, sexe = sexe2, societeSousTraite = societeSoutraite2,
     nom1 = "", nom2 = nom22, numeroAffaire = "")
 
   def provideReceptionReportNullValues_1: ReceptionReportData = ReceptionReportData(nombreSorbonnes = null, mois = mois1, annee = annee1,
     nomEtablissement = nomEtablissement1, ville = ville1, departement = departement1, adresse = adresse1,
-    codePostal = codePostal1, jour = jour1, intervenant = intervenant1, sexe = sexe1, societeSoutraite = null,
+    codePostal = codePostal1, jour = jour1, intervenant = intervenant1, sexe = sexe1, societeSousTraite = null,
     nom1 = nom11, nom2 = nom21, numeroAffaire = numeroAffaire1)
 
   def provideReceptionReportData_1MapValues: Map[String, String] = Map(

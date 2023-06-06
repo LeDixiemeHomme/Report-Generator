@@ -7,6 +7,7 @@ import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototos
 import features.results.ParsingResult
 import features.services.parsing.{ParsingCsvService, ParsingServiceTrait}
 
+import fr.valle.report_generator.domain.path.FilePath
 import org.scalatest.featurespec.AnyFeatureSpecLike
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen}
@@ -25,7 +26,7 @@ class ParsingCsvServiceFeatureSpec extends AnyFeatureSpecLike with GivenWhenThen
     Scenario("Using a filePath to create a parsingReceptionReportDataResult containing a list of ReceptionReportData objects") {
 
       val expectedParsingReceptionReportDataResult: ParsingResult[ReceptionReportData] =
-        ParsingResult(isSuccess = false, popUpMessage = "", parsedData = List(
+        ParsingResult(isSuccess = true, popUpMessage = "Successfully parsed", parsedData = List(
           TestDataProvider.provideReceptionReportData_1,
           TestDataProvider.provideReceptionReportData_2)
         )
@@ -35,7 +36,7 @@ class ParsingCsvServiceFeatureSpec extends AnyFeatureSpecLike with GivenWhenThen
 
       When("using the ParsingServiceTrait.process method with the ReceptionReportDataTototoshiParser")
       val parsingReceptionReportDataResult: ParsingResult[ReceptionReportData] = parsingReceptionReportDataCsvService
-        .parse(filePath = filePath)(ReceptionReportDataTototoshiParser())
+        .parse(filePath = FilePath.stringToFilePath(filePath))(ReceptionReportDataTototoshiParser())
 
       Then("the result should be correct")
       parsingReceptionReportDataResult.toString shouldEqual expectedParsingReceptionReportDataResult.toString
