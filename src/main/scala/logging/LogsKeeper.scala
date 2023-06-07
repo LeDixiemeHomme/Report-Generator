@@ -62,7 +62,7 @@ object LogsKeeper extends Logging with LoggingSubject {
   private def notifyLogSection(message: String, classFrom: Class[_]): Unit = {
     val log: String = buildLogMessage(message, classFrom)
     logs += log
-    notifyLoggingObservers(log = log)
+    logs.foreach(log => notifyLoggingObservers(log = log))
   }
 
   private def buildLogMessage(message: String, classFrom: Class[_]): String = {

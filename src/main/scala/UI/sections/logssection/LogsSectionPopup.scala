@@ -7,7 +7,7 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
 
-class LogsSection extends Logging with IsALogsSectionTrait {
+class LogsSectionPopup extends Logging with IsALogsSectionTrait {
   private val vbox: VBox = new VBox {
     children.onChange { (_, _) =>
       scrollDown(scrollPane)
@@ -15,8 +15,8 @@ class LogsSection extends Logging with IsALogsSectionTrait {
     mouseTransparent = false
   }
   private val scrollPane: ScrollPane = new ScrollPane {
-    prefHeight = 300
-    prefWidth = 1600
+    prefHeight = 500
+    prefWidth = 1000
     content = vbox
     vvalue.onChange {
       this.setVvalue(1.0)
@@ -55,6 +55,6 @@ class LogsSection extends Logging with IsALogsSectionTrait {
   override def update(log: String): Unit = addLogToMyVBox(log = log)
 }
 
-object LogsSection {
-  def apply(): LogsSection = new LogsSection()
+object LogsSectionPopup {
+  def apply(): LogsSectionPopup = new LogsSectionPopup()
 }

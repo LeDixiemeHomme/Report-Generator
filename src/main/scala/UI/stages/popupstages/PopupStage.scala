@@ -22,8 +22,6 @@ class PopupStage(val popupMessage: String, val fileLocation: String, val isSucce
   }
 
   private val myStage: Stage = {
-    val fileLocText = if (isSuccess) new Text(fileLocation) else new Text("vbenoitaàeraerdf")
-    fileLocText.fill = Color.White
     val closeButton = createCloseButton
     val childrenValue: Seq[Node] = Seq(
       createResultHBox(fileLocation = fileLocation, isSuccess = isSuccess),

@@ -14,7 +14,7 @@ class ReceptionReportDataFormPageState(pageSection: IsAPageSectionTrait) extends
   pageBody.visible = true
 
   override def handle(input: String): PageStateTrait = input match {
-    case PageStateMachine.GO_TO_LOGS_PAGE => LogsPageState(pageSection = pageSection)
+    case PageStateMachine.GO_TO_OTHER_REPORT_PAGE => LogsPageState(pageSection = pageSection)
     case _ => LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Already on page " + ReceptionReportFormPage().myPageName, classFrom = getClass); this
   }
 }

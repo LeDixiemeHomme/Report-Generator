@@ -10,7 +10,7 @@ import org.apache.logging.log4j.scala.Logging
 
 class LogsPageState(pageSection: IsAPageSectionTrait) extends Logging with PageStateTrait {
   pageSection.allVisibleFalse()
-  private val pageBody = pageSection.mySection.lookup("#" + PageSection.STACK_PANE_ID).lookup("#" + PageStateMachine.GO_TO_LOGS_PAGE)
+  private val pageBody = pageSection.mySection.lookup("#" + PageSection.STACK_PANE_ID).lookup("#" + PageStateMachine.GO_TO_OTHER_REPORT_PAGE)
   pageBody.visible = true
 
   override def handle(input: String): PageStateTrait = input match {
