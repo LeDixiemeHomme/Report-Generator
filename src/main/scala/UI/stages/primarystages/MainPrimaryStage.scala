@@ -66,7 +66,6 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
     scene = new Scene {
       fill = Color.rgb(38, 38, 38)
       root = mainContent
-      stylesheets = List("style.css")
     }
   }
 }

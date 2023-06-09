@@ -2,7 +2,7 @@ package fr.valle.report_generator
 package UI.stages
 
 import UI.DebugBorder
-import UI.styles.CloseButtonStyles.{unselectedEnteredButtonStyle, unselectedExitedButtonStyle}
+import UI.styles.StageButtonStyles.{unselectedEnteredCloseButtonStyle, unselectedExitedCloseButtonStyle}
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Button
@@ -15,19 +15,18 @@ trait IsAStageTrait {
   def showMyStage(): Unit
 
   def createCloseButton: Button = new Button {
-    prefWidth = 100
+    prefWidth = 150
     prefHeight = 50
-    style = unselectedExitedButtonStyle
-    onMouseEntered = _ => style = unselectedEnteredButtonStyle
-    onMouseExited = _ => style = unselectedExitedButtonStyle
+    style = unselectedExitedCloseButtonStyle
+    onMouseEntered = _ => style = unselectedEnteredCloseButtonStyle
+    onMouseExited = _ => style = unselectedExitedCloseButtonStyle
     text = "Fermer"
   }
 
-  def createCloseButtonHBox(closeButton: Button): HBox = new HBox {
+  def createButtonHBox(button: Button): HBox = new HBox {
     border = DebugBorder(Color.Orange).border
-    padding = Insets(5, 0, 5, 0)
-    children = closeButton
-    alignment = Pos.Center
+    children = button
+    margin = Insets(0, 10, 0, 10)
   }
 
   def createStage(closeButton: Button, titleValue: String, childrenValue: Seq[Node]): Stage = new Stage {

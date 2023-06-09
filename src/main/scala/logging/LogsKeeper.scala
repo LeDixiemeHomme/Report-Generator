@@ -57,7 +57,9 @@ object LogsKeeper extends Logging with LoggingSubject {
       notifyLogSection(defaultExc.getMessage, classFrom)
   }
 
-  def myLogs: List[String] = logs.toList
+  private def myLogs: List[String] = logs.toList
+
+  def myFormattedLogs: String = myLogs.mkString("\n")
 
   private def notifyLogSection(message: String, classFrom: Class[_]): Unit = {
     val log: String = buildLogMessage(message, classFrom)

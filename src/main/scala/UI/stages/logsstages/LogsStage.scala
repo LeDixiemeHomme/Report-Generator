@@ -3,7 +3,9 @@ package UI.stages.logsstages
 
 import UI.sections.logssection.{IsALogsSectionTrait, LogsSectionPopup}
 
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
+import scalafx.scene.layout.HBox
 import scalafx.stage.Stage
 
 class LogsStage extends IsALogsStageTrait {
@@ -11,9 +13,14 @@ class LogsStage extends IsALogsStageTrait {
 
   private val myStage: Stage = {
     val closeButton = createCloseButton
+    val copyButton = createCopyButton
     val childrenValue: Seq[Node] = Seq(
       logsSection.mySection,
-      createCloseButtonHBox(closeButton = closeButton),
+      new HBox {
+        padding = Insets(25, 0, 0, 0)
+        alignment = Pos.Center
+        children = Seq(createButtonHBox(button = copyButton), createButtonHBox(button = closeButton))
+      }
     )
     createStage(closeButton = closeButton, titleValue = "Logs", childrenValue = childrenValue)
   }
