@@ -2,6 +2,7 @@ package fr.valle.report_generator
 package UI.sections.logssection
 
 import org.apache.logging.log4j.scala.Logging
+import scalafx.geometry.Insets
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
@@ -9,22 +10,22 @@ import scalafx.scene.text.Text
 
 class LogsSectionPopup extends Logging with IsALogsSectionTrait {
   private val vbox: VBox = new VBox {
-    children.onChange { (_, _) =>
-      scrollDown(scrollPane)
-    }
+//    children.onChange { (_, _) =>
+//      scrollDown(scrollPane)
+//    }
     mouseTransparent = false
   }
   private val scrollPane: ScrollPane = new ScrollPane {
+    padding = Insets(0, 10, 0, 10)
     prefHeight = 500
-    prefWidth = 1000
+    prefWidth = 1100
     content = vbox
-    vvalue.onChange {
-      this.setVvalue(1.0)
-    }
+//    vvalue.onChange {
+//      this.setVvalue(1.0)
+//    }
     mouseTransparent = false
   }
   private val section: HBox = new HBox {
-    style = "-fx-background-color: white;"
     children = scrollPane
   }
 

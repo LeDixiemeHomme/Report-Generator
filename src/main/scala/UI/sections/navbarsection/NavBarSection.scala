@@ -15,7 +15,7 @@ import scalafx.scene.control.Button
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
-class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANavBarSectionTrait {
+class NavBarSection(pageSection: IsAPageSectionTrait, logsStage: IsALogsStageTrait) extends Logging with IsANavBarSectionTrait {
   private val pageStateMachine = PageStateMachine(pageSection = pageSection)
 
   private val pageNames: List[String] = pageSection.myPages.map(_.myPageName)
@@ -79,7 +79,8 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANa
   handleEnteredExitedState(button = openLogsPageButton)
 
   openLogsPageButton.onAction = _ => {
-    val stage: IsALogsStageTrait = LogsStage()
+    val stage: IsALogsStageTrait = logsStage
+    // todo handle exception when opening while already opened
     stage.showMyStage()
   }
 
@@ -97,5 +98,5 @@ class NavBarSection(pageSection: IsAPageSectionTrait) extends Logging with IsANa
 }
 
 object NavBarSection {
-  def apply(pageSection: IsAPageSectionTrait): NavBarSection = new NavBarSection(pageSection)
+  def apply(pageSection: IsAPageSectionTrait, logsStage: IsALogsStageTrait): NavBarSection = new NavBarSection(pageSection, logsStage)
 }
