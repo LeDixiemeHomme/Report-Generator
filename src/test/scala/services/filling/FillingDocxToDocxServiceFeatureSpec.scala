@@ -50,7 +50,7 @@ class FillingDocxToDocxServiceFeatureSpec extends AnyFeatureSpecLike with GivenW
       val paragraphFromTheFilledDoc = new XWPFDocument(new FileInputStream(new File(fillingResult.filledDocRelativePath.get.constructFinalPath))).getParagraphs.get(0).getText()
 
       Then("the result should be correct")
-      fillingResult.popUpMessage shouldEqual s"Successfully written $generatedTemplateFileName$docxFileExtension in $outputFilePath"
+      fillingResult.popUpMessage shouldEqual s"Successfully written $generatedTemplateFileName$docxFileExtension in ${FilePath.stringToFilePath(s"${outputFilePath}test.docx").constructBasePathAntiSlash}"
       fillingResult.filledDocRelativePath.get.constructFinalPath shouldEqual generatedTemplateFileRelativePath
       paragraphFromTheFilledDoc shouldEqual expectedDocxContentAfterFilling
     }

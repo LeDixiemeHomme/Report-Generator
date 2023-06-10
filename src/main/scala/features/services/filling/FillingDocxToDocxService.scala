@@ -7,7 +7,7 @@ import domain.path.FilePath
 import domain.reader.DocxReader
 import domain.writer.{DocxWriter, WriteResult}
 import features.results.FillingResult
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel.XWPFDocument
@@ -17,15 +17,9 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
   private val docxFiller: DocxFiller = DocxFiller()
   private val docxWriter: DocxWriter = DocxWriter()
 
-  private def defaultValue: String = {
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.ERROR,
-      "Something went wrong with the name of the file, using default value instead", classFrom = getClass)
-    "default-name-value"
-  }
-
   override def fill(templateFilePath: FilePath, valuesMap: Map[String, String], outputFilePath: FilePath): FillingResult = {
 
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Filling docx document", classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = "Filling docx document", level = Levels.INFO), classFrom = getClass)
 
     var filledTemplateDoc: XWPFDocument = new XWPFDocument()
     var templateDoc: XWPFDocument = new XWPFDocument()
@@ -60,6 +54,7 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
       case outputDirNotFoundException: OutputDirNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = outputDirNotFoundException, classFrom = getClass)
         return FillingResult(isSuccess = false, popUpMessage = outputDirNotFoundException.getMessage, filledDocRelativePath = None)
+      case _ => println("laisse moi dormir zebi")
     }
 
     FillingResult(isSuccess = true, popUpMessage = writeResult.outputMessage, filledDocRelativePath = Some(outputFilePath))

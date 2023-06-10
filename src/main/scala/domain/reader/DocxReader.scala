@@ -3,7 +3,7 @@ package domain.reader
 
 import customexceptions.{EmptyXWPFDocumentException, TemplateFileNotFoundException, WrongFileFormatException}
 import domain.path.FilePath
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException
@@ -24,7 +24,7 @@ class DocxReader extends Logging {
   @throws(classOf[WrongFileFormatException])
   def readDocx(templateFilePath: FilePath): XWPFDocument = {
 
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Reading docx " + templateFilePath, classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Reading docx $templateFilePath", level = Levels.INFO), classFrom = getClass)
 
     // Read the template file into a XWPFDocument object
     val templateFile: File = new File(templateFilePath.constructFinalPath)

@@ -3,12 +3,12 @@ package UI.sections.logssection
 
 import UI.sections.IsASectionTrait
 import logging.LogsKeeper
-import logging.loggingobserverpattern.LogsSectionObserver
+import logging.loggingobserverpattern.LogsSectionObserverTrait
 
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.VBox
 
-trait IsALogsSectionTrait extends IsASectionTrait with LogsSectionObserver {
+trait IsALogsSectionTrait extends IsASectionTrait with LogsSectionObserverTrait {
 
   LogsKeeper.addObserver(this)
 

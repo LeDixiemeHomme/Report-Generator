@@ -1,8 +1,7 @@
 package fr.valle.report_generator
 package domain.filler
 
-import customexceptions.EmptyXWPFDocumentException
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel._
@@ -11,7 +10,7 @@ import scala.jdk.CollectionConverters.CollectionHasAsScala
 
 class DocxFiller extends Logging {
   def fillDocx(templateDoc: XWPFDocument, valuesMap: Map[String, String]): XWPFDocument = {
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "fillDocx()", classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = "fillDocx()", level = Levels.INFO), classFrom = getClass)
 
     val filledTemplateDoc: XWPFDocument = templateDoc
 

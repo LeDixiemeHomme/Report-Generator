@@ -1,6 +1,8 @@
 package fr.valle.report_generator
 package logging.loggingobserverpattern
 
-trait LogsSectionObserver {
-  def update(log: String)
+import logging.Log
+
+trait LogsSectionObserverTrait {
+  def update(log: Log)
 }

@@ -3,7 +3,7 @@ package domain.model
 
 import customexceptions.IncompleteObjectInstantiationException
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 
@@ -41,10 +41,11 @@ object ReceptionReportData extends Logging {
       Option(data.nom2).isDefined &&
       Option(data.numeroAffaire).isDefined
   }
+
   object ReceptionReportDataProcessor extends ToMapValueProcessorTrait[ReceptionReportData] {
 
     override def toMapValue(inputData: ReceptionReportData): Map[String, String] = {
-      LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataProcessor.toMapValue()", classFrom = getClass)
+      LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = "Using ReceptionReportDataProcessor.toMapValue()", level = Levels.INFO), classFrom = getClass)
 
       val mapValue: Map[String, String] = tryToMapValueSafely(inputData = inputData) match {
         case Success(mapValue: Map[String, String]) => mapValue

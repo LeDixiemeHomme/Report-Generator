@@ -15,6 +15,7 @@ trait IsAStageTrait {
   def showMyStage(): Unit
 
   def createCloseButton: Button = new Button {
+    border = DebugBorder(Color.Red).border
     prefWidth = 150
     prefHeight = 50
     style = unselectedExitedCloseButtonStyle
@@ -27,6 +28,7 @@ trait IsAStageTrait {
     border = DebugBorder(Color.Orange).border
     children = button
     margin = Insets(0, 10, 0, 10)
+    alignment = Pos.Center
   }
 
   def createStage(closeButton: Button, titleValue: String, childrenValue: Seq[Node]): Stage = new Stage {

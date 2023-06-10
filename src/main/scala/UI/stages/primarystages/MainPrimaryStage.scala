@@ -11,7 +11,7 @@ import UI.stages.logsstages.{IsALogsStageTrait, LogsStage}
 import UI.stages.primarystages.MainPrimaryStage.APP_TITLE
 import UI.{DebugBorder, Shaper}
 
-import scalafx.application.JFXApp3
+import scalafx.application.{JFXApp3, Platform}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.layout.{Background, BackgroundFill, HBox, VBox}
@@ -66,6 +66,10 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
     scene = new Scene {
       fill = Color.rgb(38, 38, 38)
       root = mainContent
+    }
+
+    onCloseRequest = _ => {
+      Platform.exit()
     }
   }
 }

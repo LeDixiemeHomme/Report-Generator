@@ -80,7 +80,6 @@ class NavBarSection(pageSection: IsAPageSectionTrait, logsStage: IsALogsStageTra
 
   openLogsPageButton.onAction = _ => {
     val stage: IsALogsStageTrait = logsStage
-    // todo handle exception when opening while already opened
     stage.showMyStage()
   }
 
@@ -89,7 +88,7 @@ class NavBarSection(pageSection: IsAPageSectionTrait, logsStage: IsALogsStageTra
     spacing = 10
     alignment = Pos.Center
     padding = Insets(15, 0, 15, 0)
-    margin = Insets(0, 200, 0, 200)
+    margin = Insets(0, 150, 0, 150)
     style = "-fx-background-color: #333; -fx-background-radius: 20;"
     children = Seq(goToReceptionReportDataPageButton, goToOtherReportFormPageButton, openLogsPageButton)
   }

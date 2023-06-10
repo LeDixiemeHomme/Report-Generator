@@ -2,9 +2,9 @@ package fr.valle.report_generator
 package domain.writer
 
 import customexceptions.OutputDirNotFoundException
-import logging.LogsKeeper
+import domain.path.FilePath
+import logging.{Levels, Log, LogsKeeper}
 
-import fr.valle.report_generator.domain.path.FilePath
 import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 
@@ -20,14 +20,15 @@ class DocxWriter extends Logging with IsAWriterTrait {
   @throws(classOf[OutputDirNotFoundException])
   def write(templateDoc: XWPFDocument, outputFilePath: FilePath): WriteResult = {
 
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Writing " + outputFilePath.fileName.value + " docx to " + outputFilePath.basePath, classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Writing ${outputFilePath.fileName.value} docx to ${outputFilePath.constructBasePathAntiSlash}",
+      level = Levels.INFO), classFrom = getClass)
 
-    val finalPath = outputFilePath.constructFinalPath
+    val finalPath = outputFilePath.constructFinalPathAntiSlash
 
     val outputMessage: WriteResult = tryWriteDocxSafely(templateDoc = templateDoc, finalPath = finalPath) match {
-      case Success(_) => new WriteResult(outputPath = finalPath, outputMessage = s"Successfully written ${outputFilePath.fileName.value}.${outputFilePath.extension} in ${outputFilePath.basePath}")
+      case Success(_) => new WriteResult(outputPath = finalPath, outputMessage = s"Successfully written ${outputFilePath.fileName.value}.${outputFilePath.extension} in ${outputFilePath.constructBasePathAntiSlash}")
 
-      case Failure(fileNotFoundException: FileNotFoundException) => throw OutputDirNotFoundException(outputDirPath = outputFilePath.basePath, cause = Some(fileNotFoundException))
+      case Failure(fileNotFoundException: FileNotFoundException) => throw OutputDirNotFoundException(outputDirPath = outputFilePath.constructBasePathAntiSlash, cause = Some(fileNotFoundException))
       case Failure(exception: Exception) => throw exception
     }
 

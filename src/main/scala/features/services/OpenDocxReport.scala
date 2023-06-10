@@ -3,8 +3,7 @@ package features.services
 
 import domain.path.FilePath
 
-import java.io.File
-import sys.process._
+import scala.sys.process._
 
 class OpenDocxReport {
   def open(fileLocation: String): Int = {

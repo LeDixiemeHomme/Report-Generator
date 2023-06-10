@@ -1,7 +1,9 @@
 package fr.valle.report_generator
 package customexceptions
 
-case class UnknownLevelLogsKeeperException(level: String, cause: Option[Throwable] = None)
-  extends Exception(String.format("Niveau de log inconnu: %s", level)) {
+import logging.Levels.Level
+
+case class UnknownLevelLogsKeeperException(level: Level, cause: Option[Throwable] = None)
+  extends Exception(String.format("Niveau de log inconnu: %s", level.toString)) {
   initCause(cause.orNull)
 }

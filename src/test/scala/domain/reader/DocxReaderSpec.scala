@@ -40,7 +40,7 @@ class DocxReaderSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     }
 
     Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le fichier template \"" + getClass.getResource("/template-test-empty.docx").getPath + "/does-not-exist.docx\" est introuvable."
+    caughtException.getMessage shouldEqual "Le document word template \"" + getClass.getResource("/template-test-empty.docx").getPath + "/does-not-exist.docx\" est introuvable."
   }
 
   "An empty XWPFDocument" should "when read should throws a EmptyXWPFDocumentException" in {

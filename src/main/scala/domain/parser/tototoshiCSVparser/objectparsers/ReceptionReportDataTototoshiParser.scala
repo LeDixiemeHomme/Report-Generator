@@ -4,7 +4,7 @@ package domain.parser.tototoshiCSVparser.objectparsers
 import customexceptions.{MissingCSVColumnException, NoRowInCSVException}
 import domain.model.ReceptionReportData
 import domain.parser.IsAnObjectParserTrait
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import com.github.tototoshi.csv.CSVReader
 import org.apache.logging.log4j.scala.Logging
@@ -14,7 +14,7 @@ import scala.util.{Failure, Success, Try}
 class ReceptionReportDataTototoshiParser extends IsAnObjectParserTrait[ReceptionReportData] with Logging {
 
   def parse(reader: Object): List[ReceptionReportData] = {
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Using ReceptionReportDataTototoshiParser.parse()", classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = "Using ReceptionReportDataTototoshiParser.parse()", level = Levels.INFO), classFrom = getClass)
 
     val tototoshiCSVReader: CSVReader = reader.asInstanceOf[CSVReader]
 

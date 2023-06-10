@@ -23,11 +23,11 @@ class FilePath(val basePath: String, val fileName: FileName, val extension: Exte
     finalPathStringBuffer.toString
   }
 
-  def constructFinalPathAntiSlash(): String = {
+  def constructFinalPathAntiSlash: String = {
     this.constructFinalPath.replace("/", "\\")
   }
 
-  def constructBasePathAntiSlash(): String = {
+  def constructBasePathAntiSlash: String = {
     this.basePath.replace("/", "\\")
   }
 

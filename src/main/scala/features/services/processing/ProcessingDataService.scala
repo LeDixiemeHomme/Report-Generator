@@ -5,7 +5,7 @@ import customexceptions.IncompleteObjectInstantiationException
 import domain.processor.InputDataToMapValueProcessor
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
 import features.results.ProcessingResult
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 
@@ -14,7 +14,7 @@ class ProcessingDataService[A]() extends Logging with ProcessingServiceTrait[A] 
 
   override def process(dataToProcess: A)(implicit toMapProcessor: ToMapValueProcessorTrait[A]): ProcessingResult = {
 
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Processing data", classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = "Processing data", level = Levels.INFO), classFrom = getClass)
 
     var mapValues: Map[String, String] = Map()
 
