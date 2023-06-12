@@ -10,41 +10,60 @@ import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}
 
 class FilePathSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAfterEach with GivenWhenThen with Matchers with TableDrivenPropertyChecks {
-  private var filePath: FilePath = _
-  private var stringFilePath: String = _
+  private var filePathWindows: FilePath = _
+  private var stringFilePathWindows: String = _
+  private var filePathOthers: FilePath = _
+  private var stringFilePathOthers: String = _
 
   it should "afficher l'objet normalement avec toString" in {
-    filePath = FilePath(basePath = "C:basePath", fileName = FileName(value = "a/file/name"), extension = Extensions.csv)
+    filePathWindows = FilePath(basePath = "C:basePath", fileName = FileName(value = "a/file/name"), extension = Extensions.csv)
+    filePathOthers = FilePath(basePath = "C:basePath", fileName = FileName(value = "a\\file\\name"), extension = Extensions.csv)
 
-    filePath.toString shouldEqual "FilePath{ basePath: C:basePath/, fileName: a/file/name, extension: csv }"
+    TestFilePathProvider.assertByOs(
+      expectedWindows = filePathWindows.toString, actualWindows = "FilePath{ basePath: C:basePath\\, fileName: a\\file\\name, extension: csv }",
+      expectedOthers = filePathOthers.toString, actualOthers = "FilePath{ basePath: C:basePath/, fileName: a/file/name, extension: csv }"
+    )
   }
 
   it should "seulement nom fichier" in {
-    filePath = FilePath(basePath = "C:basePath", fileName = FileName(value = "a/file/name.docx"), extension = Extensions.csv)
+    filePathWindows = FilePath(basePath = "C:basePath", fileName = FileName(value = "a\\file\\name.docx"), extension = Extensions.csv)
+    filePathOthers = FilePath(basePath = "C:basePath", fileName = FileName(value = "a/file/name.docx"), extension = Extensions.csv)
 
-    filePath.fileName.value shouldEqual "a/file/name"
+    TestFilePathProvider.assertByOs(
+      expectedWindows = filePathWindows.fileName.value, actualWindows = "a\\file\\name",
+      expectedOthers = filePathOthers.fileName.value, actualOthers = "a/file/name"
+    )
   }
 
   it should "stringToFilePath1" in {
-    stringFilePath = "C:basePath/a/file/name.csv"
-    filePath = FilePath(basePath = "C:basePath/a/file", fileName = FileName(value = "name"), extension = Extensions.csv)
+    stringFilePathWindows = "C:basePath\\a\\file\\name.csv"
+    stringFilePathOthers = "C:basePath/a/file/name.csv"
+    filePathWindows = FilePath(basePath = "C:basePath\\a\\file", fileName = FileName(value = "name"), extension = Extensions.csv)
+    filePathOthers = FilePath(basePath = "C:basePath/a/file", fileName = FileName(value = "name"), extension = Extensions.csv)
 
-    FilePath.stringToFilePath(stringValue = stringFilePath).toString shouldEqual filePath.toString
-    FilePath.stringToFilePath(stringValue = stringFilePath).constructFinalPath shouldEqual filePath.constructFinalPath
+    TestFilePathProvider.assertByOs(
+      expectedWindows = FilePath.stringToFilePath(stringValue = stringFilePathWindows).toString, actualWindows = filePathWindows.toString,
+      expectedOthers = FilePath.stringToFilePath(stringValue = stringFilePathOthers).toString, actualOthers = filePathOthers.toString
+    )
+
+    TestFilePathProvider.assertByOs(
+      expectedWindows = FilePath.stringToFilePath(stringValue = stringFilePathWindows).constructFinalPath, actualWindows = FilePath(basePath = "C:basePath/a/file", fileName = FileName(value = "name"), extension = Extensions.csv).constructFinalPath,
+      expectedOthers = FilePath.stringToFilePath(stringValue = stringFilePathOthers).constructFinalPath, actualOthers = FilePath(basePath = "C:basePath\\a\\file", fileName = FileName(value = "name"), extension = Extensions.csv).constructFinalPath
+    )
   }
 
   it should "stringToFilePath2" in {
-    stringFilePath = "C:basePath/a/file/name.csv"
-    filePath = FilePath(basePath = "C:basePath/a/file/", fileName = FileName(value = "name"), extension = Extensions.csv)
+    stringFilePathOthers = "C:basePath/a/file/name.csv"
+    filePathWindows = FilePath(basePath = "C:basePath/a/file/", fileName = FileName(value = "name"), extension = Extensions.csv)
 
-    FilePath.stringToFilePath(stringValue = stringFilePath).constructFinalPath shouldEqual filePath.constructFinalPath
+    FilePath.stringToFilePath(stringValue = stringFilePathOthers).constructFinalPath shouldEqual filePathWindows.constructFinalPath
   }
 
   it should "stringToFilePath3" in {
-    stringFilePath = "C:basePath/a/file/name.txt"
+    stringFilePathOthers = "C:basePath/a/file/name.txt"
 
     val caughtException = intercept[WrongFileFormatException] {
-      FilePath.stringToFilePath(stringValue = stringFilePath).constructFinalPath
+      FilePath.stringToFilePath(stringValue = stringFilePathOthers).constructFinalPath
     }
 
     caughtException.getMessage shouldEqual "Mauvais format de fichier: txt"
@@ -68,8 +87,8 @@ class FilePathSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAf
 
     forAll(testData) {
       (basePath: String, fileName: String, extension: Extension, constructFinalPath: String) => {
-        filePath = FilePath(basePath = basePath, fileName = FileName(value = fileName), extension = extension)
-        filePath.constructFinalPath shouldEqual constructFinalPath
+        filePathWindows = FilePath(basePath = basePath, fileName = FileName(value = fileName), extension = extension)
+        filePathWindows.constructFinalPath shouldEqual constructFinalPath
       }
     }
   }

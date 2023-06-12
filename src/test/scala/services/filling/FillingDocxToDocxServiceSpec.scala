@@ -22,7 +22,6 @@ class FillingDocxToDocxServiceSpec extends AnyFlatSpec with PrivateMethodTester 
 
   it should "fill correctly parametrized" in {
     val appBasePath: String = getClass.getResource("/").getPath
-//    val appBasePath: String =s"${FilePath.stringToFilePath(s"${getClass.getResource("/").getPath}test.docx").constructBasePathAntiSlash}"
 
     val testData = Table(("filePath", "outputFilePath", "valuesMap", "expectedFillingResult"),
       (
@@ -44,8 +43,9 @@ class FillingDocxToDocxServiceSpec extends AnyFlatSpec with PrivateMethodTester 
         FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
         FilePath.stringToFilePath(s"${appBasePath}none-existing/result.docx"),
         Map("" -> ""),
-        FillingResult(isSuccess = false, popUpMessage = s"Le dossier de destination " +
-          s"\"${FilePath.stringToFilePath(s"${appBasePath}test.docx").constructBasePathAntiSlash}none-existing\\\" est introuvable.", filledDocRelativePath = None)),
+        FillingResult(isSuccess = false, popUpMessage = "Le dossier de destination " +
+//          s"\"${FilePath.stringToFilePath(s"${appBasePath}test.docx").constructBasePathAntiSlash}none-existing\\\" est introuvable.", filledDocRelativePath = None)),
+          s"\"${appBasePath}none-existing\\\" est introuvable. param", filledDocRelativePath = None)),
       (
         FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
         FilePath.stringToFilePath(s"${appBasePath}/result.docx"),

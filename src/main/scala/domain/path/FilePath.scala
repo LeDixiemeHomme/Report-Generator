@@ -1,6 +1,8 @@
 package fr.valle.report_generator
 package domain.path
 
+import app.LocalOS
+import app.LocalOS.OSs
 import customexceptions.WrongFileFormatException
 import domain.path.Extensions.Extension
 
@@ -20,7 +22,7 @@ class FilePath(val basePath: String, val fileName: FileName, val extension: Exte
 
     if (!fileName.value.endsWith(extension.toString)) finalPathStringBuffer.append(s".$extension")
 
-    finalPathStringBuffer.toString
+    FilePath.slashesByOS(finalPathStringBuffer.toString)
   }
 
   def constructFinalPathAntiSlash: String = {
@@ -40,7 +42,18 @@ object FilePath {
       basePath
     else
       s"$basePath/"
-    new FilePath(basePath = finalBasePath, fileName = fileName, extension = extension)
+
+    val finalBasePathByOS: String = FilePath.slashesByOS(stringPath = finalBasePath)
+    val fileNameByOS: FileName = FileName(value = FilePath.slashesByOS(stringPath = fileName.value))
+
+    new FilePath(basePath = finalBasePathByOS, fileName = fileNameByOS, extension = extension)
+  }
+
+  def slashesByOS(stringPath: String): String = {
+    LocalOS.os match {
+      case OSs.WINDOWS => stringPath.replace("/", "\\")
+      case OSs.MACOS | OSs.LINUX | OSs.OTHER => stringPath.replace("\\", "/")
+    }
   }
 
   /**
@@ -48,8 +61,11 @@ object FilePath {
    */
   @throws(classOf[WrongFileFormatException])
   def stringToFilePath(stringValue: String): FilePath = {
+
     val filePathElements: List[String] = stringValue.replace('\\', '/').split('/').toList
+
     val slashIfNotEmpty = if (filePathElements.dropRight(1).mkString("/").equals("")) "/" else ""
+
     val basePath: String = filePathElements.dropRight(1).mkString("/") + slashIfNotEmpty
 
     val finalFilePathElement: String = filePathElements.last
