@@ -8,7 +8,7 @@ import scala.sys.process._
 class OpenDocxReport {
   def open(fileLocation: String): Int = {
     val filePath: FilePath = FilePath.stringToFilePath(stringValue = fileLocation)
-    Seq("powershell", "/c", s"start '${filePath.constructBasePathAntiSlash()}${filePath.fileName.value}.${filePath.extension}'").!
+    Seq("powershell", "/c", s"start '${filePath.constructBasePathAntiSlash}${filePath.fileName.value}.${filePath.extension}'").!
   }
 }
 
