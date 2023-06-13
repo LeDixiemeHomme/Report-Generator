@@ -2,9 +2,13 @@ package fr.valle.report_generator
 package app
 
 import app.LocalOS.OSs.OS
+import logging.{Levels, Log, LogsKeeper}
 
-object LocalOS {
+import org.apache.logging.log4j.scala.Logging
+
+object LocalOS extends Logging {
   val os: OS = OSs.fromSystemProperties(System.getProperty("os.name"))
+  LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Operating system: $os", level = Levels.INFO), classFrom = getClass)
 
   object OSs extends Enumeration {
     type OS = Value

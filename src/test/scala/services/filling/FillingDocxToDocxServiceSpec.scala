@@ -84,7 +84,7 @@ class FillingDocxToDocxServiceSpec extends AnyFlatSpec with PrivateMethodTester 
           FilePath.stringToFilePath(s"${appBasePath}none-existing/result.docx"),
           Map("" -> ""),
           FillingResult(isSuccess = false, popUpMessage = "Le dossier de destination " +
-            s"\"${appBasePath}none-existing\\\" est introuvable.", filledDocRelativePath = None)),
+            s"\"${appBasePath}none-existing/\" est introuvable.", filledDocRelativePath = None)),
         (
           FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
           FilePath.stringToFilePath(s"${appBasePath}/result.docx"),
