@@ -52,8 +52,8 @@ class FillingDocxToDocxServiceFeatureSpec extends AnyFeatureSpecLike with GivenW
 
       Then("the result should be correct")
       TestFilePathProvider.assertByOs(
-        expectedWindows = fillingResult.popUpMessage, actualWindows = s"Successfully written $generatedTemplateFileName$docxFileExtension in ${FilePath.stringToFilePath(s"${outputFilePath}test.docx").basePath}",
-        expectedOthers = fillingResult.popUpMessage, actualOthers = s"Successfully written $generatedTemplateFileName$docxFileExtension in ${FilePath.stringToFilePath(s"${outputFilePath}test.docx").basePath}"
+        expectedWindows = fillingResult.popUpMessage, actualWindows = s"Successfully written $generatedTemplateFileName$docxFileExtension in ${outputFilePath.replace('/', '\\')}",
+        expectedOthers = fillingResult.popUpMessage, actualOthers = s"Successfully written $generatedTemplateFileName$docxFileExtension in ${outputFilePath.replace('/', '\\')}"
       )
       TestFilePathProvider.assertByOs(
         expectedWindows = fillingResult.filledDocRelativePath.get.constructFinalPath, actualWindows = generatedTemplateFileRelativePathWindows,
