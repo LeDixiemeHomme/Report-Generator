@@ -54,7 +54,6 @@ class FillingDocxToDocxService extends Logging with FillingServiceTrait {
       case outputDirNotFoundException: OutputDirNotFoundException =>
         LogsKeeper.handleError(extLogger = logger, exception = outputDirNotFoundException, classFrom = getClass)
         return FillingResult(isSuccess = false, popUpMessage = outputDirNotFoundException.getMessage, filledDocRelativePath = None)
-      case _ => println("laisse moi dormir zebi")
     }
 
     FillingResult(isSuccess = true, popUpMessage = writeResult.outputMessage, filledDocRelativePath = Some(outputFilePath))

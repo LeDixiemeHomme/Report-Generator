@@ -1,6 +1,7 @@
 package fr.valle.report_generator
 package services.filling
 
+import app.LocalOS
 import domain.path.{Extensions, FileName, FilePath}
 import features.results.FillingResult
 import features.services.filling.FillingDocxToDocxService
@@ -23,37 +24,75 @@ class FillingDocxToDocxServiceSpec extends AnyFlatSpec with PrivateMethodTester 
   it should "fill correctly parametrized" in {
     val appBasePath: String = getClass.getResource("/").getPath
 
-    val testData = Table(("filePath", "outputFilePath", "valuesMap", "expectedFillingResult"),
+    var testData = Table(("filePath", "outputFilePath", "valuesMap", "expectedFillingResult"),
       (
         FilePath.stringToFilePath(getClass.getResource("/reception-report-data-test-missing-column.csv").getPath),
         FilePath.stringToFilePath(s"$appBasePath/result.docx"),
         Map("" -> ""),
-        FillingResult(isSuccess = false, popUpMessage = "Mauvais format de fichier: csv", filledDocRelativePath = None)),
-      (
-        FilePath.stringToFilePath(getClass.getResource("/template-test-empty.docx").getPath),
-        FilePath.stringToFilePath(s"$appBasePath/result.docx"),
-        Map("" -> ""),
-        FillingResult(isSuccess = false, popUpMessage = s"Le document word template ${appBasePath}template-test-empty.docx est vide.", filledDocRelativePath = None)),
-      (
-        FilePath.stringToFilePath(s"$appBasePath/none-existing.docx"),
-        FilePath.stringToFilePath(s"$appBasePath/result.docx"),
-        Map("" -> ""),
-        FillingResult(isSuccess = false, popUpMessage = s"Le document word template \"${appBasePath}none-existing.docx\" est introuvable.", filledDocRelativePath = None)),
-      (
-        FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
-        FilePath.stringToFilePath(s"${appBasePath}none-existing/result.docx"),
-        Map("" -> ""),
-        FillingResult(isSuccess = false, popUpMessage = "Le dossier de destination " +
-//          s"\"${FilePath.stringToFilePath(s"${appBasePath}test.docx").constructBasePathAntiSlash}none-existing\\\" est introuvable.", filledDocRelativePath = None)),
-          s"\"${appBasePath}none-existing\\\" est introuvable. param", filledDocRelativePath = None)),
-      (
-        FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
-        FilePath.stringToFilePath(s"${appBasePath}/result.docx"),
-        Map("" -> ""),
-        FillingResult(isSuccess = true, popUpMessage = s"Successfully written result.docx in ${FilePath.stringToFilePath(s"${appBasePath}test.docx").constructBasePathAntiSlash}",
-          filledDocRelativePath = Option(FilePath(basePath = appBasePath, fileName = FileName(value = "result"), extension = Extensions.docx)))),
+        FillingResult(isSuccess = false, popUpMessage = "Mauvais format de fichier: csv", filledDocRelativePath = None))
     )
 
+    if (LocalOS.os.equals(LocalOS.OSs.WINDOWS)) {
+      testData = Table(("filePath", "outputFilePath", "valuesMap", "expectedFillingResult"),
+        (
+          FilePath.stringToFilePath(getClass.getResource("/reception-report-data-test-missing-column.csv").getPath),
+          FilePath.stringToFilePath(s"$appBasePath/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = "Mauvais format de fichier: csv", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(getClass.getResource("/template-test-empty.docx").getPath),
+          FilePath.stringToFilePath(s"$appBasePath/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = s"Le document word template ${appBasePath.replace('/', '\\')}template-test-empty.docx est vide.", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(s"$appBasePath/none-existing.docx"),
+          FilePath.stringToFilePath(s"$appBasePath/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = s"Le document word template \"${appBasePath.replace('/', '\\')}none-existing.docx\" est introuvable.", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
+          FilePath.stringToFilePath(s"${appBasePath}none-existing/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = "Le dossier de destination " +
+            s"\"${appBasePath.replace('/', '\\')}none-existing\\\" est introuvable.", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
+          FilePath.stringToFilePath(s"${appBasePath}/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = true, popUpMessage = s"Successfully written result.docx in ${FilePath.stringToFilePath(s"${appBasePath}test.docx").constructBasePathAntiSlash}",
+            filledDocRelativePath = Option(FilePath(basePath = appBasePath, fileName = FileName(value = "result"), extension = Extensions.docx)))),
+      )
+    } else {
+      testData = Table(("filePath", "outputFilePath", "valuesMap", "expectedFillingResult"),
+        (
+          FilePath.stringToFilePath(getClass.getResource("/reception-report-data-test-missing-column.csv").getPath),
+          FilePath.stringToFilePath(s"$appBasePath/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = "Mauvais format de fichier: csv", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(getClass.getResource("/template-test-empty.docx").getPath),
+          FilePath.stringToFilePath(s"$appBasePath/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = s"Le document word template ${appBasePath}template-test-empty.docx est vide.", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(s"$appBasePath/none-existing.docx"),
+          FilePath.stringToFilePath(s"$appBasePath/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = s"Le document word template \"${appBasePath}none-existing.docx\" est introuvable.", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
+          FilePath.stringToFilePath(s"${appBasePath}none-existing/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = false, popUpMessage = "Le dossier de destination " +
+            s"\"${appBasePath}none-existing\\\" est introuvable.", filledDocRelativePath = None)),
+        (
+          FilePath.stringToFilePath(s"$appBasePath/template-test.docx"),
+          FilePath.stringToFilePath(s"${appBasePath}/result.docx"),
+          Map("" -> ""),
+          FillingResult(isSuccess = true, popUpMessage = s"Successfully written result.docx in ${FilePath.stringToFilePath(s"${appBasePath}test.docx").constructBasePathAntiSlash}",
+            filledDocRelativePath = Option(FilePath(basePath = appBasePath, fileName = FileName(value = "result"), extension = Extensions.docx)))),
+      )
+    }
 
     forAll(testData) {
       (templateFilePath: FilePath, outputFilePath: FilePath, valuesMap: Map[String, String], expectedFillingResult: FillingResult) => {

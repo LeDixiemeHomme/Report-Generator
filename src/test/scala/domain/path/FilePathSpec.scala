@@ -1,6 +1,7 @@
 package fr.valle.report_generator
 package domain.path
 
+import app.LocalOS
 import customexceptions.WrongFileFormatException
 import domain.path.Extensions.Extension
 
@@ -53,17 +54,22 @@ class FilePathSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAf
   }
 
   it should "stringToFilePath2" in {
+    stringFilePathWindows = "C:basePath\\a\\file\\name.csv"
     stringFilePathOthers = "C:basePath/a/file/name.csv"
-    filePathWindows = FilePath(basePath = "C:basePath/a/file/", fileName = FileName(value = "name"), extension = Extensions.csv)
+    filePathWindows = FilePath(basePath = "C:basePath\\a\\file\\", fileName = FileName(value = "name"), extension = Extensions.csv)
+    filePathOthers = FilePath(basePath = "C:basePath/a/file", fileName = FileName(value = "name"), extension = Extensions.csv)
 
     FilePath.stringToFilePath(stringValue = stringFilePathOthers).constructFinalPath shouldEqual filePathWindows.constructFinalPath
+
+    TestFilePathProvider.assertByOs(
+      expectedWindows = FilePath.stringToFilePath(stringValue = stringFilePathWindows).constructFinalPath, actualWindows = filePathWindows.constructFinalPath,
+      expectedOthers = FilePath.stringToFilePath(stringValue = stringFilePathOthers).constructFinalPath, actualOthers = filePathOthers.constructFinalPath
+    )
   }
 
   it should "stringToFilePath3" in {
-    stringFilePathOthers = "C:basePath/a/file/name.txt"
-
     val caughtException = intercept[WrongFileFormatException] {
-      FilePath.stringToFilePath(stringValue = stringFilePathOthers).constructFinalPath
+      FilePath.stringToFilePath(stringValue = "C:basePath/a/file/name.txt").constructFinalPath
     }
 
     caughtException.getMessage shouldEqual "Mauvais format de fichier: txt"
@@ -71,19 +77,30 @@ class FilePathSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAndAf
 
   it should "afficher l'objet normalement avec toString param" in {
 
-    val testData = Table(("basePath", "fileName", "extension", "constructFinalPath"),
-      ("C:basePath", "a/file/name", Extensions.csv, "C:basePath/a/file/name.csv"),
-      ("C:basePath", "a/file/name", Extensions.docx, "C:basePath/a/file/name.docx"),
-      ("outputDirPath", "fileName", Extensions.csv, "outputDirPath/fileName.csv"),
-      ("outputDirPath/", "/fileName", Extensions.csv, "outputDirPath/fileName.csv"),
-      ("outputDirPath/", "fileName", Extensions.csv, "outputDirPath/fileName.csv"),
-      ("outputDirPath", "/fileName", Extensions.csv, "outputDirPath/fileName.csv"),
-      ("outputDirPath", "/fileName.csv", Extensions.csv, "outputDirPath/fileName.csv"),
-      ("outputDirPath\\", "\\fileName", Extensions.csv, "outputDirPath\\fileName.csv"),
-      ("outputDirPath\\", "fileName.csv", Extensions.csv, "outputDirPath/fileName.csv"),
-      ("outputDirPath", "\\fileName.csv", Extensions.csv, "outputDirPath\\fileName.csv"),
-      ("outputDirPath", "fileName", Extensions.csv, "outputDirPath/fileName.csv"),
-    )
+    var testData = Table(("basePath", "fileName", "extension", "constructFinalPath"),
+      ("C:basePath", "a/file/name", Extensions.csv, "C:basePath/a/file/name.csv"))
+
+    if (LocalOS.os.equals(LocalOS.OSs.WINDOWS)) {
+      testData = Table(("basePath", "fileName", "extension", "constructFinalPath"),
+        ("C:basePath", "a\\file\\name", Extensions.csv, "C:basePath\\a\\file\\name.csv"),
+        ("C:basePath", "a\\file\\name", Extensions.docx, "C:basePath\\a\\file\\name.docx"),
+        ("outputDirPath", "fileName", Extensions.csv, "outputDirPath\\fileName.csv"),
+        ("outputDirPath\\", "\\fileName", Extensions.csv, "outputDirPath\\fileName.csv"),
+        ("outputDirPath\\", "fileName", Extensions.csv, "outputDirPath\\fileName.csv"),
+        ("outputDirPath", "\\fileName", Extensions.csv, "outputDirPath\\fileName.csv"),
+        ("outputDirPath", "\\fileName.csv", Extensions.csv, "outputDirPath\\fileName.csv"),
+      )
+    } else {
+      testData = Table(("basePath", "fileName", "extension", "constructFinalPath"),
+        ("C:basePath", "a/file/name", Extensions.csv, "C:basePath/a/file/name.csv"),
+        ("C:basePath", "a/file/name", Extensions.docx, "C:basePath/a/file/name.docx"),
+        ("outputDirPath", "fileName", Extensions.csv, "outputDirPath/fileName.csv"),
+        ("outputDirPath/", "/fileName", Extensions.csv, "outputDirPath/fileName.csv"),
+        ("outputDirPath/", "fileName", Extensions.csv, "outputDirPath/fileName.csv"),
+        ("outputDirPath", "/fileName", Extensions.csv, "outputDirPath/fileName.csv"),
+        ("outputDirPath", "/fileName.csv", Extensions.csv, "outputDirPath/fileName.csv"),
+      )
+    }
 
     forAll(testData) {
       (basePath: String, fileName: String, extension: Extension, constructFinalPath: String) => {

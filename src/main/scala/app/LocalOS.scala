@@ -15,7 +15,6 @@ object LocalOS {
     }
 
     def fromSystemProperties(property: String): OS = {
-      println("fromSystemProperties")
       property.toLowerCase match {
         case prop if prop.contains("windows") => WINDOWS
         case prop if prop.contains("linux") => LINUX

@@ -3,8 +3,8 @@ package domain.parser.tototoshiCSVparser
 
 import customexceptions.DataFileNotFoundException
 import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
+import domain.path.{FilePath, TestFilePathProvider}
 
-import fr.valle.report_generator.domain.path.FilePath
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}
@@ -43,6 +43,9 @@ class TototoshiCsvFileParserSpec extends AnyFlatSpec with PrivateMethodTester wi
     }
 
     Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le fichier de données \"" + getClass.getResource("/reception-report-data-test.csv").getPath + "/does-not-exist.csv\" est introuvable."
+    TestFilePathProvider.assertByOs(
+      expectedWindows = caughtException.getMessage, actualWindows = "Le fichier de données \"" + getClass.getResource("/reception-report-data-test.csv").getPath.replace('/', '\\') + "\\does-not-exist.csv\" est introuvable.",
+      expectedOthers = caughtException.getMessage, actualOthers = "Le fichier de données \"" + getClass.getResource("/reception-report-data-test.csv").getPath + "/does-not-exist.csv\" est introuvable."
+    )
   }
 }

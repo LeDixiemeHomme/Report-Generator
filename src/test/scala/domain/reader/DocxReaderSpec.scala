@@ -2,8 +2,8 @@ package fr.valle.report_generator
 package domain.reader
 
 import customexceptions.{EmptyXWPFDocumentException, TemplateFileNotFoundException}
+import domain.path.{FilePath, TestFilePathProvider}
 
-import fr.valle.report_generator.domain.path.FilePath
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -36,11 +36,14 @@ class DocxReaderSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
 
     When("using the readDocx method")
     val caughtException = intercept[TemplateFileNotFoundException] {
-      docxReader.readDocx(templateFilePath =FilePath.stringToFilePath(templateFilePath + "/does-not-exist.docx"))
+      docxReader.readDocx(templateFilePath = FilePath.stringToFilePath(templateFilePath + "/does-not-exist.docx"))
     }
 
     Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le document word template \"" + getClass.getResource("/template-test-empty.docx").getPath + "/does-not-exist.docx\" est introuvable."
+    TestFilePathProvider.assertByOs(
+      expectedWindows = caughtException.getMessage, actualWindows = "Le document word template \"" + getClass.getResource("/template-test-empty.docx").getPath.replace('/', '\\') + "\\does-not-exist.docx\" est introuvable.",
+      expectedOthers = caughtException.getMessage, actualOthers = "Le document word template \"" + getClass.getResource("/template-test-empty.docx").getPath + "/does-not-exist.docx\" est introuvable."
+    )
   }
 
   "An empty XWPFDocument" should "when read should throws a EmptyXWPFDocumentException" in {
@@ -54,6 +57,9 @@ class DocxReaderSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     }
 
     Then("the caught exception should be correct")
-    caughtException.getMessage shouldEqual "Le document word template " + templateFilePath + " est vide."
+    TestFilePathProvider.assertByOs(
+      expectedWindows = caughtException.getMessage, actualWindows = "Le document word template " + templateFilePath.replace('/', '\\') + " est vide.",
+      expectedOthers = caughtException.getMessage, actualOthers = "Le document word template " + templateFilePath + " est vide."
+    )
   }
 }
