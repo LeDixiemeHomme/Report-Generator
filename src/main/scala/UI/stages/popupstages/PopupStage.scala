@@ -27,7 +27,7 @@ class PopupStage(val popupMessage: String, val fileLocation: String, val isSucce
       createPopupMessageHBox(popupMessage),
       createButtonHBox(button = closeButton),
     )
-    createStage(closeButton = closeButton, titleValue = "Success", childrenValue = childrenValue)
+    createStage(closeButton = closeButton, titleValue = if (isSuccess) "Success" else "Failure", childrenValue = childrenValue)
   }
 
   override def showMyStage(): Unit = {
