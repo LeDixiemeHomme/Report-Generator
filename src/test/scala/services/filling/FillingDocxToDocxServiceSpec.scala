@@ -99,9 +99,12 @@ class FillingDocxToDocxServiceSpec extends AnyFlatSpec with PrivateMethodTester 
         Given("a file path to a template and an output dir")
         println(s"templateFilePath = ${templateFilePath.constructFinalPath}")
         println(s"outputFilePath = ${outputFilePath.constructFinalPath}")
+        println(s"expectedFillingResult = $expectedFillingResult")
 
         When("using the fill method with the myFillingDocxToDocxService")
         val fillingResult: FillingResult = myFillingDocxToDocxService.fill(templateFilePath, valuesMap, outputFilePath)
+        println(s"fillingResult = $fillingResult")
+
 
         Then("the fillingResult should be correct")
         fillingResult.toString shouldEqual expectedFillingResult.toString

@@ -5,8 +5,11 @@ import app.LocalOS
 import app.LocalOS.OSs
 import customexceptions.WrongFileFormatException
 import domain.path.Extensions.Extension
+import logging.{Levels, Log, LogsKeeper}
 
-class FilePath(val basePath: String, val fileName: FileName, val extension: Extension) {
+import org.apache.logging.log4j.scala.Logging
+
+class FilePath(val basePath: String, val fileName: FileName, val extension: Extension) extends Logging {
   def constructFinalPath: String = {
     val basePathHasSlashAtEnd = basePath.last == '\\' || basePath.last == '/'
     val fileNameHasSlashAtBeginning = fileName.value.charAt(0) == '\\' || fileName.value.charAt(0) == '/'
@@ -22,21 +25,33 @@ class FilePath(val basePath: String, val fileName: FileName, val extension: Exte
 
     if (!fileName.value.endsWith(extension.toString)) finalPathStringBuffer.append(s".$extension")
 
-    FilePath.slashesByOS(finalPathStringBuffer.toString)
+    val result = FilePath.slashesByOS(finalPathStringBuffer.toString)
+
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"constructFinalPath apply: $result", level = Levels.DEBUG), classFrom = getClass)
+
+    result
   }
 
   def constructFinalPathAntiSlash: String = {
-    this.constructFinalPath.replace("/", "\\")
+    val result = this.constructFinalPath.replace("/", "\\")
+
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"constructFinalPathAntiSlash apply: $result", level = Levels.DEBUG), classFrom = getClass)
+
+    result
   }
 
   def constructBasePathAntiSlash: String = {
-    this.basePath.replace("/", "\\")
+    val result = this.basePath.replace("/", "\\")
+
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"constructBasePathAntiSlash apply: $result", level = Levels.DEBUG), classFrom = getClass)
+
+    result
   }
 
   override def toString: String = s"FilePath{ basePath: $basePath, fileName: ${fileName.value}, extension: $extension }"
 }
 
-object FilePath {
+object FilePath extends Logging {
   def apply(basePath: String, fileName: FileName, extension: Extension): FilePath = {
     val finalBasePath: String = if ((basePath.endsWith("/") || basePath.endsWith("\\")) && !basePath.equals(""))
       basePath
@@ -46,14 +61,23 @@ object FilePath {
     val finalBasePathByOS: String = FilePath.slashesByOS(stringPath = finalBasePath)
     val fileNameByOS: FileName = FileName(value = FilePath.slashesByOS(stringPath = fileName.value))
 
-    new FilePath(basePath = finalBasePathByOS, fileName = fileNameByOS, extension = extension)
+    val result = new FilePath(basePath = finalBasePathByOS, fileName = fileNameByOS, extension = extension)
+
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"FilePath apply: $result", level = Levels.DEBUG), classFrom = getClass)
+
+    result
   }
 
   def slashesByOS(stringPath: String): String = {
-    LocalOS.os match {
+
+    val result = LocalOS.os match {
       case OSs.WINDOWS => stringPath.replace("/", "\\")
       case OSs.MACOS | OSs.LINUX | OSs.OTHER => stringPath.replace("\\", "/")
     }
+
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"FilePath slashesByOS: $result", level = Levels.DEBUG), classFrom = getClass)
+
+    result
   }
 
   /**
@@ -80,6 +104,10 @@ object FilePath {
       case None => throw WrongFileFormatException(fileType = fileNameElements.last, cause = None)
     }
 
-    FilePath(basePath = basePath, fileName = fileName, extension = extension)
+    val result = FilePath(basePath = basePath, fileName = fileName, extension = extension)
+
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"FilePath stringToFilePath: $result", level = Levels.DEBUG), classFrom = getClass)
+
+    result
   }
 }

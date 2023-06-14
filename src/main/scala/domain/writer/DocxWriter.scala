@@ -23,12 +23,12 @@ class DocxWriter extends Logging with IsAWriterTrait {
     LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Writing ${outputFilePath.fileName.value} docx to ${outputFilePath.constructBasePathAntiSlash}",
       level = Levels.INFO), classFrom = getClass)
 
-    val finalPath = outputFilePath.constructFinalPathAntiSlash
+    val finalPath = outputFilePath.constructFinalPath
 
     val outputMessage: WriteResult = tryWriteDocxSafely(templateDoc = templateDoc, finalPath = finalPath) match {
       case Success(_) => new WriteResult(outputPath = finalPath, outputMessage = s"Successfully written ${outputFilePath.fileName.value}.${outputFilePath.extension} in ${outputFilePath.constructBasePathAntiSlash}")
 
-      case Failure(fileNotFoundException: FileNotFoundException) => throw OutputDirNotFoundException(outputDirPath = outputFilePath.constructBasePathAntiSlash, cause = Some(fileNotFoundException))
+      case Failure(fileNotFoundException: FileNotFoundException) => throw OutputDirNotFoundException(outputDirPath = outputFilePath.basePath, cause = Some(fileNotFoundException))
       case Failure(exception: Exception) => throw exception
     }
 
