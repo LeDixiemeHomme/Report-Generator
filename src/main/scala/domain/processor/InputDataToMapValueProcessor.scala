@@ -3,7 +3,7 @@ package domain.processor
 
 import customexceptions.IncompleteObjectInstantiationException
 import domain.processor.InputDataToMapValueProcessor.ToMapValueProcessorTrait
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 
@@ -13,7 +13,7 @@ class InputDataToMapValueProcessor extends Logging {
 
   def processToMapValue[A](inputData: A)(implicit processor: ToMapValueProcessorTrait[A]): Map[String, String] = {
 
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "InputDataToMapValueProcessor.processToMapValue()", classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = "InputDataToMapValueProcessor.processToMapValue()", level = Levels.INFO), classFrom = getClass)
 
     val mapValue = tryProcessingDataSafely(inputData = inputData, processor = processor) match {
       case Success(mapValue) => mapValue

@@ -2,16 +2,16 @@ package fr.valle.report_generator
 package UI.stages.primarystages
 
 import UI.sections._
-import UI.sections.logssection.{IsALogsSectionTrait, LogsSection}
 import UI.sections.navbarsection.{IsANavBarSectionTrait, NavBarSection}
 import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReceptionReportFormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
 import UI.sections.titlesection.TitleSection
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
+import UI.stages.logsstages.{IsALogsStageTrait, LogsStage}
 import UI.stages.primarystages.MainPrimaryStage.APP_TITLE
 import UI.{DebugBorder, Shaper}
 
-import scalafx.application.JFXApp3
+import scalafx.application.{JFXApp3, Platform}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.layout.{Background, BackgroundFill, HBox, VBox}
@@ -23,12 +23,13 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
     private val receptionReportDataFormPage: IsAPageTrait = ReceptionReportFormPage()
     private val otherReportFormPage: IsAPageTrait = OtherReportFormPage()
 
+    private val logsStage: IsALogsStageTrait = LogsStage()
+
     private val titleSection: IsASectionTrait = TitleSection(title = APP_TITLE)
     private val pageSection: IsAPageSectionTrait = PageSection(pageList = receptionReportDataFormPage :: otherReportFormPage :: Nil)
-    private val navBarSection: IsANavBarSectionTrait = NavBarSection(pageSection = pageSection)
-    private val logsSection: IsALogsSectionTrait = LogsSection()
+    private val navBarSection: IsANavBarSectionTrait = NavBarSection(pageSection = pageSection, logsStage = logsStage)
 
-    private val listSection: List[IsASectionTrait] = List(titleSection, navBarSection, pageSection, logsSection)
+    private val listSection: List[IsASectionTrait] = List(titleSection, navBarSection, pageSection)
 
     private val contentVBox: VBox = new VBox {
       border = DebugBorder(Color.Green).border
@@ -65,7 +66,10 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
     scene = new Scene {
       fill = Color.rgb(38, 38, 38)
       root = mainContent
-      stylesheets = List("style.css")
+    }
+
+    onCloseRequest = _ => {
+      Platform.exit()
     }
   }
 }

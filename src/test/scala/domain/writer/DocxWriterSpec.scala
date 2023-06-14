@@ -30,6 +30,6 @@ class DocxWriterSpec extends AnyFlatSpec with PrivateMethodTester with BeforeAnd
     val result: WriteResult = docxWriter.write(templateDoc = document, outputFilePath = FilePath.stringToFilePath(outputDirPath + fileName))
 
     Then("the result should be correct")
-    result.outputMessage shouldEqual "Successfully written " + fileName + " in " + outputDirPath
+    result.outputMessage shouldEqual s"Successfully written $fileName in ${FilePath.stringToFilePath(s"${outputDirPath}test.docx").constructBasePathAntiSlash}"
   }
 }

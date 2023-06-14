@@ -11,6 +11,7 @@ trait Styles {
 
   protected val whiteTextFillProperty: String = textFillProperty("white")
   protected val blackTextFillProperty: String = textFillProperty("black")
+  protected val redTextFillProperty: String = textFillProperty("red")
 
   protected val fontSize15Property: String = fontSizeProperty("15px")
   protected val fontSize20Property: String = fontSizeProperty("20px")

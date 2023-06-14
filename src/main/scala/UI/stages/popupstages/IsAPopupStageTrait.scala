@@ -14,7 +14,6 @@ import scalafx.scene.text.Text
 
 import java.nio.file.Paths
 import scala.collection.mutable.ListBuffer
-import scala.sys.process.stringSeqToProcess
 
 trait IsAPopupStageTrait extends IsAStageTrait {
 

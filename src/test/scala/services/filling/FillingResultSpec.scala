@@ -1,9 +1,9 @@
 package fr.valle.report_generator
 package services.filling
 
+import domain.path.{Extensions, FileName, FilePath, TestFilePathProvider}
 import features.results.FillingResult
 
-import fr.valle.report_generator.domain.path.{Extensions, FileName, FilePath}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen, PrivateMethodTester}
@@ -22,7 +22,10 @@ class FillingResultSpec extends AnyFlatSpec with PrivateMethodTester with Before
   }
 
   it should "have a correct string representation" in {
-    fillingResult.toString shouldEqual "FillingResult{isSuccess: true, popUpMessage: message, filledDocRelativePath: FilePath{ basePath: /, fileName: outputPath, extension: docx }}"
+    TestFilePathProvider.assertByOs(
+      expectedWindows = fillingResult.toString, actualWindows = "FillingResult{isSuccess: true, popUpMessage: message, filledDocRelativePath: FilePath{ basePath: \\, fileName: outputPath, extension: docx }}",
+      expectedOthers = fillingResult.toString, actualOthers = "FillingResult{isSuccess: true, popUpMessage: message, filledDocRelativePath: FilePath{ basePath: /, fileName: outputPath, extension: docx }}"
+    )
   }
 
   it should "return correct values for its properties" in {
