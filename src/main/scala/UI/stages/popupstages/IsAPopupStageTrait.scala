@@ -12,14 +12,13 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Text
 
-import java.nio.file.Paths
 import scala.collection.mutable.ListBuffer
 
 trait IsAPopupStageTrait extends IsAStageTrait {
 
   private def createImageView(imageFileName: String) = {
     val imageView = new ImageView(
-      new Image("file:" + Paths.get("src/main/resources/images/", imageFileName).toAbsolutePath.toString)
+      new Image(getClass.getResource(s"/images/$imageFileName").toString)
     )
     imageView.fitHeight = 70
     imageView.fitWidth = 70
@@ -27,9 +26,8 @@ trait IsAPopupStageTrait extends IsAStageTrait {
   }
 
   def createOpenFileImageVBox(isSuccess: Boolean, fileLocation: String): VBox = {
-    val resourcePath = "src/main/resources/images/"
-    val openFilePath = Paths.get(resourcePath, "open-file-100.png").toAbsolutePath.toString
-    val openFileOverPath = Paths.get(resourcePath, "open-file-over-100.png").toAbsolutePath.toString
+    val openFilePath = getClass.getResource(s"/images/open-file-100.png").toString
+    val openFileOverPath = getClass.getResource(s"/images/open-file-over-100.png").toString
 
     var imageView = createImageView(imageFileName = "open-file-failure-cross-100.png")
 
@@ -59,11 +57,11 @@ trait IsAPopupStageTrait extends IsAStageTrait {
         OpenDocxReport().open(fileLocation = fileLocation)
       })
       box.setOnMouseExited(_ => {
-        imageView.setImage(new Image("file:" + openFilePath))
+        imageView.setImage(new Image(openFilePath))
         subImageText.fill = Color.LightBlue
       })
       box.setOnMouseEntered(_ => {
-        imageView.setImage(new Image("file:" + openFileOverPath))
+        imageView.setImage(new Image(openFileOverPath))
         subImageText.fill = Color.White
       })
     }

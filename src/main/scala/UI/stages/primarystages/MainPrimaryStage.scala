@@ -62,7 +62,7 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
 
   private val mainContent = new StageContent().myContent
 
-  private val appIcon = new Image(getClass.getResource("/images/rgGeorgia100.png").toString)
+  private val appIcon = new Image(getClass.getResource("/images/rgGeorgia.png").toString)
 
   override def myPrimaryStage: JFXApp3.PrimaryStage = new JFXApp3.PrimaryStage {
     title = APP_TITLE.toTitle
