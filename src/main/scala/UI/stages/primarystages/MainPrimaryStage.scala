@@ -5,7 +5,7 @@ import UI.sections._
 import UI.sections.navbarsection.{IsANavBarSectionTrait, NavBarSection}
 import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReceptionReportFormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
-import UI.sections.titlesection.{TitleLogoSection, TitleSection}
+import UI.sections.titlesection.TitleLogoSection
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
 import UI.stages.logsstages.{IsALogsStageTrait, LogsStage}
 import UI.stages.primarystages.MainPrimaryStage.APP_TITLE
@@ -14,8 +14,11 @@ import UI.{DebugBorder, Shaper}
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
+import scalafx.scene.image.Image
 import scalafx.scene.layout.{Background, BackgroundFill, HBox, VBox}
 import scalafx.scene.paint.{Color, CycleMethod, LinearGradient}
+
+import java.nio.file.Paths
 
 class MainPrimaryStage extends IsAPrimaryStageTrait {
 
@@ -61,9 +64,12 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
 
   private val mainContent = new StageContent().myContent
 
+  private val appIcon = new Image("file:" + Paths.get("src/main/resources/images/", "rgGeorgiaProp.png").toAbsolutePath.toString)
+
   override def myPrimaryStage: JFXApp3.PrimaryStage = new JFXApp3.PrimaryStage {
     title = APP_TITLE.toTitle
     scene = new Scene {
+      icons += appIcon
       fill = Color.rgb(38, 38, 38)
       root = mainContent
     }
