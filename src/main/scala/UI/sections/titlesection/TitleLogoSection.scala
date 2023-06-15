@@ -5,15 +5,13 @@ import UI.sections.IsASectionTrait
 import UI.sections.titlesection.titles.IsATitleTrait
 import UI.{DebugBorder, Shaper}
 
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
-import java.nio.file.Paths
-
 class TitleLogoSection(title: IsATitleTrait) extends IsASectionTrait {
-  private def logo = new ImageView(new Image("file:" + Paths.get("src/main/resources/images/", "rgGeorgia100.png").toAbsolutePath.toString))
+  private def logo = new ImageView(new Image(getClass.getResource("/images/rgGeorgia100.png").toString))
 
   logo.fitHeight = 100
   logo.fitWidth = 100

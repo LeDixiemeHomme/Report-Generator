@@ -18,8 +18,6 @@ import scalafx.scene.image.Image
 import scalafx.scene.layout.{Background, BackgroundFill, HBox, VBox}
 import scalafx.scene.paint.{Color, CycleMethod, LinearGradient}
 
-import java.nio.file.Paths
-
 class MainPrimaryStage extends IsAPrimaryStageTrait {
 
   private class StageContent() {
@@ -64,7 +62,7 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
 
   private val mainContent = new StageContent().myContent
 
-  private val appIcon = new Image("file:" + Paths.get("src/main/resources/images/", "rgGeorgiaProp.png").toAbsolutePath.toString)
+  private val appIcon = new Image(getClass.getResource("/images/rgGeorgia100.png").toString)
 
   override def myPrimaryStage: JFXApp3.PrimaryStage = new JFXApp3.PrimaryStage {
     title = APP_TITLE.toTitle
