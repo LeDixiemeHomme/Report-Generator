@@ -5,7 +5,7 @@ import UI.sections._
 import UI.sections.navbarsection.{IsANavBarSectionTrait, NavBarSection}
 import UI.sections.pagesection.pages.{IsAPageTrait, OtherReportFormPage, ReceptionReportFormPage}
 import UI.sections.pagesection.{IsAPageSectionTrait, PageSection}
-import UI.sections.titlesection.TitleSection
+import UI.sections.titlesection.{TitleLogoSection, TitleSection}
 import UI.sections.titlesection.titles.{IsATitleTrait, ReportGeneratorTitle}
 import UI.stages.logsstages.{IsALogsStageTrait, LogsStage}
 import UI.stages.primarystages.MainPrimaryStage.APP_TITLE
@@ -25,7 +25,7 @@ class MainPrimaryStage extends IsAPrimaryStageTrait {
 
     private val logsStage: IsALogsStageTrait = LogsStage()
 
-    private val titleSection: IsASectionTrait = TitleSection(title = APP_TITLE)
+    private val titleSection: IsASectionTrait = TitleLogoSection(title = APP_TITLE)
     private val pageSection: IsAPageSectionTrait = PageSection(pageList = receptionReportDataFormPage :: otherReportFormPage :: Nil)
     private val navBarSection: IsANavBarSectionTrait = NavBarSection(pageSection = pageSection, logsStage = logsStage)
 
