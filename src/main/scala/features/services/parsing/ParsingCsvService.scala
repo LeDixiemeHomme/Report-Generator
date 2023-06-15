@@ -5,7 +5,7 @@ import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, N
 import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
 import domain.path.FilePath
 import features.results.ParsingResult
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 
@@ -16,7 +16,7 @@ class ParsingCsvService[A](csvParserTrait: IsACSVFileParserTrait) extends Loggin
 
   override def parse(filePath: FilePath)(implicit parser: IsAnObjectParserTrait[A]): ParsingResult[A] = {
 
-    LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, "Parsing csv file", classFrom = getClass)
+    LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = "Parsing csv file", level = Levels.DEBUG), classFrom = getClass)
 
     val dataList: ListBuffer[A] = new ListBuffer[A]
 

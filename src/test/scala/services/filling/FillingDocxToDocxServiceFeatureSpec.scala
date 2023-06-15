@@ -1,9 +1,9 @@
 package fr.valle.report_generator
 package services.filling
 
+import domain.path.{FilePath, TestFilePathProvider}
 import features.services.filling.FillingDocxToDocxService
 
-import fr.valle.report_generator.domain.path.FilePath
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.featurespec.AnyFeatureSpecLike
 import org.scalatest.matchers.should.Matchers
@@ -18,7 +18,8 @@ class FillingDocxToDocxServiceFeatureSpec extends AnyFeatureSpecLike with GivenW
   val generatedTemplateFileName = "template-test-filling-service-generated"
   val fileName = "a-filled-doc"
   val docxFileExtension = ".docx"
-  val generatedTemplateFileRelativePath: String = outputFilePath + generatedTemplateFileName + docxFileExtension
+  val generatedTemplateFileRelativePathOthers: String = outputFilePath + generatedTemplateFileName + docxFileExtension
+  val generatedTemplateFileRelativePathWindows: String = FilePath.stringToFilePath(generatedTemplateFileRelativePathOthers).constructFinalPath
 
   var document: XWPFDocument = _
 
@@ -30,7 +31,7 @@ class FillingDocxToDocxServiceFeatureSpec extends AnyFeatureSpecLike with GivenW
     val run = paragraph.createRun()
     run.setText("#nombre_sorbonne#;#mois#;#annee#;#nom_etablissement#;#ville#;#departement#;#adresse#;#code_postal#;#jour#;#intervenant#;#sexe#;#societe_soutraite#;#nom1#;#nom2#;#numero_d_affaire#")
 
-    document.write(new FileOutputStream(new File(generatedTemplateFileRelativePath)))
+    document.write(new FileOutputStream(new File(generatedTemplateFileRelativePathOthers)))
     document.close()
   }
 
@@ -40,19 +41,28 @@ class FillingDocxToDocxServiceFeatureSpec extends AnyFeatureSpecLike with GivenW
       val expectedDocxContentAfterFilling: String = "2;Janvier;2023;Université Sorbonne Paris Nord;Villetaneuse;Seine-Saint-Denis;1 Rue de la Croix Faron;93430;15;John Doe;M;FabCorp;Robert;Dupont;ABC123"
 
       Given("the templateFilePath, a valuesMap, an outputFilePath, a fileName")
-      val templateFilePath = generatedTemplateFileRelativePath
+      val templateFilePath = generatedTemplateFileRelativePathOthers
       val valuesMap: Map[String, String] = TestDataProvider.provideReceptionReportData_1MapValues
 
       When("using the FillingDocxToDocxService.fill method")
       val fillingResult = fillingDocxToDocxService.fill(templateFilePath = FilePath.stringToFilePath(templateFilePath), valuesMap = valuesMap,
-        outputFilePath = FilePath.stringToFilePath(generatedTemplateFileRelativePath))
+        outputFilePath = FilePath.stringToFilePath(generatedTemplateFileRelativePathOthers))
 
       val paragraphFromTheFilledDoc = new XWPFDocument(new FileInputStream(new File(fillingResult.filledDocRelativePath.get.constructFinalPath))).getParagraphs.get(0).getText()
 
       Then("the result should be correct")
-      fillingResult.popUpMessage shouldEqual s"Successfully written $generatedTemplateFileName$docxFileExtension in $outputFilePath"
-      fillingResult.filledDocRelativePath.get.constructFinalPath shouldEqual generatedTemplateFileRelativePath
-      paragraphFromTheFilledDoc shouldEqual expectedDocxContentAfterFilling
+      TestFilePathProvider.assertByOs(
+        expectedWindows = fillingResult.popUpMessage, actualWindows = s"Successfully written $generatedTemplateFileName$docxFileExtension in ${outputFilePath.replace('/', '\\')}",
+        expectedOthers = fillingResult.popUpMessage, actualOthers = s"Successfully written $generatedTemplateFileName$docxFileExtension in ${outputFilePath.replace('/', '\\')}"
+      )
+      TestFilePathProvider.assertByOs(
+        expectedWindows = fillingResult.filledDocRelativePath.get.constructFinalPath, actualWindows = generatedTemplateFileRelativePathWindows,
+        expectedOthers = fillingResult.filledDocRelativePath.get.constructFinalPath, actualOthers = generatedTemplateFileRelativePathOthers
+      )
+      TestFilePathProvider.assertByOs(
+        expectedWindows = paragraphFromTheFilledDoc, actualWindows = expectedDocxContentAfterFilling,
+        expectedOthers = paragraphFromTheFilledDoc, actualOthers = expectedDocxContentAfterFilling
+      )
     }
   }
 }

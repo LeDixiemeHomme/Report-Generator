@@ -18,11 +18,6 @@ class ReportGeneratorTitle() extends IsATitleTrait {
         endX = 0,
         stops = Stops(White, DarkGray)
       )
-      effect = new DropShadow {
-        color = DarkGray
-        radius = 15
-        spread = 0.25
-      }
     }
   }
 

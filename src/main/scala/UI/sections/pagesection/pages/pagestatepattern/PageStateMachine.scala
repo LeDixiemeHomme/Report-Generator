@@ -22,5 +22,5 @@ class PageStateMachine(pageSection: IsAPageSectionTrait) {
 object PageStateMachine {
   def apply(pageSection: IsAPageSectionTrait): PageStateMachine = new PageStateMachine(pageSection)
   final val GO_TO_RECEPTION_REPORT_DATA_FORM_PAGE: String = ReceptionReportFormPage.RECEPTION_REPORT_DATA_FORM_PAGE_ID
-  final val GO_TO_LOGS_PAGE: String = OtherReportFormPage.OTHER_REPORT_FORM_PAGE_ID
+  final val GO_TO_OTHER_REPORT_PAGE: String = OtherReportFormPage.OTHER_REPORT_FORM_PAGE_ID
 }

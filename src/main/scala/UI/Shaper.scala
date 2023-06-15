@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package UI
 
-import logging.LogsKeeper
+import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging
 import scalafx.stage.Screen
@@ -12,7 +12,8 @@ object Shaper extends Logging {
 
   private val bounds = Screen.primary.visualBounds
 
-  LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, s"Screen size: ${bounds.width} x ${bounds.height}", classFrom = getClass)
+  LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Screen size: ${bounds.width} x ${bounds.height}", level = Levels.INFO), classFrom = getClass)
+
 
   if (bounds.height < 1000.0) {
     smallHeightScreenMode = true
@@ -26,6 +27,9 @@ object Shaper extends Logging {
     smallWidthScreenMode = false
   }
 
-  LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, s"Small width screen mode: ${smallWidthScreenMode}", classFrom = getClass)
-  LogsKeeper.keepAndLog(extLogger = logger, LogsKeeper.INFO, s"Small height screen mode: ${smallHeightScreenMode}", classFrom = getClass)
+  smallHeightScreenMode = false
+  smallWidthScreenMode = true
+
+  LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Small width screen mode: ${smallWidthScreenMode}", level = Levels.INFO), classFrom = getClass)
+  LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Small height screen mode: ${smallHeightScreenMode}", level = Levels.INFO), classFrom = getClass)
 }

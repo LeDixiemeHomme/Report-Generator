@@ -10,6 +10,7 @@ import scalafx.scene.layout.HBox
 import scalafx.scene.paint.Color
 
 class TitleSection(title: IsATitleTrait) extends IsASectionTrait {
+
   private val section: HBox = new HBox {
     border = DebugBorder(Color.Yellow).border
     alignment = Pos.Center

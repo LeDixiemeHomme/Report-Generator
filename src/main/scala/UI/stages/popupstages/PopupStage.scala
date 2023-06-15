@@ -7,7 +7,6 @@ import scalafx.geometry.Pos
 import scalafx.scene.Node
 import scalafx.scene.layout.VBox
 import scalafx.scene.paint.Color
-import scalafx.scene.text.Text
 import scalafx.stage.{Modality, Stage}
 
 class PopupStage(val popupMessage: String, val fileLocation: String, val isSuccess: Boolean) extends IsAPopupStageTrait {
@@ -22,15 +21,13 @@ class PopupStage(val popupMessage: String, val fileLocation: String, val isSucce
   }
 
   private val myStage: Stage = {
-    val fileLocText = if (isSuccess) new Text(fileLocation) else new Text("vbenoitaàeraerdf")
-    fileLocText.fill = Color.White
     val closeButton = createCloseButton
     val childrenValue: Seq[Node] = Seq(
       createResultHBox(fileLocation = fileLocation, isSuccess = isSuccess),
       createPopupMessageHBox(popupMessage),
-      createCloseButtonHBox(closeButton = closeButton),
+      createButtonHBox(button = closeButton),
     )
-    createStage(closeButton = closeButton, titleValue = "Success", childrenValue = childrenValue)
+    createStage(closeButton = closeButton, titleValue = if (isSuccess) "Success" else "Failure", childrenValue = childrenValue)
   }
 
   override def showMyStage(): Unit = {
