@@ -26,7 +26,9 @@ object Shaper extends Logging {
   } else {
     smallWidthScreenMode = false
   }
+
   smallHeightScreenMode = false
+  smallWidthScreenMode = true
 
   LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Small width screen mode: ${smallWidthScreenMode}", level = Levels.INFO), classFrom = getClass)
   LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"Small height screen mode: ${smallHeightScreenMode}", level = Levels.INFO), classFrom = getClass)
