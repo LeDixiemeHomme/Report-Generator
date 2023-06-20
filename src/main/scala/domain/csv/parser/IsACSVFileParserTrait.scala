@@ -1,8 +1,8 @@
 package fr.valle.report_generator
-package domain.parser
+package domain.csv.parser
 
+import app.path.FilePath
 import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, NoRowInCSVException}
-import domain.path.FilePath
 
 trait IsACSVFileParserTrait {
 

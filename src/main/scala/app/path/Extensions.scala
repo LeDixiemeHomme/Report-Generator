@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package domain.path
+package app.path
 
 object Extensions extends Enumeration {
   type Extension = Value

@@ -1,8 +1,8 @@
 package fr.valle.report_generator
-package domain.writer
+package domain.docx.writer
 
+import app.path.FilePath
 import customexceptions.OutputDirNotFoundException
-import domain.path.FilePath
 import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging

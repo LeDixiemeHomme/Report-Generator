@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package domain.filler
+package domain.docx.filler
 
 import logging.{Levels, Log, LogsKeeper}
 

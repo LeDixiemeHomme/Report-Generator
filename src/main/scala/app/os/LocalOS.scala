@@ -1,7 +1,7 @@
 package fr.valle.report_generator
-package app
+package app.os
 
-import app.LocalOS.OSs.OS
+import app.os.LocalOS.OSs.OS
 import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging

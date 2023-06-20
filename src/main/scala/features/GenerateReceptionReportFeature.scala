@@ -1,12 +1,12 @@
 package fr.valle.report_generator
 package features
 
+import app.path.{Extensions, FileName, FilePath}
 import customexceptions.WrongFileFormatException
+import domain.csv.parser.tototoshiCSVparser.TototoshiCsvFileParser
+import domain.csv.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
 import domain.model.ReceptionReportData
 import domain.model.ReceptionReportData.ReceptionReportDataProcessor
-import domain.parser.tototoshiCSVparser.TototoshiCsvFileParser
-import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
-import domain.path.{Extensions, FileName, FilePath}
 import features.results.{FillingResult, GenerateReceptionReportFeatureResult, ParsingResult, ProcessingResult}
 import features.services.filling.{FillingDocxToDocxService, FillingServiceTrait}
 import features.services.parsing.{ParsingCsvService, ParsingServiceTrait}

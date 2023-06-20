@@ -1,9 +1,11 @@
 package fr.valle.report_generator
 package domain.parser.tototoshiCSVparser
 
+import app.path.FilePath
 import customexceptions.DataFileNotFoundException
-import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
-import domain.path.{FilePath, TestFilePathProvider}
+import domain.csv.parser.tototoshiCSVparser.TototoshiCsvFileParser
+import domain.csv.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
+import domain.path.TestFilePathProvider
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

@@ -1,10 +1,10 @@
 package fr.valle.report_generator
-package domain.path
+package app.path
 
-import app.LocalOS
-import app.LocalOS.OSs
+import app.os.LocalOS
+import app.os.LocalOS.OSs
+import app.path.Extensions.Extension
 import customexceptions.WrongFileFormatException
-import domain.path.Extensions.Extension
 import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging

@@ -1,9 +1,10 @@
 package fr.valle.report_generator
 package domain.path
 
-import app.LocalOS
+import app.os.LocalOS
+import app.path.Extensions.Extension
+import app.path.{Extensions, FileName, FilePath}
 import customexceptions.WrongFileFormatException
-import domain.path.Extensions.Extension
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

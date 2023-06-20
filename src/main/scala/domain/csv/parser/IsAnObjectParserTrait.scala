@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package domain.parser
+package domain.csv.parser
 
 import customexceptions.{MissingCSVColumnException, NoRowInCSVException}
 

@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package domain.path
 
-import app.LocalOS
-import app.LocalOS.OSs
+import app.os.LocalOS
+import app.os.LocalOS.OSs
 
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers

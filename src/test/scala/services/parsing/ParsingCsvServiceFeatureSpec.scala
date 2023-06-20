@@ -1,13 +1,13 @@
 package fr.valle.report_generator
 package services.parsing
 
+import app.path.FilePath
+import domain.csv.parser.tototoshiCSVparser.TototoshiCsvFileParser
+import domain.csv.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
 import domain.model.ReceptionReportData
-import domain.parser.tototoshiCSVparser.TototoshiCsvFileParser
-import domain.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser
 import features.results.ParsingResult
 import features.services.parsing.{ParsingCsvService, ParsingServiceTrait}
 
-import fr.valle.report_generator.domain.path.FilePath
 import org.scalatest.featurespec.AnyFeatureSpecLike
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, GivenWhenThen}

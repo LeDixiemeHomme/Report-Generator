@@ -1,8 +1,8 @@
 package fr.valle.report_generator
-package domain.reader
+package domain.docx.reader
 
+import app.path.FilePath
 import customexceptions.{EmptyXWPFDocumentException, TemplateFileNotFoundException, WrongFileFormatException}
-import domain.path.FilePath
 import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging

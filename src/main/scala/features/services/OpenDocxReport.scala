@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package features.services
 
-import app.LocalOS
-import domain.path.FilePath
+import app.os.LocalOS
+import app.path.FilePath
 import logging.{Levels, Log, LogsKeeper}
 
 import org.apache.logging.log4j.scala.Logging

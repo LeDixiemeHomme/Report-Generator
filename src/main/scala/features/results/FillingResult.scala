@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package features.results
 
-import domain.path.FilePath
+import app.path.FilePath
 
 case class FillingResult(isSuccess: Boolean, popUpMessage: String, filledDocRelativePath: Option[FilePath]) extends IsAResultTrait {
   override def toString: String = {

@@ -1,7 +1,5 @@
 package fr.valle.report_generator
-package domain.path
-
-import domain.path.Extensions.Extension
+package app.path
 
 
 class FileName(val value: String) {

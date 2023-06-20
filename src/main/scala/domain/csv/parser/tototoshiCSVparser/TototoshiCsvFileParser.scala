@@ -1,9 +1,9 @@
 package fr.valle.report_generator
-package domain.parser.tototoshiCSVparser
+package domain.csv.parser.tototoshiCSVparser
 
+import app.path.FilePath
 import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, NoRowInCSVException}
-import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
-import domain.path.FilePath
+import domain.csv.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
 import logging.{Levels, Log, LogsKeeper}
 
 import com.github.tototoshi.csv.{CSVReader, DefaultCSVFormat}

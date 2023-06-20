@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package services.filling
 
-import app.LocalOS
-import domain.path.{Extensions, FileName, FilePath}
+import app.os.LocalOS
+import app.path.{Extensions, FileName, FilePath}
 import features.results.FillingResult
 import features.services.filling.FillingDocxToDocxService
 
