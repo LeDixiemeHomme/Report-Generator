@@ -1,10 +1,8 @@
 package fr.valle.report_generator
-package domain.reader
+package domain.docx.reader
 
-import app.path.FilePath
+import app.path.{FilePath, TestFilePathProvider}
 import customexceptions.{EmptyXWPFDocumentException, TemplateFileNotFoundException}
-import domain.docx.reader.DocxReader
-import domain.path.TestFilePathProvider
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.flatspec.AnyFlatSpec

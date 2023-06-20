@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package domain.path
+package app.path
 
 import app.os.LocalOS
 import app.os.LocalOS.OSs

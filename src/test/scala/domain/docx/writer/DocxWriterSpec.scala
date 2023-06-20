@@ -1,8 +1,7 @@
 package fr.valle.report_generator
-package domain.writer
+package domain.docx.writer
 
 import app.path.FilePath
-import domain.docx.writer.{DocxWriter, WriteResult}
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.flatspec.AnyFlatSpec

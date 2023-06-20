@@ -1,8 +1,7 @@
 package fr.valle.report_generator
 package services.filling
 
-import app.path.FilePath
-import domain.path.TestFilePathProvider
+import app.path.{FilePath, TestFilePathProvider}
 import features.services.filling.FillingDocxToDocxService
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument

@@ -1,5 +1,5 @@
 package fr.valle.report_generator
-package domain.parser.tototoshiCSVparser.objectparsers
+package domain.csv.parser.tototoshiCSVparser.objectparsers
 
 import customexceptions.{MissingCSVColumnException, NoRowInCSVException}
 import domain.csv.parser.tototoshiCSVparser.objectparsers.ReceptionReportDataTototoshiParser

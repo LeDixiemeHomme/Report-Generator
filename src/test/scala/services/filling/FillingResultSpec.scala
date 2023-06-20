@@ -1,8 +1,7 @@
 package fr.valle.report_generator
 package services.filling
 
-import app.path.{Extensions, FileName, FilePath}
-import domain.path.TestFilePathProvider
+import app.path.{Extensions, FileName, FilePath, TestFilePathProvider}
 import features.results.FillingResult
 
 import org.scalatest.flatspec.AnyFlatSpec
