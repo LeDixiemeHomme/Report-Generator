@@ -14,8 +14,13 @@ object MainColumnWork extends App {
   val docxWriter = DocxWriter()
   val openDocxReport = OpenDocxReport()
 
-  val updatedDoc = docxArrayModifier.addColumn(document = docxReader.readDocx(templateFilePath = FilePath.stringToFilePath(Paths.get("src/test/resources", "template-test-add-column.docx").toString)))
-  val writeResult = docxWriter.write(templateDoc = updatedDoc, FilePath.stringToFilePath(Paths.get("src/test/resources", "template-test-add-column-updated.docx").toString))
+  val pathRes = "src/test/resources"
+
+  val updatedDoc = docxArrayModifier.addColumn(document = docxReader.readDocx(templateFilePath = FilePath.stringToFilePath(Paths.get(
+    pathRes, "template-test-add-column.docx").toString)))
+
+  val writeResult = docxWriter.write(templateDoc = updatedDoc, FilePath.stringToFilePath(Paths.get(
+    pathRes, "template-test-add-column-updated.docx").toString))
 
   println(writeResult)
   openDocxReport.open(fileLocation = writeResult.outputPath)
