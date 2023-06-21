@@ -4,5 +4,5 @@ package domain.docx.modifier
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 
 trait IsADocxArrayModifierTrait {
-  def addColumn(document: XWPFDocument): XWPFDocument
+  def addRow(document: XWPFDocument): XWPFDocument
 }
