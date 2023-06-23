@@ -2,17 +2,27 @@ package fr.valle.report_generator
 package domain.docx.modifier
 
 import org.apache.logging.log4j.scala.Logging
-import org.apache.poi.xwpf.usermodel.{XWPFDocument, XWPFTable}
+import org.apache.poi.xwpf.usermodel.{XWPFTable, XWPFTableRow}
 
-import scala.jdk.CollectionConverters.CollectionHasAsScala
+import scala.jdk.CollectionConverters.ListHasAsScala
 
 class DocxArrayModifier extends Logging with IsADocxArrayModifierTrait {
-  override def addRow(document: XWPFDocument): XWPFDocument = {
-    for (table: XWPFTable <- document.getTables.asScala) {
-      val rows = table.getRows.asScala
-      table.addRow(rows.last)
-    }
-    document
+  override def duplicateLastRowOfTable(table: XWPFTable): XWPFTable = {
+    table.addRow(table.getRows.asScala.toList.last)
+    table
+  }
+
+  override def updateRow(row: XWPFTableRow, texts: List[String]): XWPFTableRow = {
+    val cells = row.getTableCells
+    cells.forEach(cell => {
+      cell.setText("benoit")
+      val paras = cell.getParagraphs
+      paras.forEach(para => {
+        val runs = para.getRuns
+        runs.forEach(run => println("run => " + run.toString))
+      })
+    })
+    row
   }
 }
 
