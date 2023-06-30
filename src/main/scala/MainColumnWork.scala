@@ -16,7 +16,7 @@ object MainColumnWork extends App {
 
   val pathRes = "src/test/resources"
 
-  val updatedDoc = docxArrayModifier.addColumn(document = docxReader.readDocx(templateFilePath = FilePath.stringToFilePath(Paths.get(
+  val updatedDoc = docxArrayModifier.addRow(document = docxReader.readDocx(templateFilePath = FilePath.stringToFilePath(Paths.get(
     pathRes, "template-test-add-column.docx").toString)))
 
   val writeResult = docxWriter.write(templateDoc = updatedDoc, FilePath.stringToFilePath(Paths.get(
