@@ -1,4 +1,4 @@
-val appVersion = "2.3.5"
+val appVersion = "2.3.6"
 val appName = "Report-Generator"
 
 ThisBuild / version := appVersion
