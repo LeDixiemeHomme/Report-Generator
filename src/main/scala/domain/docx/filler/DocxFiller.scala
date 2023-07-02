@@ -7,6 +7,7 @@ import org.apache.logging.log4j.scala.Logging
 import org.apache.poi.xwpf.usermodel._
 
 import scala.jdk.CollectionConverters.CollectionHasAsScala
+import scala.util.{Failure, Success, Try}
 
 class DocxFiller extends Logging {
   def fillDocx(templateDoc: XWPFDocument, valuesMap: Map[String, String]): XWPFDocument = {
@@ -14,17 +15,38 @@ class DocxFiller extends Logging {
 
     val filledTemplateDoc: XWPFDocument = templateDoc
 
-    fillParagraphs(templateDoc = templateDoc, valuesMap = valuesMap)
-    fillFooters(templateDoc = templateDoc, valuesMap = valuesMap)
-    fillTables(templateDoc = templateDoc, valuesMap = valuesMap)
+    tryFillParagraphs(templateDoc = templateDoc, valuesMap = valuesMap) match {
+      case Success(_) =>
+      case Failure(exception) => throw exception
+    }
+    tryFillFooters(templateDoc = templateDoc, valuesMap = valuesMap) match {
+      case Success(_) =>
+      case Failure(exception) => throw exception
+    }
+    tryFillTablesSafely(templateDoc = templateDoc, valuesMap = valuesMap) match {
+      case Success(_) =>
+      case Failure(exception) => throw exception
+    }
 
     filledTemplateDoc
+  }
+
+  private def tryFillParagraphs(templateDoc: XWPFDocument, valuesMap: Map[String, String]): Try[Unit] = {
+    Try {
+      fillParagraphs(templateDoc = templateDoc, valuesMap = valuesMap)
+    }
   }
 
   private def fillParagraphs(templateDoc: XWPFDocument, valuesMap: Map[String, String]): Unit = {
     // Loop through all the paragraphs in the document and replace the values
     for (para: XWPFParagraph <- templateDoc.getParagraphs.asScala) {
       replaceText(valuesMap, para.getRuns.asScala)
+    }
+  }
+
+  private def tryFillFooters(templateDoc: XWPFDocument, valuesMap: Map[String, String]): Try[Unit] = {
+    Try {
+      fillFooters(templateDoc = templateDoc, valuesMap = valuesMap)
     }
   }
 
@@ -39,15 +61,25 @@ class DocxFiller extends Logging {
 
   private def replaceText(valuesMap: Map[String, String], runs: Iterable[XWPFRun]): Unit = {
     for (run: XWPFRun <- runs) {
-      var text = run.getText(0)
-      if (text != null) {
-        // Replace all occurrences of the values with the corresponding values in the map
-        for ((key, value) <- valuesMap) {
-          text = text.replace(key, value)
+      try {
+        var text = run.getText(0)
+        if (text != null) {
+          // Replace all occurrences of the values with the corresponding values in the map
+          for ((key, value) <- valuesMap) {
+            text = text.replace(key, value)
+          }
+          // Set the new text in the run
+          run.setText(text, 0)
         }
-        // Set the new text in the run
-        run.setText(text, 0)
+      } catch {
+        case _: Throwable => LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"No text in run", level = Levels.WARN), classFrom = getClass)
       }
+    }
+  }
+
+  private def tryFillTablesSafely(templateDoc: XWPFDocument, valuesMap: Map[String, String]): Try[Unit] = {
+    Try {
+      fillTables(templateDoc = templateDoc, valuesMap = valuesMap)
     }
   }
 
@@ -63,7 +95,11 @@ class DocxFiller extends Logging {
               text = text.replace(key, value)
             }
             // Set the new text in the cell
-            cell.getParagraphs.get(0).getRuns.get(0).setText(text, 0)
+            try {
+              cell.getParagraphs.get(0).getRuns.get(0).setText(text, 0)
+            } catch {
+              case _: Throwable => LogsKeeper.keepAndLog(extLogger = logger, log = Log(message = s"A cell of a table is empty", level = Levels.WARN), classFrom = getClass)
+            }
           }
         }
       }
