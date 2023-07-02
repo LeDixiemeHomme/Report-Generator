@@ -1,7 +1,7 @@
 package fr.valle.report_generator
 package features.services.filling
 
-import domain.path.FilePath
+import app.path.FilePath
 import features.results.FillingResult
 
 

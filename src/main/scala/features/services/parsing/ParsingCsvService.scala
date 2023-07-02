@@ -1,9 +1,9 @@
 package fr.valle.report_generator
 package features.services.parsing
 
+import app.path.FilePath
 import customexceptions.{DataFileNotFoundException, MissingCSVColumnException, NoRowInCSVException}
-import domain.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
-import domain.path.FilePath
+import domain.csv.parser.{IsACSVFileParserTrait, IsAnObjectParserTrait}
 import features.results.ParsingResult
 import logging.{Levels, Log, LogsKeeper}
 

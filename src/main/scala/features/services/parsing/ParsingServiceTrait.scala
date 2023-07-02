@@ -1,8 +1,8 @@
 package fr.valle.report_generator
 package features.services.parsing
 
-import domain.parser.IsAnObjectParserTrait
-import domain.path.FilePath
+import app.path.FilePath
+import domain.csv.parser.IsAnObjectParserTrait
 import features.results.ParsingResult
 
 trait ParsingServiceTrait[A] {

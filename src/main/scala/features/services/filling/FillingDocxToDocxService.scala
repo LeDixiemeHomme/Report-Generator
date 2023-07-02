@@ -1,11 +1,11 @@
 package fr.valle.report_generator
 package features.services.filling
 
+import app.path.FilePath
 import customexceptions.{EmptyXWPFDocumentException, OutputDirNotFoundException, TemplateFileNotFoundException, WrongFileFormatException}
-import domain.filler.DocxFiller
-import domain.path.FilePath
-import domain.reader.DocxReader
-import domain.writer.{DocxWriter, WriteResult}
+import domain.docx.filler.DocxFiller
+import domain.docx.reader.DocxReader
+import domain.docx.writer.{DocxWriter, WriteResult}
 import features.results.FillingResult
 import logging.{Levels, Log, LogsKeeper}
 
