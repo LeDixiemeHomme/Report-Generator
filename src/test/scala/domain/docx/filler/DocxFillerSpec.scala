@@ -1,8 +1,6 @@
 package fr.valle.report_generator
 package domain.docx.filler
 
-import domain.docx.filler.DocxFiller
-
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
