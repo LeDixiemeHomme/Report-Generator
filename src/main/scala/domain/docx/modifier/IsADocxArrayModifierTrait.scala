@@ -1,8 +1,12 @@
 package fr.valle.report_generator
 package domain.docx.modifier
 
-import org.apache.poi.xwpf.usermodel.XWPFDocument
+import org.apache.poi.xwpf.usermodel.{XWPFTable, XWPFTableRow}
 
 trait IsADocxArrayModifierTrait {
-  def addRow(document: XWPFDocument): XWPFDocument
+  def duplicateLastRowOfTable(table: XWPFTable): XWPFTable
+
+  def updateRow(row: XWPFTableRow, texts: List[String]): XWPFTableRow
+
+  def addColumnToTable(table: XWPFTable): XWPFTable
 }
