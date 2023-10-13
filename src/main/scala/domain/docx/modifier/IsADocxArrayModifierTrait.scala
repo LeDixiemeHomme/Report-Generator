@@ -7,4 +7,6 @@ trait IsADocxArrayModifierTrait {
   def duplicateLastRowOfTable(table: XWPFTable): XWPFTable
 
   def updateRow(row: XWPFTableRow, texts: List[String]): XWPFTableRow
+
+  def addColumnToTable(table: XWPFTable): XWPFTable
 }

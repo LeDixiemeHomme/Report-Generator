@@ -14,10 +14,13 @@ class ReportPOIXWPFDocument(val document: XWPFDocument) extends Logging {
 
   private def tables(): List[XWPFTable] = document.getTables.asScala.toList
 
-  private def tableSorbonnes(): XWPFTable = document.getTables.get(0)
+  private def tableSorbonnes(): XWPFTable = tables().head
 
-  def addColumnToTableSorbonnes(): Unit = {
-    val updatedTable = docxArrayModifier.duplicateLastRowOfTable(table = tableSorbonnes())
-    val updatedRow = docxArrayModifier.updateRow(row = updatedTable.getRows.asScala.last, texts = "text1" :: "text2" :: Nil)
+  def addRowToTableSorbonnes(): XWPFTable = {
+    docxArrayModifier.duplicateLastRowOfTable(table = tableSorbonnes())
+  }
+
+  def addColumnToTableSorbonnes(): XWPFTable = {
+    docxArrayModifier.addColumnToTable(table = tableSorbonnes())
   }
 }

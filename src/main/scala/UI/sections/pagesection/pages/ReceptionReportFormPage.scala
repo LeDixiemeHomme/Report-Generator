@@ -66,7 +66,8 @@ class ReceptionReportFormPage extends Logging with IsAPageTrait {
       val dataPathTempValue = "reception-report-data-test.csv"
 
       //    val templatePathTempValue = "template-test-empty.docx"
-      val templatePathTempValue = "template-test.docx"
+      //    val templatePathTempValue = "template-test.docx"
+      val templatePathTempValue = "template-report-data-v1-3.docx"
 
       dataPathTemp = Paths.get(resourcePath, dataPathTempValue).toString
 

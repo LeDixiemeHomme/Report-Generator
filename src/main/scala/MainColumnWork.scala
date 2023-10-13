@@ -23,6 +23,7 @@ object MainColumnWork extends App {
 
   val report = new ReportPOIXWPFDocument(document = baseDoc)
 
+  report.addRowToTableSorbonnes()
   report.addColumnToTableSorbonnes()
 
   val updatedDoc: XWPFDocument = report.document
